@@ -1,0 +1,21 @@
+#macro( uppercase $name )$name.toUpperCase()#end
+package $vPkg;
+
+public class $vName {
+
+    /**
+     * Vocabulary for all classes / interfaces
+     */
+#foreach($i in $model.getJInterfaces())
+    public static final String #uppercase($i.getJavaName()) = "$i.getMapUri()";
+#end
+
+    /**
+     * Vocabulary for all properties
+     */
+#foreach($i in $model.getJProperties())
+    public static final String #uppercase($i.getJavaFullName()) = "$i.getMapUri()";
+#end
+
+
+}

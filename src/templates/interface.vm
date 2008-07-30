@@ -1,0 +1,27 @@
+package $if.getJavaPackageName();
+
+import java.util.List;
+import java.util.Iterator;
+
+// import parent interfaces
+#foreach($iface in $if.getSuperInterfaces())
+import $iface.getJavaFullName();
+#end
+
+## for all domain properties import all range interfaces
+// import interfaces for properties
+#foreach($p in $if.getDomainProperties())
+#foreach($i in $p.getObjectRange())
+import $i.getJavaFullName();
+#end
+#end
+
+## include root interface or child interface template
+/*
+ * Interface $if.getMapUri()
+ */
+#if($if.isRootInterface())
+#parse("ifaceRoot.vm")
+#else
+#parse("ifaceChild.vm")
+#end

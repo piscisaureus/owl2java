@@ -1,0 +1,31 @@
+#set($iName = $if.getJavaName())
+#set($iFName = $if.getJavaFullName())
+##
+##
+    /**
+     * Interface / Class $if.getMapUri()
+     */
+    public $iFName get$iName(String uri) {
+        return null;
+    }
+
+    public List<$iFName> getAll$iName() {
+        return null;
+    }
+
+    public List<$iFName> getAll$iName(boolean recursive) {
+        return null;
+    }
+
+    public boolean has$iName(String uri) {
+        return false;
+    }
+
+    public $iFName create$iName(OntModel model, String localName) {
+        return null;
+    }
+
+    public $iFName create$iName(OntModel model) {
+        return null;
+    }
+     

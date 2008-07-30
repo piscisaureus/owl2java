@@ -1,0 +1,25 @@
+#set($name = $p.getJavaFullNameCaps())
+#set($range = $p.getRangeString())
+##
+##
+    /**
+     * Domain property $p.getMapUri()
+     */
+#if ($p.isFunctional())
+    public $range get$name ();
+    public void set$name($range value);
+    public boolean has$name (String uri);
+    public boolean has$name($range value);
+#else
+    public void add$name($range value);
+    public void addAll$name(List<$range> value);
+    public void remove$name($range value);
+    public void removeAll$name();
+    public boolean has$name(String uri);
+    public boolean has$name($range value);
+    public List<$range> getAll$name();
+    public Iterator<$range> getAll${name}Iterator();
+
+    // TODO: getAllRdfProeprty, inverses
+
+#end

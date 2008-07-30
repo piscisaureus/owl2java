@@ -1,0 +1,8 @@
+public interface $if.getJavaName()
+extends
+$ifh.getExtends() {
+
+#foreach($p in $if.getDomainProperties())
+#parse("ifaceProperty.vm")
+#end
+}

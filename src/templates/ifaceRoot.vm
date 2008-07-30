@@ -1,0 +1,10 @@
+public interface $if.getJavaName()  {
+
+    // Generic functions for base class
+    @SuppressWarnings("unchecked")
+    public Iterator listTypes();
+
+#foreach($p in $if.getDomainProperties())
+#parse("ifaceProperty.vm")
+#end
+}

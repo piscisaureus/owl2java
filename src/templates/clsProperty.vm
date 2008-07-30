@@ -1,0 +1,55 @@
+#set($name = $p.getJavaFullNameCaps())
+#set($range = $p.getRangeString())
+##
+##
+    /**
+     * Domain property $p.getMapUri()
+     */
+    public boolean has$name (String uri) {
+        return false;
+    }
+
+    public boolean has$name($range value) {
+        return false;
+    }
+
+#if ($p.isFunctional())
+    public $range get$name () {
+        return null;
+    }
+
+    public void set$name($range value) {
+        
+    }
+
+#else
+    public void add$name($range value) {
+        
+    }
+
+    public void addAll$name(List<$range> value) {
+        
+    }
+
+    public void remove$name($range value) {
+        
+    }
+
+    public void removeAll$name() {
+        
+    }
+
+    public List<$range> getAll$name() {
+        return null;
+    }
+
+    public Iterator<$range> getAll${name}Iterator() {
+        return null;
+    }
+
+    // TODO: parent properties? how to handle them? Restrictions
+    
+#if($cls.hasRestriction($p))
+// XXX: Restrictions apply!
+#end
+#end

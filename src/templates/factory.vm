@@ -1,0 +1,25 @@
+#macro( uppercase $name )$name.toUpperCase()#end
+package $fPkg;
+
+import java.util.List;
+import java.util.Iterator;
+
+import com.hp.hpl.jena.ontology.OntModel;
+
+/**
+ * Factory
+ */
+public class $fName {
+
+	private OntModel model;
+
+	public $fName(OntModel model) {
+		this.model = model;
+	}
+
+#foreach($if in $model.getJInterfaces())
+#parse("factMethods.vm")
+#end
+
+
+}

@@ -1,0 +1,76 @@
+#set($cName = $cls.getJavaName())
+#set($cFName = $cls.getJavaFullName())
+#set($iName = $cls.getInterface().getJavaName())
+#set($iFName = $cls.getInterface().getJavaFullName())
+##
+package $cls.getJavaPackageName();
+
+import java.util.List;
+import java.util.Iterator;
+
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.impl.IndividualImpl;
+import com.hp.hpl.jena.enhanced.EnhGraph;
+import com.hp.hpl.jena.graph.Node;
+
+// import interface
+import $iFName;
+
+## for all domain properties import all range interfaces
+// import interfaces for properties
+#foreach($p in $if.getDomainProperties(true))
+#foreach($i in $p.getObjectRange())
+import $i.getJavaFullName();
+#end
+#end
+
+/*
+ * Class $cls.getMapUri()
+ */
+public class $cls.getJavaName() extends IndividualImpl implements $iName {
+
+#parse("clsVocab.vm")
+
+    /**
+     * Generic functions from parent class
+     */
+    public $cls.getJavaName()(Node n, EnhGraph g) {
+        super(n, g);
+    }
+
+    public Iterator listTypes() {
+        return null;
+    }
+
+    /**
+     * Functions for instance handling
+     */
+    public $cName get$cName(String uri) {
+        return null;
+    }
+
+    public List<$cName> getAll$cName() {
+        return null;
+    }
+
+    public List<$cName> getAll$cName(boolean recursive) {
+        return null;
+    }
+
+    public boolean has$cName(String uri) {
+        return false;
+    }
+
+    public $cName create$cName(OntModel model, String localName) {
+        return null;
+    }
+
+    public $cName create$cName(OntModel model) {
+        return null;
+    }
+
+
+#foreach($p in $if.getDomainProperties(true))
+#parse("clsProperty.vm")
+#end
+}
