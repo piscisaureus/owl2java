@@ -101,7 +101,7 @@ public class ModelPreparation {
 	protected void reasignProperties() {
 		log.info("Reasigning unbound properties to corresponding classes with restrictions");
 
-		// XXX use depth first traversal here? - how to move to next branch upon success
+		// TODO use depth first traversal here? - how to move to next branch upon success?
 
 		// loop over all domainless properties (p's with domain OwlThing)
 		// and mark them for removal from domain OwlThing

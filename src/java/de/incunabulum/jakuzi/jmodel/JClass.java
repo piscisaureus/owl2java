@@ -30,7 +30,7 @@ public class JClass extends JMapped {
 	private List<JProperty> allProperties = new ArrayList<JProperty>();
 	private List<JClass> equivalentClasses = new ArrayList<JClass>();
 	private Map<JProperty, JRestrictionsContainer> propertyRestrictions = new HashMap<JProperty, JRestrictionsContainer>();
-
+	// PropRepresentation = (0..1) CardRestriction + 1 AllValuesRestriction + (0..1) + OtherRestriction
 	private List<JPropertyRepresentation> propertyRepresentations = new ArrayList<JPropertyRepresentation>();
 
 	public JClass(JModel model, String name, String mapUri) {

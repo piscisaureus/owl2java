@@ -11,6 +11,11 @@ import de.incunabulum.jakuzi.utils.IReporting;
 import de.incunabulum.jakuzi.utils.StringUtils;
 
 public class JRestrictionsContainer implements IReporting {
+	
+//	Restrictions
+//	- Multiple allValues restrictions are handled independently as multiple
+// restrictions of type JAllValuesRestriction 
+
 
 	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(JRestrictionsContainer.class);

@@ -7,8 +7,6 @@ import de.incunabulum.jakuzi.utils.IReporting;
 
 public class JPropertyRepresentation implements IReporting {
 
-	// TODO: PropRepresentation = (0..1) CardRestriction + 1 AllValuesRestriction + (0..1)
-	// OtherRestriction
 
 	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(JPropertyRepresentation.class);

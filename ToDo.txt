@@ -1,8 +1,5 @@
 
-Restrictions
-- Multiple allValues restrictions on one property in a single class should 
-  - either be handled as intersection
-  - or similar to a restriction with an anonymous operand 
+Use PropertyRepresentations in Templates + define helper methods in Java
   
 Misc:
 - How about OCL as query language?
