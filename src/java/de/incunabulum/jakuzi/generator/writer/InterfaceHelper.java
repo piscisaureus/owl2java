@@ -23,7 +23,7 @@ public class InterfaceHelper {
 		String ret = new String();
 
 		// no super classes > base.Thing
-		List<JClass> superClasses = cls.listSuperClasses();
+		List<JClass> superClasses = cls.listDirectSuperClasses();
 		Iterator<JClass> superClassesIt = superClasses.iterator();
 		while (superClassesIt.hasNext()) {
 			JClass i = (JClass) superClassesIt.next();

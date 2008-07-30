@@ -15,7 +15,11 @@
     }
 
     public boolean has$name($rangeFull #mixedlowercase($range)Value) {
-        return hasProperty(${pkgBase}.${pkgTools}.${vocabName}.${jname}, #mixedlowercase($range)Value);
+    	#if($p.isObjectProperty)
+    		return hasProperty(${pkgBase}.${pkgTools}.${vocabName}.${jname}, #mixedlowercase($range)Value);
+    	#else
+    		return hasLiteral(${pkgBase}.${pkgTools}.${vocabName}.${jname}, #mixedlowercase($range)Value);
+    	#end	
     }
 
 ## $p is functional
@@ -100,4 +104,5 @@
         #end ## $p.isObjectProperty()
 
     #end ## if/else/end $p.isFunctional()
+    
     

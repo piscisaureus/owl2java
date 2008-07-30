@@ -14,27 +14,30 @@ import java.util.Iterator;
     public interface $cls.getJavaInterfaceName() extends $ifh.getExtends() {
 #end ## if isRootClass()
 
-##
-## loop over all domain properties
-#foreach($p in $cls.listDomainProperties())
-    #set($name = $p.getJavaFullNameCaps())
-    #set($range = $p.getRangeJavaFull())
 
-        /**
-         * Domain property $p.getMapUri()
-         */
-        public boolean exists$name();
-        public boolean has$name($range value);
-    #if ($p.isFunctional())
-        public $range get$name ();
-        public void set$name($range value);
-        public void remove$name();
-    #else
-        public Iterator<$range> list${name}();
-        public void add$name($range value);
-        public void addAll$name(List<$range> value);
-        public void remove$name($range value);
-        public void removeAll$name();
-    #end ## isFunctional()
+##
+## loop over presentations of all properties
+#foreach($p in $cls.listDirectDomainProperties())
+	#set($name = $p.getJavaFullNameCaps())
+	#set($range = $p.getRangeJavaFull())
+
+		/**
+		 * Domain property $p.getMapUri()
+		 */
+		 public boolean exists$name();
+	#if ($p.isFunctional())
+		public $range get$name ();
+		public void set$name($range value);
+		public void remove$name();
+	#else
+		public Iterator<$range> list${name}();
+		public void add$name($range value);
+		public void addAll$name(List<$range> value);
+		public void remove$name($range value);
+		public void removeAll$name();
+	#end ## isFunctional()
+
+
 #end ## foreach $p
+
 }

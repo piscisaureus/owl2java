@@ -7,7 +7,7 @@ import com.hp.hpl.jena.ontology.Restriction;
 public class DebugUtils {
 
 	public static String logClass(OntClass cls) {
-		String log = NamingUtils.toLogName(cls) + " -> " + "anon: " + cls.isAnon() + ", complement: "
+		String log = LogUtils.toLogName(cls) + " -> " + "anon: " + cls.isAnon() + ", complement: "
 				+ cls.isComplementClass() + ", intersection: " + cls.isIntersectionClass() + ", union: "
 				+ cls.isUnionClass() + ", enumerated: " + cls.isEnumeratedClass();
 		return log;
@@ -15,7 +15,7 @@ public class DebugUtils {
 
 	public static String logProperty(OntProperty prop) {
 
-		String log = NamingUtils.toLogName(prop) + " -> " + "functional: " + prop.isFunctionalProperty()
+		String log = LogUtils.toLogName(prop) + " -> " + "functional: " + prop.isFunctionalProperty()
 				+ ", inverse: " + prop.isFunctionalProperty() + ", inverse functional: "
 				+ prop.isInverseFunctionalProperty() + ", datatype prop: " + prop.isDatatypeProperty()
 				+ ", object prop: " + prop.isObjectProperty() + ", symmetric: " + prop.isSymmetricProperty()
@@ -32,6 +32,6 @@ public class DebugUtils {
 	}
 
 	public static String logPropertyOnClass(OntClass cls, OntProperty prop) {
-		return NamingUtils.toLogName(cls) + "->" + NamingUtils.toLogName(prop);
+		return LogUtils.toLogName(cls) + "->" + LogUtils.toLogName(prop);
 	}
 }

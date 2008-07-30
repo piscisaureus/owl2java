@@ -16,8 +16,6 @@ import de.incunabulum.jakuzi.utils.JavaUtils;
 
 public class TestWriter {
 	
-	// TODO: Templates: testcase writer not implemented
-	
 	private static Log log = LogFactory.getLog(FactoryWriter.class);
 	private static final String TEMPLATE_NAME = "test.vm";
 

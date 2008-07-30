@@ -16,8 +16,6 @@ import de.incunabulum.jakuzi.utils.JavaUtils;
 
 public class ClassWriter {
 	
-	// TODO: Templates: Parent properties, restrictions
-	// TODO: Templates: inverses & equivalent properties, equivalent classes not used
 	
 	private static Log log = LogFactory.getLog(ClassWriter.class);
 

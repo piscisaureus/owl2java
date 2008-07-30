@@ -17,6 +17,7 @@ import de.incunabulum.jakuzi.generator.writer.TestWriter;
 import de.incunabulum.jakuzi.generator.writer.VocabularyWriter;
 import de.incunabulum.jakuzi.jmodel.JClass;
 import de.incunabulum.jakuzi.jmodel.JModel;
+import de.incunabulum.jakuzi.jmodel.JPackage;
 import de.incunabulum.jakuzi.jmodel.utils.NamingUtils;
 import de.incunabulum.jakuzi.utils.JavaUtils;
 
@@ -50,7 +51,7 @@ public class JavaWriter {
 		// init the templating engine
 		initVelocityEngine();
 
-		// create all interfaces
+		// write interfaces
 		createInterfaces();
 
 		// write classes
@@ -62,7 +63,7 @@ public class JavaWriter {
 		// write factory
 		createFactory();
 		
-		// create test cases
+		// write testclass
 		if (generateTestClass) {
 			createTestClass();
 		}
@@ -132,10 +133,9 @@ public class JavaWriter {
 
 		InterfaceWriter ifaceWriter = new InterfaceWriter(vEngine, getBaseVelocityContext());
 
-		Iterator clsIt = jmodel.uri2class.keySet().iterator();
+		Iterator<JClass> clsIt = jmodel.listJClasses().iterator();
 		while (clsIt.hasNext()) {
-			String clsUri = (String) clsIt.next();
-			JClass cls = jmodel.getJClass(clsUri);
+			JClass cls =  clsIt.next();
 			ifaceWriter.writeInterface(jmodel, cls, baseDir);
 		}
 	}
@@ -144,11 +144,10 @@ public class JavaWriter {
 	protected void createClasses() {
 		log.info("Creating java classes");
 		ClassWriter clsWriter = new ClassWriter(vEngine, getBaseVelocityContext());
-
-		Iterator clsIt = jmodel.uri2class.keySet().iterator();
+		
+		Iterator<JClass> clsIt = jmodel.listJClasses().iterator();
 		while (clsIt.hasNext()) {
-			String clsUri = (String) clsIt.next();
-			JClass cls = jmodel.getJClass(clsUri);
+			JClass cls = clsIt.next();
 			clsWriter.writeClass(jmodel, cls, baseDir);
 		}
 
@@ -164,9 +163,10 @@ public class JavaWriter {
 		success &= new File(baseDir).mkdirs();
 
 		// dito for all package directories
-		Iterator pkgNameIt = jmodel.pkgName2Package.keySet().iterator();
-		while (pkgNameIt.hasNext()) {
-			String pkgName = (String) pkgNameIt.next();
+		Iterator<JPackage> pkgIt = jmodel.listPackages().iterator();
+		while (pkgIt.hasNext()) {
+			JPackage pkg = pkgIt.next();
+			String pkgName = pkg.getPackageName();
 			String pkgDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
 			log.debug("Creating directory for package " + pkgName);
 			success &= new File(pkgDir).mkdirs();

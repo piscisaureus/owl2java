@@ -45,9 +45,19 @@ public class JMapped implements IReporting, IName {
 		return mapUri;
 	}
 
-	
 	public String getJavaFullNameCaps() {
-		return StringUtils.toFirstUpperCase(getName());	
+		return StringUtils.toFirstUpperCase(getName());
+	}
+
+	public boolean equals(Object other) {
+		// both instance of JMapped and Same MapUri
+		return other instanceof JMapped && (((JMapped) other).getMapUri().equals(getMapUri()));
+	}
+
+	public int hashCode() {
+		int hash = 12;
+		hash = hash + mapUri.hashCode();
+		return hash;
 	}
 
 }

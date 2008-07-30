@@ -15,13 +15,15 @@ import de.incunabulum.jakuzi.utils.IReporting;
 import de.incunabulum.jakuzi.utils.IStatistics;
 
 public class Generator implements IStatistics, IReporting {
-
+	
 	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(Generator.class);
 
-	private Date startDate;
-	private Date modelReadDate;
-	private Date stopDate;
+	private Date startAll;
+	private Date startJModedlCreation;
+	private Date startPreparation;
+	private Date startToDisk;
+	private Date stopAll;
 	private OntModel model;
 	private JModel jmodel;
 
@@ -35,25 +37,23 @@ public class Generator implements IStatistics, IReporting {
 	private boolean createTestClass = true;
 
 	public void generate(String uri, String baseDir, String basePackage) {
-		startDate = new Date();
+		startAll = new Date();
 		
 		OntModel owlModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
 		OntDocumentManager owlDocMgr = owlModel.getDocumentManager();
 		owlDocMgr.setProcessImports(true);
 		owlModel.read(uri);
 		
-		modelReadDate = new Date();
-		
 		generate(owlModel, baseDir, basePackage);
 	}
 
-	public void generate(OntModel model, String baseDir, String basePackage) {
+	public void generate(OntModel model,String baseDir, String basePackage) {
 		this.model = model;
 		
-		if (startDate == null) {
-			startDate = new Date();
+		startJModedlCreation = new Date();		
+		if (startAll == null) {
+			startAll = startJModedlCreation;
 		}
-		
 		// read the model
 		OwlReader mReader = new OwlReader();
 		mReader.setBasePackage(basePackage);
@@ -61,11 +61,13 @@ public class Generator implements IStatistics, IReporting {
 		this.jmodel = mReader.generateJModel(model);
 
 		// prepare the model
-		JModelPreparation mPrep = new JModelPreparation();
+		startPreparation = new Date();
+		ModelPreparation mPrep = new ModelPreparation();
 		mPrep.setReasignDomainlessProperties(reasignDomainlessProperties);
 		this.jmodel = mPrep.prepareModel(jmodel);
 		
 		// write the model
+		startToDisk = new Date();
 		JavaWriter mWriter = new JavaWriter();
 		mWriter.setVocabularyName(vocabularyName);
 		mWriter.setToolsPackage(toolsPackage);
@@ -74,7 +76,7 @@ public class Generator implements IStatistics, IReporting {
 		mWriter.setTestClassName(testClassName);
 		mWriter.generate(jmodel, baseDir, basePackage);
 
-		stopDate = new Date();
+		stopAll = new Date();
 	}
 
 	@Override
@@ -82,9 +84,11 @@ public class Generator implements IStatistics, IReporting {
 		String str = new String();
 		if (this.jmodel != null)
 			str += jmodel.getStatistics() +"\n";
-		str += "Total Time: " + (stopDate.getTime() - startDate.getTime()) + " ms\n";
-		str += "Reading the Owl Model: " + (modelReadDate.getTime() - startDate.getTime()) + " ms\n";
-		str += "Generating the classes: " + (stopDate.getTime() - modelReadDate.getTime()) + " ms\n";
+		str += "Total Time: " + (stopAll.getTime() - startAll.getTime()) + " ms\n";
+		str += "Reading the Owl Model: " + (startJModedlCreation.getTime() - startAll.getTime()) + " ms\n";
+		str += "Creating the JModel: " + (startPreparation.getTime() - startJModedlCreation.getTime()) + " ms\n";
+		str += "Preparing the JModel: " + (startToDisk.getTime() - startPreparation.getTime()) + " ms\n";
+		str += "Writting the classes: " + (stopAll.getTime() - startToDisk.getTime()) + " ms\n";
 
 		return str;
 	}

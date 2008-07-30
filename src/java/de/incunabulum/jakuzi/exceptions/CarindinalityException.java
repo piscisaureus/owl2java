@@ -1,6 +1,6 @@
 package de.incunabulum.jakuzi.exceptions;
 
-public class CarindinalityException extends O4JException {
+public class CarindinalityException extends JakuziException {
 
 	/**
 	 * 

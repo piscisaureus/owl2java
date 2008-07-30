@@ -1,0 +1,15 @@
+
+Restrictions
+- Multiple allValues restrictions on one property in a single class should 
+  - either be handled as intersection
+  - or similar to a restriction with an anonymous operand 
+  
+Misc:
+- How about OCL as query language?
+
+ 
+ JavaDocs:
+ - These are completely missing
+ 
+ Logging:
+ - Cleanup for info, warn, error 

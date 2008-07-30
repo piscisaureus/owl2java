@@ -7,18 +7,19 @@ import java.util.List;
 import com.hp.hpl.jena.ontology.IntersectionClass;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntProperty;
-import com.hp.hpl.jena.ontology.OntResource;
 import com.hp.hpl.jena.ontology.UnionClass;
 
 import de.incunabulum.jakuzi.jmodel.JClass;
 import de.incunabulum.jakuzi.jmodel.JModel;
 import de.incunabulum.jakuzi.jmodel.JPackage;
-import de.incunabulum.jakuzi.jmodel.JProperty;
 import de.incunabulum.jakuzi.model.NamespaceUtils;
 import de.incunabulum.jakuzi.utils.JavaUtils;
 import de.incunabulum.jakuzi.utils.StringUtils;
 
 public class NamingUtils {
+
+	public static int anonCounter = 0;
+	public static String anonPrefix = "Anon";
 
 	public static String unionClassPrefix = "Union";
 	public static String intersectionClassPrefix = "Intersection";
@@ -26,14 +27,16 @@ public class NamingUtils {
 	public static String classNameAddOn = "";
 	// %c = AddOn, %n = Name, %p = Prefix
 	public static String classNamingSchema = "%c%n%p";
-	public static String interfaceNameAddOn = "I";
 
+	public static String interfaceNameAddOn = "I";
 	// %i = AddOn, %n = Name, %p = Prefix
 	public static String interfaceNamingSchema = "%i%n%p";
-	public static List<String> propertyIgnoredPrefixes;
 
+	// %n = Name, $p = Prefix
 	public static String propertyNamingSchema = "%n%p";
 	public static boolean propertyStripPrefix = true;
+
+	public static List<String> propertyIgnoredPrefixes;
 
 	static {
 		propertyIgnoredPrefixes = new ArrayList<String>();
@@ -47,13 +50,13 @@ public class NamingUtils {
 
 		// ignore base prefixes and namespaces
 		if (NamespaceUtils.defaultNs2UriMapping.containsKey(nsUri))
-			prefix = JModel.getBasePrefix();
+			prefix = JModel.BASEPREFIX;
 
 		String localName = ontClass.getLocalName();
 		if (prefix != null) {
 			prefix = StringUtils.toFirstUpperCase(prefix);
 		} else {
-			prefix = JModel.getBasePrefix();
+			prefix = JModel.BASEPREFIX;
 		}
 
 		// to naming schema
@@ -83,13 +86,13 @@ public class NamingUtils {
 
 		// ignore base prefixes and namespaces
 		if (NamespaceUtils.defaultNs2UriMapping.containsKey(nsUri))
-			prefix = JModel.getBasePrefix();
+			prefix = JModel.BASEPREFIX;
 
 		String localName = ontClass.getLocalName();
 		if (prefix != null) {
 			prefix = StringUtils.toFirstUpperCase(prefix);
 		} else {
-			prefix = JModel.getBasePrefix();
+			prefix = JModel.BASEPREFIX;
 		}
 
 		// to naming schema
@@ -109,7 +112,7 @@ public class NamingUtils {
 	}
 
 	public static String getJavaPackageName(String basePackage, String prefix) {
-		if (prefix != JModel.getBasePrefix())
+		if (prefix != JModel.BASEPREFIX)
 			return basePackage + "." + prefix;
 		return basePackage;
 	}
@@ -121,7 +124,7 @@ public class NamingUtils {
 		if (prefix != null) {
 			prefix = StringUtils.toFirstUpperCase(prefix);
 		} else {
-			prefix = JModel.getBasePrefix();
+			prefix = JModel.BASEPREFIX;
 		}
 
 		if (propertyStripPrefix)
@@ -140,25 +143,8 @@ public class NamingUtils {
 
 	public static String stripPropertyPrefixes(String string) {
 		for (String prefix : propertyIgnoredPrefixes)
-			string = string.replace(prefix, JModel.getBasePrefix());
+			string = string.replace(prefix, JModel.BASEPREFIX);
 		return string;
-	}
-
-	public static String toLogName(JClass cls) {
-		return cls.getJavaPackageName() + "." + cls.getName();
-	}
-
-	public static String toLogName(JProperty prop) {
-		return prop.getName();
-	}
-
-	public static String toLogName(OntResource res) {
-		String ns = res.getNameSpace();
-		if (res.getModel().getNsURIPrefix(ns) != null) {
-			return res.getModel().getNsURIPrefix(res.getNameSpace()) + "#"
-					+ res.getLocalName();
-		}
-		return ns + res.getLocalName();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -171,7 +157,7 @@ public class NamingUtils {
 		}
 		return name;
 	}
-	
+
 	public static String createUnionClassName(JClass cls, List<JClass> operandClasses) {
 		String name = unionClassPrefix;
 		for (JClass c : operandClasses) {
@@ -186,15 +172,24 @@ public class NamingUtils {
 		Iterator operandIt = cls.listOperands();
 		while (operandIt.hasNext()) {
 			OntClass c = (OntClass) operandIt.next();
-			name += StringUtils.toFirstUpperCase(c.getLocalName());
+			// avoid problems with anonymous classes in intersections
+			if (c.isAnon()) {
+				name += anonPrefix + anonCounter;
+				anonCounter++;
+			} else {
+				name += StringUtils.toFirstUpperCase(c.getLocalName());
+			}
 		}
 		return name;
 	}
-	
+
 	public static String createIntersectionClassName(JClass cls, List<JClass> operandClasses) {
 		String name = intersectionClassPrefix;
 		for (JClass c : operandClasses) {
 			name += c.getJavaClassName();
 		}
 		return name;
-	}}
+	}
+
+
+}

@@ -2,7 +2,7 @@ package de.incunabulum.jakuzi.model;
 
 import com.hp.hpl.jena.ontology.OntResource;
 
-import de.incunabulum.jakuzi.jmodel.utils.NamingUtils;
+import de.incunabulum.jakuzi.jmodel.utils.LogUtils;
 import de.incunabulum.jakuzi.utils.IReporting;
 
 public class ResourceError implements IReporting {
@@ -17,7 +17,7 @@ public class ResourceError implements IReporting {
 	
 	@Override
 	public String getReport() {
-		return NamingUtils.toLogName(item) + ": " + string;
+		return LogUtils.toLogName(item) + ": " + string;
 	}
 	
 

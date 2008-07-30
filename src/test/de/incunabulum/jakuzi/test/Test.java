@@ -19,10 +19,8 @@ public class Test {
 		Date startDate = new Date();
 
 		Generator gen = new Generator();
-		String uri = "http://owl.incunabulum.de/test1.owl";
-		//gen.generate(uri, "src/test", "model.test1");
 
-		uri = "http://owl.incunabulum.de/2007/10/kEquipment.owl";
+		String uri = "http://owl.incunabulum.de/2007/10/kEquipment.owl";
 		gen.generate(uri, "src/test", "model.kequipment");
 
 		uri = "http://owl.incunabulum.de/2008/02/owl4java.owl";

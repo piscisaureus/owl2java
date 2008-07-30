@@ -17,7 +17,7 @@ public class JPackage implements IReporting, IName {
 	@SuppressWarnings("unused")
 	private JModel jmodel;
 	private String packageName;
-	protected List<JClass> classes = new ArrayList<JClass>();
+	private List<JClass> classes = new ArrayList<JClass>();
 
 	public JPackage(JModel model, String packageName) {
 		this.packageName = packageName;
@@ -54,9 +54,10 @@ public class JPackage implements IReporting, IName {
 	}
 
 	public void addClass(JClass cls) {
-		if (!classes.contains(cls))
+		if (!classes.contains(cls)) {
 			this.classes.add(cls);
-		cls.pkg = this;
+			cls.setPackage(this);
+		}
 	}
 
 
