@@ -9,7 +9,7 @@ package $cls.getJavaPackageName();
 import java.util.List;
 import java.util.Iterator;
 
-import de.incunabulum.owl4java.utils.NullFilter;
+import de.incunabulum.jakuzi.model.NullFilter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

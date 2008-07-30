@@ -7,7 +7,6 @@ import java.util.Iterator;
 /*
  * Interface $cls.getMapUri()
  *
- * XXX: inverses and equivalent properties are not used
  */
 #if($cls.isRootClass())
     public interface $cls.getJavaInterfaceName()  {

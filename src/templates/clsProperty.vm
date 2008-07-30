@@ -2,6 +2,7 @@
 #set($jname = $p.getJavaName())             ## the java name 
 #set($range = $p.getRangeJava())            ## the java name for the range
 #set($rangeFull = $p.getRangeJavaFull())    ## the full java name including package for the range
+#set($rangeMethod = $p.getDataRangeMethod()) ## the name of the method to acess a dataproperty range
 #set($rangeFullUri = $p.getRangeUri())      ## the uri of the range. Used for datatype properties
 ##
 ##
@@ -31,7 +32,7 @@
         #else
             if (n instanceof Literal) {
                 Literal l = (Literal) n;
-                return ($rangeFull) (l.getValue());
+                return ($rangeFull) (${rangeMethod}(l));
             } else {
                 log.warn("Could not convert property $p.getMapUri() to type $rangeFull");
                 return null;
@@ -44,7 +45,9 @@
         #if($p.isObjectProperty())
             setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${jname}, #mixedlowercase($range)Value);
         #else
-            Literal literal = getModel().createTypedLiteral(#mixedlowercase($range)Value.toString(), "$rangeFullUri");
+        de.incunabulum.jakuzi.model.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeFullUri");
+        
+            Literal literal = de.incunabulum.jakuzi.model.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeFullUri");
             setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${jname}, literal);
         #end ## $p.isObjectProperty()
         }
@@ -59,7 +62,7 @@
         #if ($p.isObjectProperty))
             addProperty(${pkgBase}.${pkgTools}.${vocabName}.${jname}, #mixedlowercase($range)Value);
         #else
-            Literal literal = getModel().createTypedLiteral(#mixedlowercase($range)Value.toString(), "$rangeFullUri");
+            Literal literal = de.incunabulum.jakuzi.model.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeFullUri");
             setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${jname}, literal);
         #end ## $p.isObjectProperty()
         }
@@ -73,7 +76,7 @@
         #if ($p.isObjectProperty())
             removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${jname}, #mixedlowercase($range)Value);
         #else
-            Literal literal = getModel().createTypedLiteral(#mixedlowercase($range)Value.toString(), "$rangeFullUri");
+            Literal literal = de.incunabulum.jakuzi.model.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeFullUri");
             removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${jname}, literal);
         #end ## $p.isObjectProperty()
         }
@@ -96,16 +99,5 @@
         }
         #end ## $p.isObjectProperty()
 
-        #if($cls.hasModifiesRestriction($p))
-            // XXX: Restrictions apply!
-        #end
-        ##
-        #if($p.hasParentProperties())
-            // XXX: Parent properites present
-        #end
-        ##
-        #if($p.hasInversePropertyies())
-            // XXX: Inverse properites present
-        #end
-
     #end ## if/else/end $p.isFunctional()
+    

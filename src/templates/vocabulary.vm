@@ -16,7 +16,8 @@ import org.apache.commons.logging.LogFactory;
  * in the ontology. This is based on the jena schemagen
  * output
  *
- * XXX: We assume unique names for class names
+ * Note, that the current implementation assumes unique names
+ * for class names.
  */
 public class $vocabName {
 
