@@ -46,10 +46,6 @@ public class FactoryWriter {
 			throw new RuntimeException();
 		}
 
-		vContext.put("fName", factoryName);
-		vContext.put("fPkg", NamingUtils.getJavaPackageName(basePackage, toolsPackage));
-		vContext.put("model", jmodel);
-
 		try {
 			FileWriter fWriter = new FileWriter(outPath);
 			template.merge(vContext, fWriter);

@@ -1,28 +1,52 @@
 #parse("macros.vm") ##
-package $vPkg;
-
-public class $vName {
-
-    /**
-     * Vocabulary for all interfaces
-     */
-#foreach($i in $model.getJClasses())
-    public static final String #uppercase($i.getJavaInterfaceName()) = "$i.getMapUri()";
-#end
-
-    /**
-     * Vocabulary for all classes
-     */
-#foreach($i in $model.getJClasses())
-    public static final String #uppercase($i.getJavaClassName()) = "$i.getMapUri()";
-#end
-
-    /**
-     * Vocabulary for all properties
-     */
-#foreach($i in $model.getJProperties())
-    public static final String #uppercase($i.getJavaName()) = "$i.getMapUri()";
-#end
+package $vocabPkg;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.hp.hpl.jena.ontology.*;
+import com.hp.hpl.jena.rdf.model.*;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+/**
+ * A vocabulary for all properties, classes etc. used
+ * in the ontology. This is based on the jena schemagen
+ * output
+ *
+ * XXX: We assume unique names for class names
+ */
+public class $vocabName {
+
+    @SuppressWarnings("unused")
+    private static Log log = LogFactory.getLog(${vocabName}.class);
+
+    private static OntModel ontModel = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM, null );
+
+    public static final List<String> NAMESPACES;
+    static {
+        NAMESPACES = new ArrayList<String>();
+        #foreach($ns in $jmodel.listImportURIs())
+            NAMESPACES.add("$ns#");
+        #end
+    }
+
+    #foreach ($ns in $jmodel.listImportURIs())
+        #set($prefix = $jmodel.getPrefixFromImport($ns))
+        public static final Resource NS#uppercase($prefix) = ontModel.createResource("$ns");
+    #end
+
+    #foreach ($cls in $jmodel.listJClasses())
+        public static final OntClass $cls.getJavaClassName() = ontModel.createClass("$cls.getMapUri()");
+    #end
+
+    #foreach ($p in $jmodel.listJProperties())
+        #if ($p.isDataTypeProperty())
+            public static final DatatypeProperty $p.getJavaName() = ontModel.createDatatypeProperty("$p.getMapUri()");
+        #else
+            public static final ObjectProperty $p.getJavaName() = ontModel.createObjectProperty("$p.getMapUri()");
+        #end ## isDataTypeProperty
+    #end
 }

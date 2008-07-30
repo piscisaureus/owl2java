@@ -8,6 +8,8 @@ import de.incunabulum.owl4java.utils.StringUtils;
 
 public class JClassRestriction implements IReporting {
 	
+	@SuppressWarnings("unused")
+	private JModel jmodel;
 	private Restriction ontRestriction;
 
 	protected int maxCardinality = -1;
@@ -18,12 +20,13 @@ public class JClassRestriction implements IReporting {
 
 	protected JClass allValues;
 
-	public JClassRestriction(JClass cls, JProperty prop) {
+	public JClassRestriction(JModel model, JClass cls, JProperty prop) {
 		// register the restriction
 		cls.addRestriction(this);
 		prop.addRestriction(this);
 		this.onProp = prop;
 		this.onCls = cls;
+		this.jmodel = model;
 	}
 
 	public void setMaxCardinality(int maxCardinality) {

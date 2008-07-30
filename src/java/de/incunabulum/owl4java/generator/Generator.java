@@ -51,6 +51,7 @@ public class Generator implements IStatistics, IReporting {
 		Owl2JModelReader mAnalyzer = new Owl2JModelReader();
 		mAnalyzer.setAnonClassBase(anonClassBase);
 		mAnalyzer.setBasePackage(basePackage);
+		mAnalyzer.addForbiddenPrefix(toolsPackage);
 		this.jmodel = mAnalyzer.generateJModel(model);
 
 		// write the model

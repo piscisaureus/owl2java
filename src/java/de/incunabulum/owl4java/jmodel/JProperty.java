@@ -21,9 +21,11 @@ public class JProperty extends JMapped {
 	public static String DataTypeProperty = "DataTypeProperty";
 	public static String ObjectProperty = "ObjectProperty";
 
+	private JModel jmodel;
 	private OntProperty ontProperty;
 
 	protected String propertyType;
+	protected boolean isFunctional = false;
 	protected List<JProperty> subProps = new ArrayList<JProperty>();
 	protected List<JProperty> superProps = new ArrayList<JProperty>();
 	protected List<JProperty> inverseProps = new ArrayList<JProperty>();
@@ -33,17 +35,26 @@ public class JProperty extends JMapped {
 	// - List<JClass> for a object property
 	@SuppressWarnings("unchecked")
 	protected List propertyRange = new ArrayList();
+
 	protected List<JClassRestriction> restrictions = new ArrayList<JClassRestriction>();
-	protected boolean isFunctional = false;
 
 	@SuppressWarnings("unchecked")
 	public void addRange(JClass range) {
+		if (propertyType == DataTypeProperty) {
+			log.warn("Adding a JClass object to a Datatype property. Ignored");
+			return;
+		}
 		if (!this.propertyRange.contains(range))
 			this.propertyRange.add(range);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void addRange(String range) {
+		if (propertyType == ObjectProperty) {
+			log.warn("Adding a String to a Objectproperty. Ignored");
+			return;
+		}
+
 		if (!this.propertyRange.contains(range))
 			this.propertyRange.add(range);
 	}
@@ -67,8 +78,9 @@ public class JProperty extends JMapped {
 		return (!this.superProps.isEmpty());
 	}
 
-	public JProperty(String name, String mappedTo) {
+	public JProperty(JModel model, String name, String mappedTo) {
 		super(name, mappedTo);
+		this.jmodel = model;
 	}
 
 	public void addSuperProperty(JProperty prop) {
@@ -138,6 +150,14 @@ public class JProperty extends JMapped {
 		return isFunctional;
 	}
 
+	public boolean isDataTypeProperty() {
+		return (propertyType == JProperty.DataTypeProperty);
+	}
+
+	public boolean isObjectProperty() {
+		return (propertyType == JProperty.ObjectProperty);
+	}
+
 	public void setFunctional(boolean isFunctional) {
 		this.isFunctional = isFunctional;
 	}
@@ -163,45 +183,72 @@ public class JProperty extends JMapped {
 		this.propertyType = propertyType;
 	}
 
-	public List<JClass> getRange() {
-		return propertyRange;
+	@SuppressWarnings("unchecked")
+	public List<JClass> listRange() {
+		if (propertyType == JProperty.ObjectProperty)
+			return propertyRange;
+		return null;
 	}
 
 	public boolean equals(Object other) {
-		return other instanceof JProperty && (
 		// same URI
-				(JProperty) other).getMapUri().equals(getMapUri());
+		return other instanceof JProperty && ((JProperty) other).getMapUri().equals(getMapUri());
 	}
 
-	public String getRangeString() {
-		String rangeStr;
+	public String getRangeUri() {
+		String rangeUri;
 		if (this.getPropertyType() == JProperty.DataTypeProperty)
 			if (propertyRange.isEmpty()) {
-				log.info(NamingUtils.toLogName(this) + ": Range is empty! Setting range to Object");
-				rangeStr = "Object";
+				log.info(NamingUtils.toLogName(this) + ": Range is empty! Setting range to XMLLiteral");
+				rangeUri = "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral";
 			} else if (propertyRange.size() > 1) {
-				log.warn(NamingUtils.toLogName(this)
-						+ ": ultiple range! This should have been be handled before. Setting range to Object");
-				rangeStr = "Object";
+				// TODO: set range to the nearest common parent of the type hierarchy?
+				log.warn(NamingUtils.toLogName(this) + ": multiple range! Setting range to XMLLiteral");
+				rangeUri = "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral";
 			} else {
-				rangeStr = (String) propertyRange.get(0);
-				rangeStr = XsdUtils.xsd2Java(rangeStr);
-				log.info(NamingUtils.toLogName(this) + ": Setting range to " + rangeStr);
+				rangeUri = (String) propertyRange.get(0);
+				log.info(NamingUtils.toLogName(this) + ": Setting range to " + rangeUri);
 			}
 		else {
 			if (propertyRange.isEmpty()) {
-				log.info(NamingUtils.toLogName(this) + ": Range is empty! Setting range to Object");
-				rangeStr = "Object";
+				log.info(NamingUtils.toLogName(this) + ": Range is empty! Setting range to BaseThing Uri");
+				rangeUri = jmodel.baseThingUri;
 			} else if (propertyRange.size() > 1) {
+				// TODO: This should never happen. If it does, abort?  
 				log.warn(NamingUtils.toLogName(this)
 						+ ": Multiple range! This should have been be handled before. Setting range to Object");
-				rangeStr = "Object";
+				rangeUri = jmodel.baseThingUri;
 			} else {
 				JClass cls = (JClass) propertyRange.get(0);
-				rangeStr = cls.getJavaInterfaceName();
+				rangeUri = cls.getMapUri();
 			}
 		}
-		return rangeStr;
+		return rangeUri;
+	}
+
+	public String getRangeJava() {
+		String rangeName = new String();;
+		String rangeUri = getRangeUri();
+		if (this.isDataTypeProperty()) {
+			rangeName = XsdUtils.xsd2Java(rangeUri);
+			// go from java.lang.String to String
+			rangeName = rangeName.substring(rangeName.lastIndexOf(".")+1);
+		} else {
+			JClass cls = jmodel.getJClass(rangeUri);
+			rangeName = cls.getJavaClassName();
+		}
+		return rangeName;
+	}
+	public String getRangeJavaFull() {
+		String rangeName = new String();;
+		String rangeUri = getRangeUri();
+		if (this.isDataTypeProperty()) {
+			rangeName = XsdUtils.xsd2Java(rangeUri);
+		} else {
+			JClass cls = jmodel.getJClass(rangeUri);
+			rangeName = cls.getJavaClassFullName();
+		}
+		return rangeName;
 	}
 
 }

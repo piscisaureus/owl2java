@@ -1,43 +1,87 @@
 #parse("macros.vm") ##
-package $fPkg;
+package $factoryPkg;
 
-import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.Ontology;
+import com.hp.hpl.jena.ontology.OntDocumentManager;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Factory
  */
-public class $fName {
+public class $factoryName {
 
+    @SuppressWarnings("unused")
+    private static Log log = LogFactory.getLog(${factoryName}.class);
 
-    // Type Mapper
-    public static Map<String, String> uri2Type;
+    private static Map<String, String> uri2Type;
 
     static {
         uri2Type = new HashMap<String, String>();
-#foreach($cls in $model.getJClasses())
-        uri2Type.put("$cls.getMapUri()","$cls.getJavaInterfaceFullName()");
-#end
+        #foreach($cls in $jmodel.listJClasses())
+            uri2Type.put("$cls.getMapUri()","$cls.getJavaInterfaceFullName()");
+        #end
     }
 
-    private OntModel model;
 
-	public $fName(OntModel model) {
-		this.model = model;
-	}
-
-    public static String getType(String uri) {
+    /**
+     * Returns the interface name for a given OWL Class
+     */
+    public static String getJavaInterfaceName(String uri) {
         return uri2Type.get(uri);
     }
 
-    public static boolean hasType(String uri) {
+    /**
+     * Returns true if there is a java interface for the
+     * given OWL Class
+     */
+    public static boolean hasJavaType(String uri) {
         return uri2Type.containsKey(uri);
     }
 
-#foreach($cls in $model.getJClasses())
-#parse("factMethods.vm")
-#end
+    /**
+     * Deletes the individual with URI from the OntModel
+     */
+    public boolean deleteInstance(OntModel ontModel, String uri) {
+        Individual individual = ontModel.getIndividual(uri);
+        if (individual != null) {
+            individual.remove();
+            return true;
+        }
+        log.warn("Could not remove non existing instance " + uri + " from model");
+        return false;
+    }
+
+    /**
+     * Registers all custom classes with jena
+     */
+    public void registerCustomClasses() {
+        log.info("Registering custom classes with jena");
+        #foreach($cls in $jmodel.listJClasses())
+            #set($cname = $cls.getJavaClassFullName())
+            ${cname}.register();
+        #end
+    }
+
+    /**
+     * Adds imports statements to an ontology and adds
+     * imported subModels to a model.
+     *
+     * XXX: Namespace URI without trailing '#' used as location.
+     */
+    public void registerImports(OntModel ontModel, Ontology ontology) {
+        log.info("Adding import statements to the model");
+        OntDocumentManager odm = OntDocumentManager.getInstance();
+        #foreach($import in $jmodel.listImportURIs())
+            log.debug("Adding import $import to the model");
+            odm.loadImport(ontModel, "$import");
+            ontology.addImport(ontModel.createResource("$import"));
+        #end
+    }
 }

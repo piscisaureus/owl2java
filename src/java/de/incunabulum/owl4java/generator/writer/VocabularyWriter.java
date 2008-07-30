@@ -47,9 +47,6 @@ public class VocabularyWriter {
 			throw new RuntimeException();
 		}
 
-		vContext.put("vName", vocabularyName);
-		vContext.put("vPkg", NamingUtils.getJavaPackageName(basePackage, toolsPackage));
-		vContext.put("model", jmodel);
 
 		try {
 			FileWriter fWriter = new FileWriter(outPath);

@@ -217,42 +217,6 @@ public class Datatypes {
     }
     
     
-    /**
-     * Parse a file containing mapping values.
-     * Format of the file is <datatype URI><whitespace><javatype> per line.
-     * Augments or modified current mapping.
-     * TODO: Not called by anything yet
-     * @param filename
-     */
-    public void parseTypeMapping(String filename) 
-        throws IOException 
-    {
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
-        boolean stop = false;
-        int i = 0;
-        while (!stop) {
-            String line = reader.readLine();
-            i++;
-            if (line == null) {
-                stop = true;
-            } else {
-                StringTokenizer st = new StringTokenizer(line, " \t");
-                if (st.hasMoreTokens()) {
-                    String firstToken = st.nextToken();
-                    if (st.hasMoreTokens()) {
-                        String secondToken = st.nextToken();
-                        if (st.hasMoreTokens()) {
-                            System.err.println("Type Mapping file format is incorrect at line "+i);
-                        }
-                        // TODO: Check to see if secondToken is a valid class?
-                        setType(firstToken, secondToken);
-                    } else {
-                        System.err.println("Type Mapping file format is incorrect at line "+i);
-                    }
-                }
-            }
-        }
-    }
     
     
     /**

@@ -14,16 +14,19 @@ public class JPackage implements IReporting, IName {
 
 	private static Log log = LogFactory.getLog(JPackage.class);
 
-
+	@SuppressWarnings("unused")
+	private JModel jmodel;
 	private String packageName;
 	protected List<JClass> classes = new ArrayList<JClass>();
 
-	public JPackage(String packageName) {
+	public JPackage(JModel model, String packageName) {
 		this.packageName = packageName;
+		this.jmodel = model;
 	}
 
-	public JPackage(String basePackage, String prefix) {
+	public JPackage(JModel model, String basePackage, String prefix) {
 		this.packageName = NamingUtils.getJavaPackageName(basePackage, prefix);
+		this.jmodel = model;
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public class JPackage implements IReporting, IName {
 
 	
 	
-	public List<JClass> getClasses() {
+	public List<JClass> listJClasses() {
 		return classes;
 	}
 

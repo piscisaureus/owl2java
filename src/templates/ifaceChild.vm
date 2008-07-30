@@ -1,8 +1,0 @@
-public interface $cls.getJavaInterfaceName()
-extends
-$ifh.getExtends() {
-
-#foreach($p in $cls.getDomainProperties())
-#parse("ifaceProperty.vm")
-#end
-}

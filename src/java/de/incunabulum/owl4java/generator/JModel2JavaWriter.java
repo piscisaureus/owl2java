@@ -24,14 +24,13 @@ public class JModel2JavaWriter {
 	private static Log log = LogFactory.getLog(JModel2JavaWriter.class);
 
 	VelocityEngine vEngine;
-	VelocityContext vContext;
 
 	private String baseDir;
 	private String basePackage;
 	private String vocabularyName;
 	private String factoryName;
 	private String toolsPackage;
-	
+
 	private JModel jmodel;
 
 	public void generate(JModel model, String baseDir, String basePackage) {
@@ -64,7 +63,7 @@ public class JModel2JavaWriter {
 	@SuppressWarnings("unchecked")
 	protected void createFactory() {
 		log.info("Creating Factory");
-		FactoryWriter fWriter = new FactoryWriter(vEngine, vContext);
+		FactoryWriter fWriter = new FactoryWriter(vEngine, getBaseVelocityContext());
 		fWriter.setFactoryName(factoryName);
 		fWriter.setToolsPackage(toolsPackage);
 		fWriter.writeFactory(jmodel, baseDir, basePackage);
@@ -73,7 +72,7 @@ public class JModel2JavaWriter {
 	@SuppressWarnings("unchecked")
 	protected void createVocabulary() {
 		log.info("Creating vocabulary");
-		VocabularyWriter vWriter = new VocabularyWriter(vEngine, vContext);
+		VocabularyWriter vWriter = new VocabularyWriter(vEngine, getBaseVelocityContext());
 		vWriter.setVocabularyName(vocabularyName);
 		vWriter.setToolsPackage(toolsPackage);
 		vWriter.writeVocabulary(jmodel, baseDir, basePackage);
@@ -83,32 +82,40 @@ public class JModel2JavaWriter {
 		log.info("Init velocity engine");
 
 		vEngine = new VelocityEngine();
-		vContext = new VelocityContext();
-
 		vEngine.setProperty("resource.loader", "class");
-		vEngine
-				.setProperty("class.resource.loader.class",
-						"org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+		vEngine.setProperty("class.resource.loader.class",
+				"org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 		// see http://minaret.biz/tips/tomcatLogging.html
-		// vEngine.setProperty("runtime.log.logsystem.class",
-		// "org.apache.velocity.runtime.log.SimpleLog4JLogSystem");
-		vEngine.setProperty("runtime.log.logsystem.class",
-				"org.apache.velocity.runtime.log.Log4JLogSystem");
+		vEngine.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.Log4JLogSystem");
 		try {
 			vEngine.init();
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}
 
+	}
+
+	private VelocityContext getBaseVelocityContext() {
+		// add some default stuff to our context. These are reused over all writers
+		VelocityContext vContext = new VelocityContext();
 		Calendar c = Calendar.getInstance();
 		vContext.put("now", SimpleDateFormat.getInstance().format(c.getTime()));
+		vContext.put("pkgBase", basePackage);
+		vContext.put("pkgTools", toolsPackage);
+		vContext.put("jmodel", jmodel);
+		vContext.put("factoryName", factoryName);
+		vContext.put("factoryPkg", NamingUtils.getJavaPackageName(basePackage, toolsPackage));
+		vContext.put("vocabName", vocabularyName);
+		vContext.put("vocabPkg", NamingUtils.getJavaPackageName(basePackage, toolsPackage));
+		
+		return vContext;
 	}
 
 	@SuppressWarnings("unchecked")
 	protected void createInterfaces() {
 		log.info("Creating java interfaces");
 
-		InterfaceWriter ifaceWriter = new InterfaceWriter(vEngine, vContext);
+		InterfaceWriter ifaceWriter = new InterfaceWriter(vEngine, getBaseVelocityContext());
 
 		Iterator clsIt = jmodel.uri2class.keySet().iterator();
 		while (clsIt.hasNext()) {
@@ -121,7 +128,7 @@ public class JModel2JavaWriter {
 	@SuppressWarnings("unchecked")
 	protected void createClasses() {
 		log.info("Creating java classes");
-		ClassWriter clsWriter = new ClassWriter(vEngine, vContext);
+		ClassWriter clsWriter = new ClassWriter(vEngine, getBaseVelocityContext());
 
 		Iterator clsIt = jmodel.uri2class.keySet().iterator();
 		while (clsIt.hasNext()) {
@@ -149,7 +156,7 @@ public class JModel2JavaWriter {
 			log.debug("Creating directory for package " + pkgName);
 			success &= new File(pkgDir).mkdirs();
 		}
-		
+
 		// finally for the tools package
 		String pkgName = NamingUtils.getJavaPackageName(basePackage, toolsPackage);
 		String pkgDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);

@@ -19,6 +19,8 @@ public class JClass extends JMapped {
 	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(JClass.class);
 
+	@SuppressWarnings("unused")
+	private JModel jmodel;
 	private OntClass ontClass;
 
 	protected boolean anonymous = false; 
@@ -28,8 +30,9 @@ public class JClass extends JMapped {
 	protected List<JProperty> domainProps = new ArrayList<JProperty>();
 	protected List<JClassRestriction> restrictions = new ArrayList<JClassRestriction>();
 
-	public JClass(String name, String mapUri) {
+	public JClass(JModel model, String name, String mapUri) {
 		super(name, mapUri);
+		this.jmodel = model;
 	}
 
 	public void addRestriction(JClassRestriction res) {
@@ -57,7 +60,7 @@ public class JClass extends JMapped {
 	
 	public boolean hasModifiesRestriction(JProperty property) {
 		boolean propIsFunctional = property.isFunctional;
-		List<JClassRestriction> restrictions = getRestrictions(property);
+		List<JClassRestriction> restrictions = listJRestrictions(property);
 		for (JClassRestriction clsRestriction : restrictions) {
 			if (!propIsFunctional && clsRestriction.maxCardinality == 1)
 				return true;
@@ -67,7 +70,7 @@ public class JClass extends JMapped {
 		return false;
 	}
 
-	public List<JClassRestriction> getRestrictions(JProperty property) {
+	public List<JClassRestriction> listJRestrictions(JProperty property) {
 		List<JClassRestriction> r = new ArrayList<JClassRestriction>();
 		for (JClassRestriction clsRestriction : restrictions) {
 			if (clsRestriction.getOnProp() == property)
@@ -185,15 +188,15 @@ public class JClass extends JMapped {
 		this.ontClass = ontClass;
 	}
 
-	public List<JClass> getSubClasses() {
+	public List<JClass> listSubClasses() {
 		return subClasses;
 	}
 
-	public List<JProperty> getDomainProperties() {
+	public List<JProperty> listDomainProperties() {
 		return domainProps;
 	}
 
-	public Map<String, JProperty> getDomainPropertiesAsMap(boolean recursive) {
+	public Map<String, JProperty> listDomainPropertiesAsMap(boolean recursive) {
 		Map<String, JProperty> uri2prop = new HashMap<String, JProperty>();
 
 		// add current props, if not present
@@ -204,25 +207,25 @@ public class JClass extends JMapped {
 
 		if (recursive) {
 			for (JClass sCls : superClasses) {
-				uri2prop.putAll(sCls.getDomainPropertiesAsMap(recursive));
+				uri2prop.putAll(sCls.listDomainPropertiesAsMap(recursive));
 			}
 		}
 
 		return uri2prop;
 	}
 
-	public List<JProperty> getDomainProperties(boolean recursive) {
+	public List<JProperty> listDomainProperties(boolean recursive) {
 		if (recursive == false)
 			return domainProps;
 
-		Map<String, JProperty> uri2prop = getDomainPropertiesAsMap(true);
+		Map<String, JProperty> uri2prop = listDomainPropertiesAsMap(true);
 
 		List<JProperty> props = new ArrayList<JProperty>();
 		props.addAll(uri2prop.values());
 		return props;
 	}
 
-	public List<JClass> getSuperClasses() {
+	public List<JClass> listSuperClasses() {
 		return superClasses;
 	}
 
@@ -230,8 +233,6 @@ public class JClass extends JMapped {
 		return superClasses.iterator();
 	}
 
-	public List<JProperty> getDomainProps() {
-		return domainProps;
-	}
+	
 
 }

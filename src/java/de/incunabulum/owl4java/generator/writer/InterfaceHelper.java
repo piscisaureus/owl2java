@@ -23,11 +23,11 @@ public class InterfaceHelper {
 		String ret = new String();
 
 		// no super classes > base.Thing
-		List<JClass> superClasses = cls.getSuperClasses();
+		List<JClass> superClasses = cls.listSuperClasses();
 		Iterator<JClass> superClassesIt = superClasses.iterator();
 		while (superClassesIt.hasNext()) {
 			JClass i = (JClass) superClassesIt.next();
-			String str = StringUtils.indentText(i.getJavaInterfaceName(), 2);
+			String str = StringUtils.indentText(i.getJavaInterfaceFullName(), 2);
 			if (superClassesIt.hasNext())
 				str += ",\n";
 			ret += str;

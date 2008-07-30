@@ -1,10 +1,14 @@
 package de.incunabulum.owl4java.test;
 
 import java.util.Date;
+import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.hp.hpl.jena.datatypes.RDFDatatype;
+import com.hp.hpl.jena.datatypes.TypeMapper;
+import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
 import com.hp.hpl.jena.ontology.Individual;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Literal;
@@ -19,16 +23,17 @@ public class Test {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		Date startDate = new Date();
-		
+
 		Generator gen = new Generator();
 		String uri = "http://owl.incunabulum.de/test1.owl";
-		gen.generate(uri, "src/test", "model.test1");
-		
+		//gen.generate(uri, "src/test", "model.test1");
+
 		uri = "http://owl.incunabulum.de/2007/10/kEquipment.owl";
 		gen.generate(uri, "src/test", "model.kequipment");
-		
+
 		uri = "http://owl.incunabulum.de/2008/02/owl4java.owl";
 		gen.generate(uri, "src/test", "model.owl4java");
 
@@ -46,24 +51,18 @@ public class Test {
 		Date stopDate = new Date();
 		long elapse = stopDate.getTime() - startDate.getTime();
 		log.info("Test finished (" + elapse + " ms)");
-		
-		testTypes(gen.getModel());
-
-	}
-
 	
-	public static void testTypes(OntModel model) {
-
-		Individual ind = model.getIndividual("http://owl.incunabulum.de/owl4java.owl#DpRangeTest_1");
-		Property dpGMonth = model.getProperty("http://owl.incunabulum.de/owl4java.owl#dpGMonth");
-		
-		Literal indGMonth = (Literal) ind.getPropertyValue(dpGMonth);
-		
-		System.err.println(indGMonth.getDatatype().getURI());
-		// System.err.println(indGMonth.getDatatype().getJavaClass().getCanonicalName());
-		
-		System.err.println( indGMonth.toString());
-		
+		// type mapper test
+		TypeMapper tm = TypeMapper.getInstance();
+		Iterator it = tm.listTypes();
+		while (it.hasNext()) {
+			RDFDatatype dt = (RDFDatatype) it.next();
+			log.info(dt);
+			
+		}
 		
 	}
+	
+
+
 }

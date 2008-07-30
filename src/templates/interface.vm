@@ -3,27 +3,39 @@ package $cls.getJavaPackageName();
 
 import java.util.List;
 import java.util.Iterator;
-import de.incunabulum.owl4java.utils.SimpleUrl;
 
-// import parent interfaces
-#foreach($c in $cls.getSuperClasses())
-import $c.getJavaInterfaceFullName();
-#end
-
-## for all domain properties import all range interfaces
-// import interfaces for properties
-#foreach($p in $cls.getDomainProperties())
-#foreach($i in $p.getObjectRange())
-import $i.getJavaInterfaceFullName();
-#end
-#end
-
-## include root interface or child interface template
 /*
  * Interface $cls.getMapUri()
+ *
+ * XXX: inverses and equivalent properties are not used
  */
 #if($cls.isRootClass())
-#parse("ifaceRoot.vm")
+    public interface $cls.getJavaInterfaceName()  {
 #else
-#parse("ifaceChild.vm")
-#end
+    public interface $cls.getJavaInterfaceName() extends $ifh.getExtends() {
+#end ## if isRootClass()
+
+##
+## loop over all domain properties
+#foreach($p in $cls.listDomainProperties())
+    #set($name = $p.getJavaFullNameCaps())
+    #set($range = $p.getRangeJavaFull())
+
+        /**
+         * Domain property $p.getMapUri()
+         */
+        public boolean exists$name();
+        public boolean has$name($range value);
+    #if ($p.isFunctional())
+        public $range get$name ();
+        public void set$name($range value);
+        public void remove$name();
+    #else
+        public Iterator<$range> list${name}();
+        public void add$name($range value);
+        public void addAll$name(List<$range> value);
+        public void remove$name($range value);
+        public void removeAll$name();
+    #end ## isFunctional()
+#end ## foreach $p
+}

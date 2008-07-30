@@ -2,21 +2,25 @@ package de.incunabulum.owl4java.jmodel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.ontology.UnionClass;
 
 import de.incunabulum.owl4java.jmodel.utils.NamingUtils;
 import de.incunabulum.owl4java.utils.IReporting;
 import de.incunabulum.owl4java.utils.IStatistics;
+import de.incunabulum.owl4java.utils.NamespaceUtils;
 import de.incunabulum.owl4java.utils.ResourceError;
 import de.incunabulum.owl4java.utils.StringUtils;
 
@@ -35,6 +39,7 @@ public class JModel implements IReporting, IStatistics {
 
 	public List<ResourceError> ontResourceErrors = new ArrayList<ResourceError>();
 	public String baseThingUri;
+	private OntModel ontModel;
 
 	public void addPackage(String pkgName, JPackage pkg) {
 		if (pkgName2Package.containsKey(pkgName)) {
@@ -62,7 +67,7 @@ public class JModel implements IReporting, IStatistics {
 
 			// if both anonymous classes have identical super classes
 			// > identical > return it
-			List<JClass> superClasses = cls.getSuperClasses();
+			List<JClass> superClasses = cls.listSuperClasses();
 			// different size > super classes are not identical
 			if (superClasses.size() != operandClasses.size())
 				continue;
@@ -98,6 +103,31 @@ public class JModel implements IReporting, IStatistics {
 
 	public static String getBaseThingName() {
 		return THINGNAME;
+	}
+	
+	public List<String> listNamespaces() {
+		List<String> nss = new ArrayList<String>();
+		Iterator<String> it = ns2javaPkgName.keySet().iterator();
+		while (it.hasNext()) {
+			String nsUri = (String) it.next();
+			nss.add(nsUri);
+		}
+		return nss;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> listImportURIs() {
+		Set<String> importsSet = new HashSet<String>();
+		Iterator<String> nsIt = ns2prefix.keySet().iterator();
+		while (nsIt.hasNext()) {
+			String ns = (String) nsIt.next();
+			if (!NamespaceUtils.defaultNs2UriMapping.containsKey(ns)) {
+				// Strip trailing namespace #
+				ns = ns.substring(0, ns.length()-1);
+				importsSet.add(ns);
+			}
+		}
+		return new ArrayList<String>(importsSet);
 	}
 
 	@Override
@@ -135,6 +165,17 @@ public class JModel implements IReporting, IStatistics {
 		}
 		return report;
 	}
+	
+	public String getPrefixFromImport(String imp) {
+		return getPrefix(imp + "#");
+	}
+	
+	public String getPrefix(String namespace) {
+		String prefix = this.ns2prefix.get(namespace);
+		if (prefix == null)
+			return "";
+		return prefix;
+	}
 
 	public String getNamespace(String prefix) {
 		Iterator<String> it = ns2prefix.keySet().iterator();
@@ -163,7 +204,7 @@ public class JModel implements IReporting, IStatistics {
 		return this.uri2class.get(uri);
 	}
 
-	public List<JClass> getJClasses() {
+	public List<JClass> listJClasses() {
 		List<JClass> classes = new ArrayList<JClass>();
 		Iterator<String> it = uri2class.keySet().iterator();
 		while (it.hasNext()) {
@@ -174,7 +215,7 @@ public class JModel implements IReporting, IStatistics {
 		return classes;
 	}
 
-	public List<JProperty> getJProperties() {
+	public List<JProperty> listJProperties() {
 		List<JProperty> props = new ArrayList<JProperty>();
 		Iterator<String> it = uri2property.keySet().iterator();
 		while (it.hasNext()) {
@@ -186,7 +227,7 @@ public class JModel implements IReporting, IStatistics {
 	}
 
 	public void createJClass(String clsName, String clsUri, String pkgName) {
-		JClass cls = new JClass(clsName, clsUri);
+		JClass cls = new JClass(this, clsName, clsUri);
 		uri2class.put(clsUri, cls);
 
 		getJPackage(pkgName).addClass(cls);
@@ -224,7 +265,7 @@ public class JModel implements IReporting, IStatistics {
 
 	public void createJProperty(OntProperty ontProp) {
 		String propName = NamingUtils.getPropertyName(ontProp);
-		JProperty p = new JProperty(propName, ontProp.getURI());
+		JProperty p = new JProperty(this, propName, ontProp.getURI());
 		uri2property.put(ontProp.getURI(), p);
 
 		log.debug(NamingUtils.toLogName(ontProp) + ": Creating property "
@@ -259,6 +300,14 @@ public class JModel implements IReporting, IStatistics {
 		ret += "Restrictions: " + restrictionCount + "\n";
 		ret += "Errors: " + ontResourceErrors.size();
 		return ret;
+	}
+
+	public void setOntModel(OntModel ontModel) {
+		this.ontModel = ontModel;
+	}
+
+	public OntModel getOntModel() {
+		return ontModel;
 	}
 
 }
