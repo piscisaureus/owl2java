@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
-import de.incunabulum.owl2java.model.jenautils.NullFilter;
+import de.incunabulum.owl2java.core.model.jenautils.NullFilter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -23,8 +23,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
-import de.incunabulum.owl2java.model.jenautils.NullFilter;
-import de.incunabulum.owl2java.generator.db4o.IDb4oMergeCode;
+import de.incunabulum.owl2java.core.model.jenautils.NullFilter;
+import de.incunabulum.owl2java.core.generator.db4o.IDb4oMergeCode;
 
 
 /**

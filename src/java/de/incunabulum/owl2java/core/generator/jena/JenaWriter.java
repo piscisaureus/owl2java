@@ -41,7 +41,7 @@ public class JenaWriter extends AbstractWriter {
 		createPackageDirectories();
 
 		// init the templating engine
-		initVelocityEngine();
+		initVelocityEngine(templateDirJena);
 
 		// write interfaces
 		createInterfaces();

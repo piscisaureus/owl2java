@@ -23,7 +23,7 @@
 	    @SuppressWarnings("unchecked")
 		public Iterator<$rangeFull> iterate${propnameCaps}${suffix}() {
             ExtendedIterator it = listProperties(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            return it.mapWith(de.incunabulum.owl2java.model.xsd.XsdUtils.objectAs${range}Mapper).filterDrop(nullFilter);		
+            return it.mapWith(de.incunabulum.owl2java.core.model.xsd.XsdUtils.objectAs${range}Mapper).filterDrop(nullFilter);		
    		}
    		
  		$multipleDeprecated
@@ -40,7 +40,7 @@
 		
 		$multipleDeprecated
 		public void add$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
-            Literal literal = de.incunabulum.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
+            Literal literal = de.incunabulum.owl2java.core.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
             setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
 		}
 		
@@ -52,7 +52,7 @@
 		
 		$multipleDeprecated
 		public void remove$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
-            Literal literal = de.incunabulum.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
+            Literal literal = de.incunabulum.owl2java.core.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
             removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
 		}
 		
@@ -79,8 +79,8 @@
 		$singleDeprecated
 		public void set$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
             removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-	        de.incunabulum.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");    
-            Literal literal = de.incunabulum.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
+	        de.incunabulum.owl2java.core.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");    
+            Literal literal = de.incunabulum.owl2java.core.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
             setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
 		}
 		

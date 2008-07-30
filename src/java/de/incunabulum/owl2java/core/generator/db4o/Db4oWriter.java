@@ -48,11 +48,11 @@ public class Db4oWriter extends AbstractWriter {
 		// init the templating engine
 		if (generationType == Db4oGenerator.ClassBasedGeneration) {
 			templateDirCurrent = templateDirDb4oClassBased;
-			initVelocityEngine();
+			initVelocityEngine(templateDirDb4oClassBased);
 			createClasses();
 		} else {
 			templateDirCurrent = templateDirDb4oIfaceBased;
-			initVelocityEngine();
+			initVelocityEngine(templateDirDb4oIfaceBased);
 			// TODO: createInterfaces missing
 			createClasses();
 		}

@@ -8,7 +8,7 @@ log.debug("  Mapping property $propUri");
 
 ontProp = ontModel.getOntProperty("$propUri");
 itProp = ontInst.listProperties(ontProp);
-Iterator<$propRangeFull> instIt$propName = itProp.mapWith(de.incunabulum.owl2java.model.xsd.XsdUtils.objectAs${propRange}Mapper).filterDrop(nullFilter);		
+Iterator<$propRangeFull> instIt$propName = itProp.mapWith(de.incunabulum.owl2java.core.model.xsd.XsdUtils.objectAs${propRange}Mapper).filterDrop(nullFilter);		
 
 while (instIt${propName}.hasNext()) {
 	$propRangeFull inst = instIt${propName}.next();

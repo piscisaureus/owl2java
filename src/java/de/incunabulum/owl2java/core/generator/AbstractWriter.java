@@ -52,7 +52,7 @@ public abstract class AbstractWriter {
 		success &= new File(pkgDir).mkdirs();
 	}
 
-	protected void initVelocityEngine() {
+	protected void initVelocityEngine(String baseDir) {
 		log.info("Init velocity engine");
 
 		vEngine = new VelocityEngine();
@@ -66,7 +66,7 @@ public abstract class AbstractWriter {
 		// see http://minaret.biz/tips/tomcatLogging.html
 		vEngine.setProperty("runtime.log.logsystem.class",
 				"org.apache.velocity.runtime.log.Log4JLogSystem");
-		vEngine.setProperty("velocimacro.library", "macros.vm");
+		vEngine.setProperty("velocimacro.library", "/" + baseDir + "/" + "macros.vm");
 		try {
 			vEngine.init();
 		} catch (Exception e) {
