@@ -17,5 +17,13 @@ public class NamespaceUtils {
 		defaultNs2UriMapping.put("http://www.daml.org/2001/03/daml+oil#", "daml");
 		// defaultNs2UriMapping.put("http://xmlns.com/foaf/0.1/", "foaf");
 	}
+	
+	public static boolean isPrimitiveNamespace(String objectUri) {
+		for (String nsUri : defaultNs2UriMapping.keySet()) {
+			if (objectUri.startsWith(nsUri))
+				return true;
+		}
+		return false;
+	}
 
 }

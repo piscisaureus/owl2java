@@ -207,11 +207,11 @@ public class OwlReader {
 				log.debug(LogUtils.toLogName(ontProperty) + ": Domain is Anonymous class. Ignored.");
 				continue;
 			}
-
+			
 			JClass domainCls = jmodel.getJClass(domain.getURI());
 			domainCls.addDomainProperty(jProperty);
 			domainProp = true;
-			log.debug(LogUtils.toLogName(ontProperty) + ": Registering as domain property in  class "
+			log.debug(LogUtils.toLogName(ontProperty) + ": Registering as domain property in class "
 					+ LogUtils.toLogName(domainCls));
 		}
 
@@ -887,6 +887,12 @@ public class OwlReader {
 	protected void handleProperties(Iterator propertiesIt) {
 		while (propertiesIt.hasNext()) {
 			OntProperty ontProperty = (OntProperty) propertiesIt.next();
+			
+			// ignore primitive properties
+			String uri = ontProperty.getURI();
+			
+			if (NamespaceUtils.isPrimitiveNamespace(uri))
+				continue;
 			createProperty(ontProperty);
 		}
 	}

@@ -15,13 +15,13 @@ public class TestGenerators extends TestCase{
 	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(TestGenerators.class);
 
-	public static void testJenaGenerator() {
+	public static void testJenaGeneratorFull() {
 		Date startDate = new Date();
 
 		JenaGenerator gen = new JenaGenerator();
 
 		String uri = "http://owl.incunabulum.de/2008-Jakuzi/owl4java.owl";
-		gen.generate(uri, "src/testOut", "jenatest");
+		gen.generate(uri, "src/testOut", "jenatestFull");
 
 		// report
 		String report = gen.getJModelReport();
@@ -35,6 +35,26 @@ public class TestGenerators extends TestCase{
 		log.info("Test finished (" + elapse + " ms)");
 	}
 	
+	public static void testJenaGeneratorSimple() {
+		Date startDate = new Date();
+
+		JenaGenerator gen = new JenaGenerator();
+
+		String uri = "http://owl.incunabulum.de/2008-Jakuzi/owl4java-simple.owl";
+		gen.generate(uri, "src/testOut", "jenatestSimple");
+
+		// report
+		String report = gen.getJModelReport();
+		//log.error(report);
+
+		report = gen.getStatistics();
+		log.info(report);
+
+		Date stopDate = new Date();
+		long elapse = stopDate.getTime() - startDate.getTime();
+		log.info("Test finished (" + elapse + " ms)");
+	}
+
 	public static void testDb4oGenerator() {
 		Date startDate = new Date();
 

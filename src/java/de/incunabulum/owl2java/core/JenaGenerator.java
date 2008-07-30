@@ -51,6 +51,7 @@ public class JenaGenerator extends AbstractGenerator {
 	}
 
 	public void generate(OntModel model, String baseDir, String basePackage) {
+		// Note: model needs to be OWL_DL_MEM !!! 
 		this.model = model;
 
 		startJModedlCreation = new Date();
