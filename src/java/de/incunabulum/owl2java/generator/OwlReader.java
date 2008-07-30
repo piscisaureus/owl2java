@@ -25,16 +25,16 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.util.ResourceUtils;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
-import de.incunabulum.owl2java.model.jenautils.ResourceError;
-import de.incunabulum.owl2java.model.jmodel.JClass;
-import de.incunabulum.owl2java.model.jmodel.JModel;
-import de.incunabulum.owl2java.model.jmodel.JPackage;
-import de.incunabulum.owl2java.model.jmodel.JProperty;
-import de.incunabulum.owl2java.model.jmodel.JRestrictionsContainer;
-import de.incunabulum.owl2java.model.jmodel.utils.DebugUtils;
-import de.incunabulum.owl2java.model.jmodel.utils.LogUtils;
-import de.incunabulum.owl2java.model.jmodel.utils.NamingUtils;
-import de.incunabulum.owl2java.model.ns.NamespaceUtils;
+import de.incunabulum.owl2java.core.model.jenautils.ResourceError;
+import de.incunabulum.owl2java.core.model.jmodel.JClass;
+import de.incunabulum.owl2java.core.model.jmodel.JModel;
+import de.incunabulum.owl2java.core.model.jmodel.JPackage;
+import de.incunabulum.owl2java.core.model.jmodel.JProperty;
+import de.incunabulum.owl2java.core.model.jmodel.JRestrictionsContainer;
+import de.incunabulum.owl2java.core.model.jmodel.utils.DebugUtils;
+import de.incunabulum.owl2java.core.model.jmodel.utils.LogUtils;
+import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
+import de.incunabulum.owl2java.core.model.ns.NamespaceUtils;
 
 public class OwlReader {
 

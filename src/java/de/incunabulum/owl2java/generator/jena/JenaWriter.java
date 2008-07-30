@@ -8,11 +8,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
 
+import de.incunabulum.owl2java.core.model.jmodel.JClass;
+import de.incunabulum.owl2java.core.model.jmodel.JModel;
+import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
+import de.incunabulum.owl2java.core.model.xsd.XsdMapTestData;
 import de.incunabulum.owl2java.generator.AbstractWriter;
-import de.incunabulum.owl2java.model.jmodel.JClass;
-import de.incunabulum.owl2java.model.jmodel.JModel;
-import de.incunabulum.owl2java.model.jmodel.utils.NamingUtils;
-import de.incunabulum.owl2java.model.xsd.XsdMapTestData;
 
 public class JenaWriter extends AbstractWriter {
 	

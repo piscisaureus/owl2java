@@ -7,10 +7,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 
-import de.incunabulum.owl2java.model.jmodel.JModel;
-import de.incunabulum.owl2java.model.jmodel.JPackage;
-import de.incunabulum.owl2java.model.jmodel.utils.NamingUtils;
-import de.incunabulum.owl2java.utils.JavaUtils;
+import de.incunabulum.owl2java.core.model.jmodel.JModel;
+import de.incunabulum.owl2java.core.model.jmodel.JPackage;
+import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
+import de.incunabulum.owl2java.core.utils.JavaUtils;
 
 public abstract class AbstractWriter {
 	

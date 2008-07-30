@@ -10,9 +10,9 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
-import de.incunabulum.owl2java.model.jmodel.JClass;
-import de.incunabulum.owl2java.model.jmodel.JModel;
-import de.incunabulum.owl2java.utils.JavaUtils;
+import de.incunabulum.owl2java.core.model.jmodel.JClass;
+import de.incunabulum.owl2java.core.model.jmodel.JModel;
+import de.incunabulum.owl2java.core.utils.JavaUtils;
 
 public class JenaInterfaceWriter {
 	

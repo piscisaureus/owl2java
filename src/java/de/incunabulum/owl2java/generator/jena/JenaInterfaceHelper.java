@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import de.incunabulum.owl2java.model.jmodel.JClass;
-import de.incunabulum.owl2java.utils.StringUtils;
+import de.incunabulum.owl2java.core.model.jmodel.JClass;
+import de.incunabulum.owl2java.core.utils.StringUtils;
 
 public class JenaInterfaceHelper {
 	@SuppressWarnings("unused")

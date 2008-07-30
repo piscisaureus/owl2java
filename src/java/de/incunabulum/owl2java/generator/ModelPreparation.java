@@ -11,13 +11,13 @@ import org.jgrapht.traverse.BreadthFirstIterator;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntProperty;
 
-import de.incunabulum.owl2java.model.jenautils.RestrictionUtils;
-import de.incunabulum.owl2java.model.jmodel.JClass;
-import de.incunabulum.owl2java.model.jmodel.JInheritanceGraph;
-import de.incunabulum.owl2java.model.jmodel.JModel;
-import de.incunabulum.owl2java.model.jmodel.JProperty;
-import de.incunabulum.owl2java.model.jmodel.JRestrictionsContainer;
-import de.incunabulum.owl2java.model.jmodel.utils.LogUtils;
+import de.incunabulum.owl2java.core.model.jenautils.RestrictionUtils;
+import de.incunabulum.owl2java.core.model.jmodel.JClass;
+import de.incunabulum.owl2java.core.model.jmodel.JInheritanceGraph;
+import de.incunabulum.owl2java.core.model.jmodel.JModel;
+import de.incunabulum.owl2java.core.model.jmodel.JProperty;
+import de.incunabulum.owl2java.core.model.jmodel.JRestrictionsContainer;
+import de.incunabulum.owl2java.core.model.jmodel.utils.LogUtils;
 
 public class ModelPreparation {
 

@@ -7,9 +7,9 @@ import org.apache.commons.logging.LogFactory;
 
 import com.hp.hpl.jena.ontology.OntModel;
 
-import de.incunabulum.owl2java.model.jmodel.JModel;
-import de.incunabulum.owl2java.utils.IReporting;
-import de.incunabulum.owl2java.utils.IStatistics;
+import de.incunabulum.owl2java.core.model.jmodel.JModel;
+import de.incunabulum.owl2java.core.utils.IReporting;
+import de.incunabulum.owl2java.core.utils.IStatistics;
 
 public abstract class AbstractGenerator implements IStatistics, IReporting {
 

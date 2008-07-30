@@ -10,12 +10,12 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
+import de.incunabulum.owl2java.core.model.jmodel.JClass;
+import de.incunabulum.owl2java.core.model.jmodel.utils.LogUtils;
+import de.incunabulum.owl2java.core.utils.JavaUtils;
 import de.incunabulum.owl2java.generator.ModelPreparation;
 import de.incunabulum.owl2java.generator.OwlReader;
 import de.incunabulum.owl2java.generator.db4o.Db4oWriter;
-import de.incunabulum.owl2java.model.jmodel.JClass;
-import de.incunabulum.owl2java.model.jmodel.utils.LogUtils;
-import de.incunabulum.owl2java.utils.JavaUtils;
 
 public class Db4oGenerator extends AbstractGenerator {
 	
