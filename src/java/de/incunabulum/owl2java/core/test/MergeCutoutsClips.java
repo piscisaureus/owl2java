@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.test;
+package de.incunabulum.owl2java.core.test;
 
 import com.hp.hpl.jena.ontology.OntDocumentManager;
 import com.hp.hpl.jena.ontology.OntModel;

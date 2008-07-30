@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.exceptions;
+package de.incunabulum.owl2java.core.exceptions;
 
 public class CarindinalityException extends Owl2JavaException {
 
