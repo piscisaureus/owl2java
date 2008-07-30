@@ -15,6 +15,7 @@ import de.incunabulum.owl2java.generator.OwlReader;
 import de.incunabulum.owl2java.generator.db4o.Db4oWriter;
 import de.incunabulum.owl2java.model.jmodel.JClass;
 import de.incunabulum.owl2java.model.jmodel.utils.LogUtils;
+import de.incunabulum.owl2java.utils.JavaUtils;
 
 public class Db4oGenerator extends AbstractGenerator {
 	
@@ -28,6 +29,13 @@ public class Db4oGenerator extends AbstractGenerator {
 	private int	generationType = ClassBasedGeneration;
 	private boolean generateMergeCode = true;
 	private String instanceClassName = "MergeCode";
+	
+	public Db4oGenerator() {
+		log.info("Adding 'uriInstance', 'uriClass', 'activator' to reserved java keywords");
+		JavaUtils.reservedWords.add("uriInstance");
+		JavaUtils.reservedWords.add("uriClass");
+		JavaUtils.reservedWords.add("activator");
+	}
 
 	@Override
 	public void generate(String uri, String altLocation, String baseDir, String basePackage) {

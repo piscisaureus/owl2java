@@ -504,17 +504,6 @@ public class JClass extends JMapped {
 	
 	
 
-	public List<JProperty> listDomainProperties(boolean recursive) {
-		if (recursive == false)
-			return domainProperties;
-
-		Map<String, JProperty> mapUri2prop = listDomainPropertiesAsMap(true);
-
-		List<JProperty> props = new ArrayList<JProperty>();
-		props.addAll(mapUri2prop.values());
-		return props;
-	}
-
 	public Map<String, JProperty> listDomainPropertiesAsMap(boolean recursive) {
 		Map<String, JProperty> uri2prop = new HashMap<String, JProperty>();
 

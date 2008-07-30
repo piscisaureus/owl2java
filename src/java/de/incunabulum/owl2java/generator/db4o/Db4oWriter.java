@@ -18,6 +18,9 @@ import de.incunabulum.owl2java.model.xsd.XsdMapTestData;
 public class Db4oWriter extends AbstractWriter {
 	
 	static Log log = LogFactory.getLog(Db4oWriter.class);
+	
+	public static String templateDirClassBased = "db4oTemplatesCB";
+	public static String templateDirIfaceBased = "db4oTemplatesIB";
 
 	private String instanceClassName;
 	private int generationType;
@@ -37,10 +40,10 @@ public class Db4oWriter extends AbstractWriter {
 
 		// init the templating engine
 		if (generationType == Db4oGenerator.ClassBasedGeneration) {
-			initVelocityEngine("db4oTemplatesCB");
+			initVelocityEngine(templateDirClassBased);
 			createClasses();
 		} else {
-			initVelocityEngine("db4oTemplatesIB");
+			initVelocityEngine(templateDirIfaceBased);
 			// TODO: createInterfaces missing
 			createClasses();
 		}
@@ -49,11 +52,13 @@ public class Db4oWriter extends AbstractWriter {
 		if (generateMergeCode)
 			createInstanceMergeCode();
 		
+		log.info("Done");
+		
 	}
 
 	protected void createInstanceMergeCode() {
 		log.info("Creating instance handling stuff");
-		Db4oInstanceWriter vWriter = new Db4oInstanceWriter(vEngine, getBaseVelocityContext());
+		Db4oMergeCodeWriter vWriter = new Db4oMergeCodeWriter(vEngine, getBaseVelocityContext());
 		vWriter.setInstanceName(instanceClassName);
 		vWriter.setToolsPackage(toolsPackage);
 		vWriter.writeInstance(jmodel, baseDir, basePackage);		

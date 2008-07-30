@@ -135,6 +135,11 @@ public class OwlReader {
 
 		// All values
 		if (res.isAllValuesFromRestriction()) {
+			// TODO: currently, only ObjectProperties can be handled
+			if (prop.isDatatypeProperty()) {
+				log.warn(LogUtils.toLogName(prop) + ": Not creating allValues restriction on datatype property");
+				return;
+			}
 			AllValuesFromRestriction allValuesRestriction = res.asAllValuesFromRestriction();
 			Resource allValuesResource = allValuesRestriction.getAllValuesFrom();
 			JClass allValuesJClass = jmodel.getJClass(allValuesResource.getURI());
@@ -144,6 +149,11 @@ public class OwlReader {
 		}
 
 		if (res.isHasValueRestriction()) {
+			// TODO: currently, only ObjectProperties can be handled
+			if (prop.isDatatypeProperty()) {
+				log.warn(LogUtils.toLogName(prop) + ": Not creating hasValue restriction on datatype property");
+				return;
+			}
 			HasValueRestriction hasValueRestriction = res.asHasValueRestriction();
 			RDFNode hasValueResource = hasValueRestriction.getHasValue();
 			jRestriction.getOtherRestriction().addHasValue(hasValueResource.toString());
@@ -153,6 +163,11 @@ public class OwlReader {
 		}
 
 		if (res.isSomeValuesFromRestriction()) {
+			// TODO: currently, only ObjectProperties can be handled
+			if (prop.isDatatypeProperty()) {
+				log.warn(LogUtils.toLogName(prop) + ": Not creating someValues restriction on datatype property");
+				return;
+			}
 			SomeValuesFromRestriction someValuesRestriction = res.asSomeValuesFromRestriction();
 			Resource someValuesResource = someValuesRestriction.getSomeValuesFrom();
 			JClass someValuesJClass = jmodel.getJClass(someValuesResource.getURI());
@@ -401,7 +416,7 @@ public class OwlReader {
 		// find (or create, if not present) equivalent class definitions
 		ExtendedIterator equIt = ontClass.listEquivalentClasses();
 		while (equIt.hasNext()) {
-			OntClass equCls = (OntClass) superIt.next();
+			OntClass equCls = (OntClass) equIt.next();
 
 			if (equCls.isAnon()) {
 				log.warn("Currently, only primitive equivalent class definitions are used (OWL Lite)");
@@ -477,7 +492,8 @@ public class OwlReader {
 				continue;
 
 			// XXX Multiple property range should use a intersection class instead of a union class
-			// -> not implemented
+			// -> not implemented, yet code present
+			// -> see the owl standard
 			log.info(LogUtils.toLogName(prop) + ": Found multiple range. Replacing with UnionClass ");
 
 			List<JClass> operandClasses = prop.listObjectPropertyRange();
@@ -889,7 +905,7 @@ public class OwlReader {
 			// skip all non anonymous classes
 			if (!cls.isAnon())
 				continue;
-
+			
 			// we have a restriction
 			if (cls.isRestriction()) {
 				// find the restriction and the property it acts on
@@ -911,7 +927,7 @@ public class OwlReader {
 						continue;
 					}
 
-					// owl:Thing and Co -> ignore
+					// owl:Thing -> ignore
 					if (NamespaceUtils.defaultNs2UriMapping.containsKey(ontClass.getNameSpace())) {
 						log.debug(LogUtils.toLogName(ontClass) + ": Is a base class. Ignored");
 						continue;

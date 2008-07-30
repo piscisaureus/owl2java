@@ -14,16 +14,16 @@ import de.incunabulum.owl2java.model.jmodel.JModel;
 import de.incunabulum.owl2java.model.jmodel.utils.NamingUtils;
 import de.incunabulum.owl2java.utils.JavaUtils;
 
-public class Db4oInstanceWriter {
-	private static Log log = LogFactory.getLog(Db4oInstanceWriter.class);
-	private static final String TEMPLATE_NAME = "mapInstances.vm";
+public class Db4oMergeCodeWriter {
+	private static Log log = LogFactory.getLog(Db4oMergeCodeWriter.class);
+	private static final String TEMPLATE_NAME = "mergeCode.vm";
 
 	private VelocityEngine vEngine;
 	private VelocityContext vContext;
 	private String instanceName;
 	private String toolsPackage;
 
-	public Db4oInstanceWriter(VelocityEngine vEngine, VelocityContext vContext) {
+	public Db4oMergeCodeWriter(VelocityEngine vEngine, VelocityContext vContext) {
 		this.vEngine = vEngine;
 		this.vContext = vContext;
 	}
@@ -34,7 +34,7 @@ public class Db4oInstanceWriter {
 		String outDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
 		String outName = instanceName;
 		String outPath = outDir + "/" + outName + ".java";
-		log.debug("Creating vocabulary " + outPath);
+		log.debug("Creating merge code " + outPath);
 
 		Template template;
 		try {

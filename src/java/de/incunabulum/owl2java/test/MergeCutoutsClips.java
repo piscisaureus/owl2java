@@ -5,9 +5,9 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
-import db4otest.cutoutsclips.jakuzi.MergeCode;
+import db4otest.cutoutsclips.owl2java.MergeCode;
 
-public class MergeCoutoutsClips {
+public class MergeCutoutsClips {
 
 	public static void main(String[] args) {
 		String uri = "http://owl.incunabulum.de/2008-Base/cutoutsClips.owl";
@@ -16,7 +16,8 @@ public class MergeCoutoutsClips {
 		owlDocMgr.setProcessImports(true);
 		owlModel.read(uri);
 
-		MergeCode.run(owlModel, "/home/mz/tmpDabitz/db4otest.db4o");
+		MergeCode mc = new MergeCode();
+		mc.run(owlModel, "src/testOut/cutoutclips.db4o");
 	}
 
 }

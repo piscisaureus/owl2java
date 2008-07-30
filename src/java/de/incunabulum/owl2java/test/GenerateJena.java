@@ -21,7 +21,7 @@ public class GenerateJena {
 		JenaGenerator gen = new JenaGenerator();
 
 		String uri = "http://owl.incunabulum.de/2008-Jakuzi/owl4java.owl";
-		gen.generate(uri, "src/test", "jenatest");
+		gen.generate(uri, "src/testOut", "jenatest");
 
 		// report
 		String report = gen.getJModelReport();

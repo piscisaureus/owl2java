@@ -7,7 +7,7 @@ General:
 - XsdTypes: Entity currently ignored
 
 
-Jena:
+Generate Jena Code:
 ########################
 - How about OCL as query language?
 - Use Sparql for Count?
@@ -18,7 +18,7 @@ Use maxCardinality, transitive, inverse functional etc. property characteristics
 
 
 
-Db4o:
+Generate Db4o Code:
 ########################
 - Add interface based code generation
 - Non functional properties with  a subclassOf definition of "max 1" on all occurences

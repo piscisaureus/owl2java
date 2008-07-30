@@ -16,7 +16,7 @@ public abstract class AbstractGenerator implements IStatistics, IReporting {
 	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(AbstractGenerator.class);
 
-	String toolsPackage = "jakuzi";
+	String toolsPackage = "owl2java";
 
 	Date startAll;
 	Date startJModedlCreation;

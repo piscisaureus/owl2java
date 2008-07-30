@@ -279,6 +279,7 @@ public class JModel implements IReporting, IStatistics {
 	}
 
 	public void createJClass(String clsName, String clsUri, String pkgName) {
+		clsName = NamingUtils.getValidJavaName(clsName);
 		JClass cls = new JClass(this, clsName, clsUri);
 		uri2class.put(clsUri, cls);
 

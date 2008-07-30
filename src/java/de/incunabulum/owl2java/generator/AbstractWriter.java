@@ -16,6 +16,8 @@ public abstract class AbstractWriter {
 	
 	static Log log = LogFactory.getLog(AbstractWriter.class);
 	
+	public static String templateBasePath = JavaUtils.getCurrentDirectory() +  File.separator + "bin"  ;
+	
 	protected String baseDir;
 	protected String basePackage;
 	protected String toolsPackage;
@@ -53,13 +55,15 @@ public abstract class AbstractWriter {
 	protected void initVelocityEngine(String templateDir) {
 		log.info("Init velocity engine");
 
+		// FIXME fix template location issues! (or make it configurable)
+		
 		vEngine = new VelocityEngine();
 
 		vEngine.setProperty("resource.loader", "file");
 		vEngine.setProperty("file.resource.loader.class",
 				"org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-		String currentpath = JavaUtils.getCurrentDirectory();
-		vEngine.setProperty("file.resource.loader.path", currentpath + "/" + "bin/" + templateDir); 
+
+		vEngine.setProperty("file.resource.loader.path", templateBasePath + File.separator + templateDir); 
 
 		// see http://minaret.biz/tips/tomcatLogging.html
 		vEngine.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.Log4JLogSystem");

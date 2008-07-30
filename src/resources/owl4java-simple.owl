@@ -1,0 +1,814 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:daml="http://www.daml.org/2001/03/daml+oil#"
+    xmlns="http://owl.incunabulum.de/2008-Jakuzi/owl4java-simple.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://owl.incunabulum.de/2008-Jakuzi/owl4java-simple.owl">
+  <owl:Ontology rdf:about="">
+    <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Created with TopBraid Composer</owl:versionInfo>
+  </owl:Ontology>
+  <owl:Class rdf:ID="ObjectPropTests">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="PropertyTest"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Op tests</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="RestrictionsTestAllValues_1_1">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="RestrictionsTestAllValues_1"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="opRestAllValues"/>
+        </owl:onProperty>
+        <owl:allValuesFrom>
+          <owl:Class rdf:ID="ClassZ"/>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Restrictions test all values_1_1</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="RestrictionsTestAllValues">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="RestrictionsTestsTODO"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#opRestAllValues"/>
+        </owl:onProperty>
+        <owl:allValuesFrom>
+          <owl:Class rdf:ID="ClassX"/>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Restrictions test all values</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="DataPropRangeTest">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#PropertyTest"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Dp range test</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#PropertyTest">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Property test</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="ClassA">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="ClassTests"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Class a</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#RestrictionsTestsTODO">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+        >1</owl:maxCardinality>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="xxxRestr"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Restrictions tests</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#ClassZ">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="ClassY"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Class z</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="SubClassA">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >ASimple sub class</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ClassTests"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#ClassY">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Class y</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ClassX"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="SubClassB">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ClassTests"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Simple sub class b</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#ClassX">
+    <rdfs:subClassOf rdf:resource="#ClassA"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Class x</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="ClassB">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ClassTests"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Class b</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="ClassC">
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#ClassTests"/>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Class c</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="Misc">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Misc</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#ClassTests">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Class tests</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="ForGeneratorTests">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Property tests</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#PropertyTest"/>
+  </owl:Class>
+  <owl:Class rdf:about="#RestrictionsTestAllValues_1">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#opRestAllValues"/>
+        </owl:onProperty>
+        <owl:allValuesFrom rdf:resource="#ClassY"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Restrictions test all values_1</rdfs:label>
+    <rdfs:subClassOf rdf:resource="#RestrictionsTestAllValues"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="opSimpleEquivalent">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="opSimpleInverse"/>
+    </owl:inverseOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op simple equivalent</rdfs:label>
+    <owl:equivalentProperty>
+      <owl:ObjectProperty rdf:ID="opSimple"/>
+    </owl:equivalentProperty>
+    <rdfs:domain rdf:resource="#ObjectPropTests"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="intersectionProperty">
+    <rdfs:domain rdf:resource="#ClassC"/>
+    <rdfs:domain rdf:resource="#ClassB"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >intersection property</rdfs:label>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="opWithRange">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op with range</rdfs:label>
+    <rdfs:range rdf:resource="#ClassB"/>
+    <rdfs:domain rdf:resource="#ObjectPropTests"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#opRestAllValues">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op rest all values</rdfs:label>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#opSimpleInverse">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#opSimple"/>
+    </owl:inverseOf>
+    <owl:inverseOf rdf:resource="#opSimpleEquivalent"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op sImple inverse</rdfs:label>
+    <rdfs:domain rdf:resource="#ObjectPropTests"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="propTestOp">
+    <rdfs:domain rdf:resource="#ForGeneratorTests"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >prop test op functional</rdfs:label>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="propTestOpFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >prop test op functional</rdfs:label>
+    <rdfs:domain rdf:resource="#ForGeneratorTests"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="opWithDomainMultiple">
+    <rdfs:domain rdf:resource="#Misc"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op with domain</rdfs:label>
+    <rdfs:domain rdf:resource="#ObjectPropTests"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#opSimple">
+    <owl:inverseOf rdf:resource="#opSimpleInverse"/>
+    <owl:equivalentProperty rdf:resource="#opSimpleEquivalent"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op simple</rdfs:label>
+    <rdfs:domain rdf:resource="#ObjectPropTests"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#xxxRestr">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >xxx restr</rdfs:label>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="opWithDomain">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op with domain</rdfs:label>
+    <rdfs:domain rdf:resource="#ObjectPropTests"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="dpGYearMonth">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYearMonth"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="propTestDpFunctionalRanged">
+    <rdfs:domain rdf:resource="#ForGeneratorTests"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >prop test dp functional</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpQNameFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#QName"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpByte">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp byte</rdfs:label>
+    <rdfs:subPropertyOf>
+      <owl:DatatypeProperty rdf:ID="dpShort"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpGDayFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gDay"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpName">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:ID="dpToken"/>
+    </rdfs:subPropertyOf>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#Name"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_4</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpAnyURI">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpDuration">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpLongFunctional">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:ID="dpInteger"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_3</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpBase64BinaryFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#base64Binary"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpStringFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp string</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpUnsignedSortFunctional">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:ID="dpUnsignedInt"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp unsigned sort</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpUnsignedByte">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp unsigned byte</rdfs:label>
+    <rdfs:subPropertyOf>
+      <owl:DatatypeProperty rdf:ID="dpUnsignedSort"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNameFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_4</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#Name"/>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpToken"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpBooleanFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="propTestDp">
+    <rdfs:domain rdf:resource="#ForGeneratorTests"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >prop test dp functional</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpGYear">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpHexBinary">
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#hexBinary"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpIDFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_1</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#ID"/>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:ID="dpNCName"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpDouble">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpGMonthDay">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gMonthDay"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpDurationFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#duration"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNonPositiveInteger">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpInteger"/>
+    </rdfs:subPropertyOf>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_3</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpID">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpNCName"/>
+    </rdfs:subPropertyOf>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#ID"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_1</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpTime">
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpBase64Binary">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#base64Binary"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNOTATION">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#NOTATION"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpGMonthDayFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gMonthDay"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNegativeIntegerFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp negative integer</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#negativeInteger"/>
+    <rdfs:subPropertyOf rdf:resource="#dpNonPositiveInteger"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpHexBinaryFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#hexBinary"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpLanguageFunctional">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpToken"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_1</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#language"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpFloatFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpBoolean">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpIDREF">
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#IDREF"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_4</rdfs:label>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpNCName"/>
+    </rdfs:subPropertyOf>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpGYearMonthFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYearMonth"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpString">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp string</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="propTestDpFunctional">
+    <rdfs:domain rdf:resource="#ForGeneratorTests"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >prop test dp functional</rdfs:label>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpLanguage">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpToken"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_1</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#language"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpDoubleFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpIDREFFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_4</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#IDREF"/>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpNCName"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNonPositiveIntegerFunctional">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpInteger"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_3</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonPositiveInteger"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpTimeFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#time"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpGYearFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gYear"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNMTOKEN">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpToken"/>
+    </rdfs:subPropertyOf>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#NMTOKEN"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_5</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpQName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#QName"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="propTestDpRanged">
+    <rdfs:domain rdf:resource="#ForGeneratorTests"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >prop test dp functional</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpDecimal">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpGDay">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gDay"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpAnyURIFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNMTOKENFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_5</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#NMTOKEN"/>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpToken"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpFloat">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpUnsignedLong">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp unsigned long</rdfs:label>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:ID="dpNonNegativeInteger"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpPositiveIntegerFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp positive integer</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpNonNegativeInteger"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpDateTimeFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpGMonth">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gMonth"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNegativeInteger">
+    <rdfs:subPropertyOf rdf:resource="#dpNonPositiveInteger"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#negativeInteger"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp negative integer</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpLong">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpInteger"/>
+    </rdfs:subPropertyOf>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#long"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_3</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpNOTATIONFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#NOTATION"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpPositiveInteger">
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp positive integer</rdfs:label>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpNonNegativeInteger"/>
+    </rdfs:subPropertyOf>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#dpUnsignedSort">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpUnsignedInt"/>
+    </rdfs:subPropertyOf>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedShort"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp unsigned sort</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#dpShort">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:ID="dpInt"/>
+    </rdfs:subPropertyOf>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp short</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpDateTime">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpByteFunctional">
+    <rdfs:subPropertyOf rdf:resource="#dpShort"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp byte</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#byte"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="dpUnsignedByteFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp unsigned byte</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedByte"/>
+    <rdfs:subPropertyOf rdf:resource="#dpUnsignedSort"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:DatatypeProperty>
+  <owl:SymmetricProperty rdf:ID="opSymetric">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op symetric</rdfs:label>
+    <owl:inverseOf rdf:resource="#opSymetric"/>
+    <rdfs:domain rdf:resource="#ObjectPropTests"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  </owl:SymmetricProperty>
+  <owl:FunctionalProperty rdf:about="#dpNCName">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#NCName"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_1</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="#dpName"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="opFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >op functional</rdfs:label>
+    <rdfs:domain rdf:resource="#ObjectPropTests"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="#dpInteger">
+    <rdfs:subPropertyOf rdf:resource="#dpDecimal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_2</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="#dpInt">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp int</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="#dpLong"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="dpUnsignedLongFunctional">
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:about="#dpNonNegativeInteger"/>
+    </rdfs:subPropertyOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp unsigned long</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedLong"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="dpShortFunctional">
+    <rdfs:subPropertyOf rdf:resource="#dpInt"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp short</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:ID="dpGMonthFunctional">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#gMonth"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="#dpUnsignedInt">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#unsignedInt"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >dp unsigned int</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="#dpUnsignedLong"/>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="#dpToken">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#token"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_1</rdfs:label>
+    <rdfs:subPropertyOf>
+      <owl:FunctionalProperty rdf:ID="dpNormalizedString"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="#dpNormalizedString">
+    <rdfs:subPropertyOf rdf:resource="#dpString"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#normalizedString"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_1</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <owl:FunctionalProperty rdf:about="#dpNonNegativeInteger">
+    <rdfs:subPropertyOf rdf:resource="#dpInteger"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Datatype property_3</rdfs:label>
+    <rdfs:domain rdf:resource="#DataPropRangeTest"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+  </owl:FunctionalProperty>
+  <DataPropRangeTest rdf:ID="DpRangeTest_1">
+    <dpGMonth rdf:datatype="http://www.w3.org/2001/XMLSchema#gMonth"
+    >--12</dpGMonth>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Dp range test_1</rdfs:label>
+  </DataPropRangeTest>
+</rdf:RDF>
+
+<!-- Created with TopBraid Composer -->

@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.hp.hpl.jena.ontology.IntersectionClass;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.ontology.UnionClass;
+import com.hp.hpl.jena.rdf.model.Property;
 
 import de.incunabulum.owl2java.model.jmodel.JClass;
 import de.incunabulum.owl2java.model.jmodel.JModel;
@@ -17,6 +21,9 @@ import de.incunabulum.owl2java.utils.JavaUtils;
 import de.incunabulum.owl2java.utils.StringUtils;
 
 public class NamingUtils {
+
+	@SuppressWarnings("unused")
+	private static Log log = LogFactory.getLog(NamingUtils.class);
 
 	public static int anonCounter = 0;
 	public static String anonPrefix = "Anon";
@@ -127,8 +134,24 @@ public class NamingUtils {
 			prefix = JModel.BASEPREFIX;
 		}
 
-		if (propertyStripPrefix)
-			localName = stripPropertyPrefixes(localName);
+		if (propertyStripPrefix) {
+			// prefixes are only stripped if no other property with a
+			// name without the prefix exists
+			String newLocalName = stripPropertyPrefixes(localName);
+			// we have a different name
+			if (!newLocalName.equals(localName)) {
+				Property p1 = ontProperty.getOntModel().getOntProperty(nsUri +  newLocalName);
+				Property p2 = ontProperty.getOntModel().getOntProperty(
+						nsUri + StringUtils.toFirstLowerCase(newLocalName));
+				// no other property of stripped name exists
+				if (p1 == null && p2 == null) {
+					localName = newLocalName;
+				} else {
+					log.warn(LogUtils.toLogName(ontProperty) + ": Can not strip property prefix "
+							+ "as another property of such name exists");
+				}
+			}
+		}
 
 		// to naming schema
 		String name = propertyNamingSchema;
@@ -155,6 +178,7 @@ public class NamingUtils {
 			OntClass c = (OntClass) operandIt.next();
 			name += StringUtils.toFirstUpperCase(c.getLocalName());
 		}
+		name = NamingUtils.getValidJavaName(name);
 		return name;
 	}
 
@@ -163,6 +187,7 @@ public class NamingUtils {
 		for (JClass c : operandClasses) {
 			name += c.getJavaClassName();
 		}
+		name = NamingUtils.getValidJavaName(name);
 		return name;
 	}
 
@@ -190,6 +215,5 @@ public class NamingUtils {
 		}
 		return name;
 	}
-
 
 }

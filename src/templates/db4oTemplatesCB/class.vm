@@ -30,14 +30,26 @@ import com.db4o.ta.Activatable;
 	public class $cName implements Activatable { 
 #end
 
+#if( ! $cls.hasSuperClasses())    
     @SuppressWarnings("unused")
-    private static Log log = LogFactory.getLog(${cName}.class);
-    
-    public $cName() {
-    }
+    public static transient Log log;
+#end
+
+#if( ! $cls.hasSuperClasses())     
+    public static transient String uriClass;
+    public String uriInstance;
+#end 
+ 
+	static {
+		log = LogFactory.getLog(${cName}.class);
+		uriClass = "$cls.getMapUri()";
+	}	
+	
+    public $cName() {}
 
 ## create transparent persistence handling for super class
-	private transient Activator activator;
+#if( ! $cls.hasSuperClasses())    
+	public transient Activator activator;
 	
 	public void activate(ActivationPurpose purpose) {
 		if (activator != null)
@@ -53,7 +65,33 @@ import com.db4o.ta.Activatable;
 		
 		activator = actv;
 	}
+#end
 
+## getters for instance, class uris 	
+#if( ! $cls.hasSuperClasses())	
+	/**
+	 * Getter for class, instance URI
+	 */
+	public String getUriInstance() {
+		activate(ActivationPurpose.READ);	
+	 	return uriInstance;
+ 	}
+ 	
+ 	public String getUriClass() {
+		activate(ActivationPurpose.READ); 	
+ 		return uriClass;
+ 	}
+#end
+
+## toString method 	
+#if( ! $cls.hasSuperClasses())	
+	/**
+	 * toString method
+	 */
+	public String toString() {
+		return getUriInstance();
+ 	}
+#end
 
     /**
      * Static Functions for instance handling
@@ -69,7 +107,7 @@ import com.db4o.ta.Activatable;
     }
 
 ## add the domain property methods
-#foreach($prop in $cls.listAggregatedProperties())
+#foreach($prop in $cls.listDomainProperties())
 	#set($propnameCaps = $prop.getJavaNameCaps())  		## the java name with first letter capitalized
 	#set($propname = $prop.getJavaName())          		## the java name
 	#parse("clsPropBase.vm")

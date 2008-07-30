@@ -11,7 +11,8 @@ ontProp = ontModel.getOntProperty("$propUri");
 objPropIt = ontInst.listProperties(ontProp);
 
 while (objPropIt.hasNext()) {
-	Resource ind = (Resource) objPropIt.next();
+	Statement stm = (Statement) objPropIt.next();
+	Resource ind = stm.getResource();
 	if (ind.getURI() == null)
 		continue;
 	String indUri = ind.getURI();
