@@ -1,0 +1,16 @@
+/**
+ * Domain property $propname
+ * with uri $prop.getMapUri()
+ */
+public boolean exists$propnameCaps() {
+	return hasProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+}
+
+// #set($rangeFull = $prop.getRangeJavaFull())    ## the full java name including package for the range
+//public boolean has$propnameCaps($rangeFull #mixedlowercase($range)Value) {
+//	#if($p.isObjectProperty)
+//		return hasProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+//	#else
+//		return hasLiteral(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+//	#end	
+//}

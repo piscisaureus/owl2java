@@ -1,0 +1,46 @@
+#set($range = $rep.getRangeJava())
+#set($rangeFull = $rep.getRangeJavaFull())
+#set($rangeUri = $rep.getRangeUri())
+#set($suffix = $rep.getJavaMethodSuffix())
+#set($multipleDeprecated = $rep.getMultipleDeprecated())
+#set($singleDeprecated = $rep.getSingleDeprecated())
+#set($method = $xsdMap.getMethodName($rangeFull))
+
+
+#if($rep.isMultipleEnabled())
+log.debug("    Adding property instance");
+instance.add$propnameCaps${suffix}($method("$rangeUri"));
+
+log.debug("    Iterate over all property values");
+Iterator<$rangeFull> it$propnameCaps${suffix} = instance.iterate$propnameCaps${suffix}();
+$rangeFull inst$propnameCaps${suffix} = null;
+while (it${propnameCaps}${suffix}.hasNext()) {
+	inst$propnameCaps${suffix} = ($rangeFull) it${propnameCaps}${suffix}.next();
+	log.debug("    -> instance: " + inst${propnameCaps}${suffix});
+}
+
+log.debug("    List all property values");
+for ($rangeFull iinst$propnameCaps${suffix} : instance.list$propnameCaps${suffix}())
+	log.debug("    -> instance: " + iinst$propnameCaps${suffix});
+
+log.debug("    Count property values");
+log.debug("    -> count: " + instance.count$propnameCaps${suffix}());
+
+log.debug("    Removing a known property instance");
+instance.remove$propnameCaps${suffix}(inst$propnameCaps${suffix});
+
+log.debug("    Removing all property instances");
+instance.removeAll$propnameCaps${suffix}();
+#end
+
+#if($rep.isSingleEnabled())
+log.debug("    Adding property instance");
+instance.set$propnameCaps${suffix}($method("$rangeeUri"));
+
+log.debug("    Getting property instances");
+$rangeFull inst$propnameCaps${suffix} = instance.get$propnameCaps${suffix}();
+
+log.debug("    Removing the property instance");
+instance.remove$propnameCaps${suffix}();
+			
+#end

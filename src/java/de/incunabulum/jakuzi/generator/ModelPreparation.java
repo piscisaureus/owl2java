@@ -15,6 +15,7 @@ import de.incunabulum.jakuzi.jmodel.JClass;
 import de.incunabulum.jakuzi.jmodel.JInheritanceGraph;
 import de.incunabulum.jakuzi.jmodel.JModel;
 import de.incunabulum.jakuzi.jmodel.JProperty;
+import de.incunabulum.jakuzi.jmodel.JRestrictionsContainer;
 import de.incunabulum.jakuzi.jmodel.utils.LogUtils;
 import de.incunabulum.jakuzi.model.RestrictionUtils;
 
@@ -28,7 +29,7 @@ public class ModelPreparation {
 	JClass baseCls;
 
 	public JModel prepareModel(JModel model) {
-		this.jModel = model;
+		jModel = model;
 		baseCls = jModel.getJClass(jModel.getBaseThingUri());
 		log.info("");
 		log.info("Prepaing model for class writer");
@@ -36,17 +37,19 @@ public class ModelPreparation {
 		// assign properties without domain to restrictions
 		if (reasignDomainlessProperties)
 			reasignProperties();
-
+		
+		// createPropertyRepresentations 
+		createDomainPropertyRepresentations();
+		
 		// aggregate properties, restriction containers...
 		aggregateAllOnClass();
 
-		// createPropertyRepresentations (top-down) missing
-		createPropertyRepresentations();
 
-		return this.jModel;
+		return jModel;
 	}
 
-	protected void createPropertyRepresentations() {
+	protected void createDomainPropertyRepresentations() {
+		log.info("Creating domain property representations");
 		JClass baseCls = jModel.getBaseThing();
 		JInheritanceGraph<JClass, DefaultEdge> classGraph = jModel.getClassGraph();
 		BreadthFirstIterator<JClass, DefaultEdge> it = new BreadthFirstIterator<JClass, DefaultEdge>(classGraph,
@@ -54,11 +57,12 @@ public class ModelPreparation {
 		it.setCrossComponentTraversal(true);
 		while (it.hasNext()) {
 			JClass c = (JClass) it.next();
-			c.createPropertyRepresentations();
+			c.createDomainPropertyRepresentations();
 		}
 	}
 
 	protected void aggregateAllOnClass() {
+		log.info("Aggregating all from parent classes");
 		JClass baseCls = jModel.getBaseThing();
 		JInheritanceGraph<JClass, DefaultEdge> classGraph = jModel.getClassGraph();
 		BreadthFirstIterator<JClass, DefaultEdge> it = new BreadthFirstIterator<JClass, DefaultEdge>(classGraph,
@@ -81,10 +85,27 @@ public class ModelPreparation {
 
 		if (RestrictionUtils.hasRestrictionOnProperty(ontClass, ontProperty)) {
 			// baseCls as we are only testing base properties here
-			log.info(LogUtils.toLogName(property) + ": Changing domain from " + LogUtils.toLogName(baseCls) + " to "
+			log.debug(LogUtils.toLogName(property) + ": Changing domain from " + LogUtils.toLogName(baseCls) + " to "
 					+ LogUtils.toLogName(cls));
 			property.addDomain(cls);
 			// restriction container is ignored as this is empty in our case for baseClass
+			
+			// We no longer have a global property with a local restriction!
+			// -> update "enabled" cardinality status based on cardinality 
+			// -> for local restriction "aProperty max 1" disable multiple accessors
+			JRestrictionsContainer rc = cls.getDomainRestrictionsContainer(property);
+			if (rc != null) {
+				if (rc.hasCardinalityRestriction()) {
+					if (rc.getCardinalityRestriction().getMaxCardinality() == 1) {
+						rc.getCardinalityRestriction().setMultipleEnabled(false);
+						rc.getCardinalityRestriction().setSingleEnabled(true);
+					}
+					if (rc.getCardinalityRestriction().getMaxCardinality() == 0) {
+						rc.getCardinalityRestriction().setMultipleEnabled(false);
+						rc.getCardinalityRestriction().setSingleEnabled(false);
+					}
+				}
+			}
 			success = true;
 		} else {
 			// test all subclasses, calls this method recursively
@@ -105,7 +126,7 @@ public class ModelPreparation {
 
 		// loop over all domainless properties (p's with domain OwlThing)
 		// and mark them for removal from domain OwlThing
-		List<JProperty> properties = baseCls.listDirectDomainProperties();
+		List<JProperty> properties = baseCls.listDomainProperties();
 		List<JProperty> propsToRemove = new ArrayList<JProperty>();
 
 		for (JProperty property : properties) {
@@ -117,7 +138,7 @@ public class ModelPreparation {
 		// remove the marked properties and the restriction containers
 		for (JProperty prop : propsToRemove) {
 			prop.removeDomain(baseCls);
-			baseCls.removeRestrictionsContainer(prop);
+			baseCls.removeDomainRestrictionsContainer(prop);
 		}
 
 	}

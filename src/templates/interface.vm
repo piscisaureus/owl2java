@@ -1,43 +1,67 @@
-#parse("macros.vm") ##
 package $cls.getJavaPackageName();
 
 import java.util.List;
 import java.util.Iterator;
 
-/*
+/**
  * Interface $cls.getMapUri()
- *
  */
+ 
 #if($cls.isRootClass())
+ 	@SuppressWarnings("unused")
     public interface $cls.getJavaInterfaceName()  {
 #else
+	@SuppressWarnings("unused")
     public interface $cls.getJavaInterfaceName() extends $ifh.getExtends() {
 #end ## if isRootClass()
 
-
 ##
-## loop over presentations of all properties
-#foreach($p in $cls.listDirectDomainProperties())
-	#set($name = $p.getJavaFullNameCaps())
-	#set($range = $p.getRangeJavaFull())
+## loop over all properties and its presentations
+##
 
-		/**
-		 * Domain property $p.getMapUri()
-		 */
-		 public boolean exists$name();
-	#if ($p.isFunctional())
-		public $range get$name ();
-		public void set$name($range value);
-		public void remove$name();
-	#else
-		public Iterator<$range> list${name}();
-		public void add$name($range value);
-		public void addAll$name(List<$range> value);
-		public void remove$name($range value);
-		public void removeAll$name();
-	#end ## isFunctional()
-
-
-#end ## foreach $p
-
+## generate base function stuff + for each presentation
+#foreach($prop in $cls.listAggregatedProperties())
+	#set($propnameCaps = $prop.getJavaNameCaps())
+	/**
+	 * Domain property $propnameCaps
+	 * with uri $prop.getMapUri()
+	 */
+	public boolean exists$propnameCaps();
+	
+	## loop over all presentations and create functions
+	#foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
+		#set($range = $rep.getRangeJava())
+		#set($rangeFull = $rep.getRangeJavaFull())
+		#set($suffix = $rep.getJavaMethodSuffix())
+		#set($multipleDeprecated = $rep.getMultipleDeprecated())
+		#set($singleDeprecated = $rep.getSingleDeprecated())
+		
+		#if($rep.isMultipleEnabled())
+			$multipleDeprecated
+			public int count$propnameCaps$suffix();
+			$multipleDeprecated
+			public Iterator<$rangeFull> iterate${propnameCaps}${suffix}();
+			$multipleDeprecated
+			public List<$rangeFull> list${propnameCaps}${suffix}();
+			$multipleDeprecated
+			public void add$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value);
+			$multipleDeprecated
+			public void addAll$propnameCaps${suffix}(List<$rangeFull> #mixedlowercase($range)List);
+			$multipleDeprecated
+			public void remove$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value);
+			$multipleDeprecated
+			public void removeAll$propnameCaps${suffix}();
+		#end
+		
+		#if($rep.isSingleEnabled())
+			$singleDeprecated
+			public $rangeFull get$propnameCaps${suffix} ();
+			$singleDeprecated
+			public void set$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value);
+			$singleDeprecated
+			public void remove$propnameCaps${suffix}();						
+		#end
+		
+	#end	
+#end
 }

@@ -35,6 +35,19 @@ public class Generator implements IStatistics, IReporting {
 	
 	private boolean reasignDomainlessProperties = true;
 	private boolean createTestClass = true;
+	
+	
+	public void generate(String uri, String altLocation, String baseDir, String basePackage) {
+		startAll = new Date();
+		
+		OntModel owlModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
+		OntDocumentManager owlDocMgr = owlModel.getDocumentManager();
+		owlDocMgr.setProcessImports(true);
+		owlDocMgr.addAltEntry(uri, altLocation);
+		owlModel.read(uri);
+		
+		generate(owlModel, baseDir, basePackage);		
+	}
 
 	public void generate(String uri, String baseDir, String basePackage) {
 		startAll = new Date();
@@ -74,7 +87,7 @@ public class Generator implements IStatistics, IReporting {
 		mWriter.setFactoryName(factoryName);
 		mWriter.setCreateTestClass(createTestClass);
 		mWriter.setTestClassName(testClassName);
-		mWriter.generate(jmodel, baseDir, basePackage);
+		mWriter.generate(this.jmodel, baseDir, basePackage);
 
 		stopAll = new Date();
 	}

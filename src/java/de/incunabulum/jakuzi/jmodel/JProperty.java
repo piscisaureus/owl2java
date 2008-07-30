@@ -31,14 +31,14 @@ public class JProperty extends JMapped {
 	private JModel jmodel;
 
 	protected List<JClass> propertyDomain = new ArrayList<JClass>();
-	// propertyRange is of type List<String> for a datatype property, List<JClass> for a object property
+	// propertyRange is of type List<String (URI)> for a datatype property, List<JClass> for a object property
 	@SuppressWarnings("unchecked")
 	protected List propertyRange = new ArrayList();
 	private String propertyType;
 
 	private List<JProperty> equivalentProps = new ArrayList<JProperty>();
 	private List<JProperty> inverseProps = new ArrayList<JProperty>();
-	
+
 	private Map<JClass, JRestrictionsContainer> classRestrictions = new HashMap<JClass, JRestrictionsContainer>();
 
 	private boolean isFunctional = false;
@@ -98,7 +98,6 @@ public class JProperty extends JMapped {
 		if (!this.propertyRange.contains(range))
 			this.propertyRange.add(range);
 	}
-
 
 	public void addSubProperty(JProperty prop) {
 		jmodel.getPropertyGraph().addChildVertex(this, prop);
@@ -161,20 +160,19 @@ public class JProperty extends JMapped {
 		String rangeUri;
 		if (this.getPropertyType() == JProperty.DataTypeProperty)
 			if (propertyRange.isEmpty()) {
-				log.info(LogUtils.toLogName(this) + ": Range is empty! Setting range to XMLLiteral");
+				log.debug(LogUtils.toLogName(this) + ": Range is empty! Setting range to XMLLiteral");
 				rangeUri = "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral";
 			} else if (propertyRange.size() > 1) {
 				rangeUri = XsdGraph.findBestSuperXsdType(propertyRange);
-				log
-						.info(LogUtils.toLogName(this) + ": multiple range! Setting range to best super type "
-								+ rangeUri);
+				log.info(LogUtils.toLogName(this) + ": multiple range! Setting range to best " + "super type "
+						+ rangeUri);
 			} else {
 				rangeUri = (String) propertyRange.get(0);
-				log.info(LogUtils.toLogName(this) + ": Setting range to " + rangeUri);
+				log.debug(LogUtils.toLogName(this) + ": Setting range to " + rangeUri);
 			}
 		else {
 			if (propertyRange.isEmpty()) {
-				log.info(LogUtils.toLogName(this) + ": Range is empty! Setting range to BaseThing Uri");
+				log.debug(LogUtils.toLogName(this) + ": Range is empty! Setting range to BaseThing Uri");
 				rangeUri = jmodel.getBaseThingUri();
 			} else if (propertyRange.size() > 1) {
 				log.error(LogUtils.toLogName(this) + ": Multiple range! This should have been "
@@ -205,7 +203,7 @@ public class JProperty extends JMapped {
 			rng += src.getJavaName() + ", ";
 		}
 		report += StringUtils.indentText("Parent Properties: " + rng + "\n", 3);
-		
+
 		Set<DefaultEdge> edgesOut = jmodel.getPropertyGraph().outgoingEdgesOf(this);
 		it = edgesOut.iterator();
 		rng = new String();
@@ -214,8 +212,8 @@ public class JProperty extends JMapped {
 			JProperty src = jmodel.getPropertyGraph().getEdgeTarget(edge);
 			rng += src.getJavaName() + ",";
 		}
-		report += StringUtils.indentText("Child Properties: " + rng + "\n", 3);		
-		
+		report += StringUtils.indentText("Child Properties: " + rng + "\n", 3);
+
 		rng = new String();
 		for (JProperty equProperty : equivalentProps)
 			rng += equProperty.getJavaName() + ", ";
@@ -234,7 +232,6 @@ public class JProperty extends JMapped {
 				JClass cls = (JClass) it.next();
 				range += cls.getJavaInterfaceFullName() + ", ";
 			}
-
 		}
 
 		report += StringUtils.indentText("Range: " + range + "\n", 3);
@@ -244,9 +241,9 @@ public class JProperty extends JMapped {
 			report += StringUtils.indentText(property.getJavaName() + "\n", 3);
 
 		report += StringUtils.indentText("Property Restrictions\n", 3);
-		
-		for (JRestrictionsContainer rc: classRestrictions.values()) {
-			report += StringUtils.indentText(rc.getReport(), 1);
+
+		for (JRestrictionsContainer rc : classRestrictions.values()) {
+			report += StringUtils.indentText(rc.getReport(), 4) + "\n";
 		}
 		report += StringUtils.indentText("Functional: " + isFunctional + "\n", 3);
 		return report;
@@ -273,15 +270,22 @@ public class JProperty extends JMapped {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<JClass> listRange() {
+	public List<JClass> listObjectPropertyRange() {
 		if (propertyType == JProperty.ObjectProperty)
+			return propertyRange;
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> listDatatypePropertyRange() {
+		if (propertyType == JProperty.DataTypeProperty) 
 			return propertyRange;
 		return null;
 	}
 
 	public void removeDomain(JClass domainCls) {
 		log.debug(LogUtils.toLogName(domainCls) + ": Removing domain property " + LogUtils.toLogName(this));
-		domainCls.listDirectDomainProperties().remove(this);
+		domainCls.listDomainProperties().remove(this);
 		propertyDomain.remove(domainCls);
 	}
 
@@ -320,20 +324,20 @@ public class JProperty extends JMapped {
 	public void setInverseFunctional(boolean isInverseFunctional) {
 		this.isInverseFunctional = isInverseFunctional;
 	}
-	
+
 	public String toString() {
 		return getJavaName();
 	}
-	
+
 	public void addRestrictionsContainer(JClass cls, JRestrictionsContainer rc) {
 		if (!classRestrictions.containsKey(cls))
 			classRestrictions.put(cls, rc);
 	}
-	
-	public JRestrictionsContainer  getRestrictionsContainer(JClass cls) {
+
+	public JRestrictionsContainer getRestrictionsContainer(JClass cls) {
 		return classRestrictions.get(cls);
 	}
-	
+
 	public boolean hasRestrictionsContainer(JRestrictionsContainer restriction) {
 		return classRestrictions.containsValue(restriction);
 	}
@@ -341,6 +345,5 @@ public class JProperty extends JMapped {
 	public boolean hasRestrictionsContainer(JClass cls) {
 		return classRestrictions.containsKey(cls);
 	}
-
 
 }

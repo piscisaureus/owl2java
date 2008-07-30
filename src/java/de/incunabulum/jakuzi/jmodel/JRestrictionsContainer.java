@@ -33,20 +33,20 @@ public class JRestrictionsContainer implements IReporting {
 		cardinalityRestriction = new JCardinalityRestriction(onClass, onProperty);
 		otherRestriction = new JOtherRestriction(onClass, onProperty);
 		
-		onClass.addRestrictionsContainer(onProperty, this);
+		onClass.addDomainRestrictionsContainer(onProperty, this);
 		onProperty.addRestrictionsContainer(onClass, this);
 	}
 	
 	public boolean hasCardinalityRestriction() {
 		if (cardinalityRestriction == null)
-			return true;
-		return false;
+			return false;
+		return true;
 	}
 	
 	public boolean hasOtherRestriction() {
 		if (otherRestriction == null)
-			return true;
-		return false;
+			return false;
+		return true;
 	}
 
 	public JOtherRestriction getOtherRestriction() {
@@ -61,7 +61,7 @@ public class JRestrictionsContainer implements IReporting {
 		for (JClass cls : parentClasses) {
 			log.debug(LogUtils.toLogName(onClass, onProperty)
 					+ ": Aggregating restrictions of parent class " + LogUtils.toLogName(cls));
-			JRestrictionsContainer restrictions = cls.getRestrictionsContainer(onProperty);
+			JRestrictionsContainer restrictions = cls.getAggregatedRestrictionsContainer(onProperty);
 			// continue if we have no restrictions for this property on the parent class
 			if (restrictions == null)
 				continue;
@@ -95,10 +95,12 @@ public class JRestrictionsContainer implements IReporting {
 	@Override
 	public String getReport() {
 		String report = LogUtils.toLogName(onClass, onProperty) + " Restriction Container:\n";
-		report += StringUtils.indentText(cardinalityRestriction.getReport() + "\n", 1);
-		report += StringUtils.indentText(otherRestriction.getReport() + "\n", 1);
+		report += StringUtils.indentText(cardinalityRestriction.getReport()+"\n", 1) ;
+		report += StringUtils.indentText(otherRestriction.getReport(), 1);
+		if (!allValuesRestrictions.isEmpty())
+			report += "\n";
 		for (JAllValuesRestriction r : allValuesRestrictions) {
-			report += StringUtils.indentText(r.getReport() +"\n", 1);
+			report += StringUtils.indentText(r.getReport()+"\n" , 1);
 		}
 		return report;
 	}

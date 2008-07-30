@@ -34,7 +34,7 @@ public class TestWriter {
 		String outDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
 		String outName = testClassName;
 		String outPath = outDir + "/" + outName + ".java";
-		log.info("Creating test cases " + outPath);
+		log.debug("Creating test cases " + outPath);
 
 		Template template;
 		try {

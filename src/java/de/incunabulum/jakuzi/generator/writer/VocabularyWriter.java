@@ -34,7 +34,7 @@ public class VocabularyWriter {
 		String outDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
 		String outName = vocabularyName;
 		String outPath = outDir + "/" + outName + ".java";
-		log.info("Creating vocabulary " + outPath);
+		log.debug("Creating vocabulary " + outPath);
 
 		Template template;
 		try {

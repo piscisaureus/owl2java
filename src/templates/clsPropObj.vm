@@ -1,0 +1,85 @@
+## loop over all presentations and create functions
+#foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
+	#set($range = $rep.getRangeJava())
+	#set($rangeFull = $rep.getRangeJavaFull())
+	#set($suffix = $rep.getJavaMethodSuffix())
+	#set($multipleDeprecated = $rep.getMultipleDeprecated())
+	#set($singleDeprecated = $rep.getSingleDeprecated())
+	
+	#if($rep.isMultipleEnabled())
+		$multipleDeprecated
+		public int count$propnameCaps$suffix() {
+			int count = 0;
+			Iterator<$rangeFull> it = iterate${propnameCaps}${suffix}();
+			while (it.hasNext()) {
+				it.next();
+				count++;
+			}
+			return count;
+		}
+		
+		$multipleDeprecated
+	    @SuppressWarnings("unchecked")
+		public Iterator<$rangeFull> iterate${propnameCaps}${suffix}() {
+            ExtendedIterator it = listProperties(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+            return it.mapWith(${range}.mapper).filterDrop(nullFilter);		
+		}
+		
+ 		$multipleDeprecated
+		public List<$rangeFull> list${propnameCaps}${suffix}() {
+			List<$rangeFull> list = new ArrayList<$rangeFull>();
+			Iterator<$rangeFull> it = iterate${propnameCaps}${suffix}();
+			while (it.hasNext()) {
+				$rangeFull inst = it.next();
+				list.add(inst);
+			}
+			return list;
+		}
+		
+		$multipleDeprecated
+		public void add$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
+            addProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+		}
+		
+		$multipleDeprecated
+		public void addAll$propnameCaps${suffix}(List<$rangeFull> #mixedlowercase($range)List) {
+            for ($rangeFull o : #mixedlowercase($range)List)
+                add$propnameCaps${suffix}(o);
+		
+		}
+		
+		$multipleDeprecated
+		public void remove$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
+            removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+		}
+		
+		$multipleDeprecated
+		public void removeAll$propnameCaps${suffix}() {
+		            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+		}
+	#end
+	
+	#if($rep.isSingleEnabled())
+		$singleDeprecated
+		public $rangeFull get$propnameCaps${suffix} () {
+            RDFNode n = getPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+            if (n.canAs(${range}.class))
+                return ($rangeFull) n.as(${range}.class);
+            else {
+                log.warn("Could not convert property $prop.getMapUri() to type $rangeFull");
+                return null;
+            }		
+		}
+		
+		$singleDeprecated
+		public void set$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
+            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+            setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+		}
+		
+		$singleDeprecated
+		public void remove$propnameCaps${suffix}() {
+            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});		
+		}						
+	#end
+#end    

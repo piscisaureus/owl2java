@@ -71,8 +71,9 @@ public class OwlReader {
 
 			// abort if we have an invalid prefix
 			if (forbiddenPrefixes.contains(prefix)) {
-				log.error("Prefix " + prefix
-						+ " is identical with a system internal prefix (toolspackage?). Aborting!");
+				log
+						.error("Prefix " + prefix
+								+ " is identical with a system internal prefix (toolspackage?). Aborting!");
 				System.exit(1);
 			}
 
@@ -100,9 +101,9 @@ public class OwlReader {
 
 		// we are reusing existing restriction if possible
 		JRestrictionsContainer jRestriction;
-		if (jClass.hasRestrictionsContainer(jProp)) {
+		if (jClass.hasDomainRestrictionsContainer(jProp)) {
 			log.debug(LogUtils.toLogName(jClass, jProp) + ": Reusing existing restriction");
-			jRestriction = jClass.getRestrictionsContainer(jProp);
+			jRestriction = jClass.getDomainRestrictionsContainer(jProp);
 		} else {
 			jRestriction = new JRestrictionsContainer(jClass, jProp);
 			log.debug(LogUtils.toLogName(jClass, jProp) + ": Creating new restriction");
@@ -113,8 +114,7 @@ public class OwlReader {
 			MaxCardinalityRestriction maxCardinalityRestriction = res.asMaxCardinalityRestriction();
 			int maxCardinality = maxCardinalityRestriction.getMaxCardinality();
 			jRestriction.getCardinalityRestriction().setMaxCardinality(maxCardinality);
-			log.debug(DebugUtils.logPropertyOnClass(cls, prop) + ": Max cardinality set to "
-					+ maxCardinality);
+			log.debug(DebugUtils.logPropertyOnClass(cls, prop) + ": Max cardinality set to " + maxCardinality);
 		}
 
 		// min cardinality -> skipped, does not make sense
@@ -122,8 +122,7 @@ public class OwlReader {
 			MinCardinalityRestriction minCardinalityRestriction = res.asMinCardinalityRestriction();
 			int minCardinality = minCardinalityRestriction.getMinCardinality();
 			jRestriction.getCardinalityRestriction().setMinCardinality(minCardinality);
-			log.debug(DebugUtils.logPropertyOnClass(cls, prop) + ": Min cardinality set to "
-					+ minCardinality);
+			log.debug(DebugUtils.logPropertyOnClass(cls, prop) + ": Min cardinality set to " + minCardinality);
 		}
 
 		// exactly -> only useful for exactly = 1
@@ -131,8 +130,7 @@ public class OwlReader {
 			CardinalityRestriction cardinalityRestriction = res.asCardinalityRestriction();
 			int cardinality = cardinalityRestriction.getCardinality();
 			jRestriction.getCardinalityRestriction().setCardinality(cardinality);
-			log.debug(DebugUtils.logPropertyOnClass(cls, prop) + ": Cardinality (min=max) set to "
-					+ cardinality);
+			log.debug(DebugUtils.logPropertyOnClass(cls, prop) + ": Cardinality (min=max) set to " + cardinality);
 		}
 
 		// All values
@@ -151,8 +149,7 @@ public class OwlReader {
 			jRestriction.getOtherRestriction().addHasValue(hasValueResource.toString());
 			log.debug(DebugUtils.logPropertyOnClass(cls, prop) + ": Added hasValue restriction:"
 					+ hasValueResource.toString());
-			log.warn(DebugUtils.logPropertyOnClass(cls, prop)
-					+ ": HasValueRestriction currently ignored");
+			log.warn(DebugUtils.logPropertyOnClass(cls, prop) + ": HasValueRestriction currently ignored");
 		}
 
 		if (res.isSomeValuesFromRestriction()) {
@@ -162,15 +159,14 @@ public class OwlReader {
 			jRestriction.getOtherRestriction().addSomeValues(someValuesJClass);
 			log.debug(DebugUtils.logPropertyOnClass(cls, prop) + ": Added someValues restriction:"
 					+ LogUtils.toLogName(someValuesJClass));
-			log.warn(DebugUtils.logPropertyOnClass(cls, prop)
-					+ ": SomeValuesRestriction currently ignored");
+			log.warn(DebugUtils.logPropertyOnClass(cls, prop) + ": SomeValuesRestriction currently ignored");
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	protected void createProperty(OntProperty ontProperty) {
-		log.debug(LogUtils.toLogName(ontProperty) + ": Found property");
-		log.info(DebugUtils.logProperty(ontProperty));
+		log.info(LogUtils.toLogName(ontProperty) + ": Found property");
+		log.debug(DebugUtils.logProperty(ontProperty));
 
 		// create the property if not already present
 		if (!jmodel.hasJProperty(ontProperty.getURI()))
@@ -189,21 +185,18 @@ public class OwlReader {
 		ExtendedIterator dIt = ontProperty.listDomain();
 		while (dIt.hasNext()) {
 			OntResource domain = (OntResource) dIt.next();
-			log.debug(LogUtils.toLogName(ontProperty) + ": Found domain "
-					+ LogUtils.toLogName(domain));
+			log.debug(LogUtils.toLogName(ontProperty) + ": Found domain " + LogUtils.toLogName(domain));
 
 			if (domain.isAnon()) {
 				// anonymous classes as domain > done in handleAnonClasses
-				log.debug(LogUtils.toLogName(ontProperty)
-						+ ": Domain is Anonymous class. Ignored.");
+				log.debug(LogUtils.toLogName(ontProperty) + ": Domain is Anonymous class. Ignored.");
 				continue;
 			}
 
 			JClass domainCls = jmodel.getJClass(domain.getURI());
 			domainCls.addDomainProperty(jProperty);
 			domainProp = true;
-			log.debug(LogUtils.toLogName(ontProperty)
-					+ ": Registering as domain property in  class "
+			log.debug(LogUtils.toLogName(ontProperty) + ": Registering as domain property in  class "
 					+ LogUtils.toLogName(domainCls));
 		}
 
@@ -211,8 +204,7 @@ public class OwlReader {
 		if (!domainProp) {
 			JClass domainCls = jmodel.getJClass(jmodel.getBaseThingUri());
 			domainCls.addDomainProperty(jProperty);
-			log.debug(LogUtils.toLogName(ontProperty)
-					+ ": Registering property without domain in "
+			log.debug(LogUtils.toLogName(ontProperty) + ": Registering property without domain in "
 					+ LogUtils.toLogName(domainCls));
 		}
 
@@ -220,46 +212,40 @@ public class OwlReader {
 		Iterator rIt = ontProperty.listRange();
 		while (rIt.hasNext()) {
 			OntResource range = (OntResource) rIt.next();
-			log.debug(LogUtils.toLogName(ontProperty) + ": Found range "
-					+ LogUtils.toLogName(range));
+			log.debug(LogUtils.toLogName(ontProperty) + ": Found range " + LogUtils.toLogName(range));
 
 			// Range points to a valid class -> object property
 			if (jmodel.hasJClass(range.getURI())) {
 				jProperty.setPropertyType(JProperty.ObjectProperty);
 				jProperty.addRange(jmodel.getJClass(range.getURI()));
 
-				log.debug(LogUtils.toLogName(ontProperty) + ": Registering class "
-						+ LogUtils.toLogName(range) + " as range");
+				log.debug(LogUtils.toLogName(ontProperty) + ": Registering class " + LogUtils.toLogName(range)
+						+ " as range");
 
 			} else if (ontProperty.isDatatypeProperty()) {
 				// data type property
 				jProperty.setPropertyType(JProperty.DataTypeProperty);
 				jProperty.addRange(range.getURI());
-				log.debug(LogUtils.toLogName(ontProperty) + ": Registering "
-						+ LogUtils.toLogName(range) + " as range");
+				log.debug(LogUtils.toLogName(ontProperty) + ": Registering " + LogUtils.toLogName(range) + " as range");
 			}
-
 		}
 
 		// property is functional -> set to functional
 		if (ontProperty.isFunctionalProperty()) {
-			log.debug(LogUtils.toLogName(ontProperty)
-					+ ": Is a functional property. Marking it. ");
+			log.debug(LogUtils.toLogName(ontProperty) + ": Is a functional property. Marking it. ");
 			jProperty.setFunctional(true);
 		}
 
 		// property is inverse functional -> we do not handle this case
 		if (ontProperty.isInverseFunctionalProperty()) {
-			log.warn(LogUtils.toLogName(ontProperty)
-					+ ": Is a inverse functional property. Ignored");
+			log.warn(LogUtils.toLogName(ontProperty) + ": Is a inverse functional property. Ignored");
 			jProperty.setInverseFunctional(true);
 		}
 
 		// property is symetric -> this is handled via owl:inverseOf,
 		// rdfs:range, rdfs:domain
 		if (ontProperty.isSymmetricProperty()) {
-			log.debug(LogUtils.toLogName(ontProperty)
-					+ ": Is a symmetric property: handled elsewhere");
+			log.debug(LogUtils.toLogName(ontProperty) + ": Is a symmetric property: handled elsewhere");
 			jProperty.setSymetric(true);
 		}
 
@@ -284,11 +270,10 @@ public class OwlReader {
 				// mark inverse
 				if (!iProp.hasInverseProperty(jProperty)) {
 					iProp.addInverseProperty(jProperty);
-					log.info(LogUtils.toLogName(ontProperty) + ": Marked as inverse of "
-							+ LogUtils.toLogName(iProp));
+					log.info(LogUtils.toLogName(ontProperty) + ": Marked as inverse of " + LogUtils.toLogName(iProp));
 				} else {
-					log.debug(LogUtils.toLogName(ontProperty)
-							+ ": Already defined as inverse of " + LogUtils.toLogName(iProp));
+					log.debug(LogUtils.toLogName(ontProperty) + ": Already defined as inverse of "
+							+ LogUtils.toLogName(iProp));
 				}
 			}
 		}
@@ -297,8 +282,9 @@ public class OwlReader {
 		Iterator superIt = ontProperty.listSuperProperties(true);
 		while (superIt.hasNext()) {
 			OntProperty superProp = (OntProperty) superIt.next();
-			log.debug(LogUtils.toLogName(ontProperty) + ": Registering super property "
-					+ LogUtils.toLogName(superProp));
+			log
+					.debug(LogUtils.toLogName(ontProperty) + ": Registering super property "
+							+ LogUtils.toLogName(superProp));
 
 			// property already present?
 			if (!jmodel.hasJProperty(superProp.getURI()))
@@ -334,8 +320,7 @@ public class OwlReader {
 						+ LogUtils.toLogName(equProp));
 				eProp.addEquivalentProperty(jProperty);
 			} else {
-				log.debug(LogUtils.toLogName(ontProperty)
-						+ ": Alredy defined as inverse property of "
+				log.debug(LogUtils.toLogName(ontProperty) + ": Alredy defined as inverse property of "
 						+ LogUtils.toLogName(equProp));
 			}
 		}
@@ -419,8 +404,7 @@ public class OwlReader {
 			OntClass equCls = (OntClass) superIt.next();
 
 			if (equCls.isAnon()) {
-				log
-						.warn("Currently, only primitive equivalent class definitions are used (OWL Lite)");
+				log.warn("Currently, only primitive equivalent class definitions are used (OWL Lite)");
 				// Currently, only primite equivalent classes are accepted
 				continue;
 			}
@@ -489,15 +473,14 @@ public class OwlReader {
 			if (prop.getPropertyType() == JProperty.DataTypeProperty)
 				continue;
 
-			if (prop.listRange().size() < 2)
+			if (prop.listObjectPropertyRange().size() < 2)
 				continue;
 
 			// XXX Multiple property range should use a intersection class instead of a union class
 			// -> not implemented
-			log.info(LogUtils.toLogName(prop)
-					+ ": Found multiple range. Replacing with UnionClass ");
+			log.info(LogUtils.toLogName(prop) + ": Found multiple range. Replacing with UnionClass ");
 
-			List<JClass> operandClasses = prop.listRange();
+			List<JClass> operandClasses = prop.listObjectPropertyRange();
 			JClass cls = jmodel.getAnonymousJClass(operandClasses);
 
 			// an identical anonymous class exists > we use it
@@ -516,14 +499,14 @@ public class OwlReader {
 			}
 
 			// register range as super classes in class
-			for (JClass superCls : prop.listRange()) {
+			for (JClass superCls : prop.listObjectPropertyRange()) {
 				superCls.addSubClass(cls);
 				log.debug(LogUtils.toLogName(cls) + ": Registering super class "
 						+ NamingUtils.getJavaFullName(superCls.getPackage(), superCls.getName()));
 			}
 
 			// reset range for property to new union class
-			prop.listRange().clear();
+			prop.listObjectPropertyRange().clear();
 			prop.addRange(cls);
 			log.debug(LogUtils.toLogName(prop) + ": Setting range to " + cls.getName());
 		}
@@ -570,10 +553,8 @@ public class OwlReader {
 			// createIntersectionClass(ontClass.asIntersectionClass());
 
 			if (ontClass.isEnumeratedClass()) {
-				jmodel.addOntResourceError(new ResourceError(ontClass,
-						"Enumerated class handled as simple class"));
-				log.warn("Found non restriction anonymous class: " + "EnumeratedClass handled "
-						+ "as simple class");
+				jmodel.addOntResourceError(new ResourceError(ontClass, "Enumerated class handled as simple class"));
+				log.warn("Found non restriction anonymous class: " + "EnumeratedClass handled " + "as simple class");
 			}
 
 		}
@@ -676,10 +657,9 @@ public class OwlReader {
 			// remove all operandClass.superclass in reassignedSuperClasses
 			for (JClass oldSuperClass : reassignedSuperClasses) {
 				if (operandCls.hasSuperClass(oldSuperClass, false)) {
-					log.debug(LogUtils.toLogName(operandCls)
-							+ ": Removing old super class relation "
+					log.debug(LogUtils.toLogName(operandCls) + ": Removing old super class relation "
 							+ LogUtils.toLogName(oldSuperClass));
-					operandCls.removeSuperClass(oldSuperClass);
+					operandCls.removeSuperClassRelation(oldSuperClass);
 				}
 			}
 		}
@@ -705,7 +685,7 @@ public class OwlReader {
 				continue;
 			String ontUri = ontCls.getURI();
 			JClass operandCls = jmodel.getJClass(ontUri);
-			for (JProperty p : operandCls.listDirectDomainProperties())
+			for (JProperty p : operandCls.listDomainProperties())
 				properties.add(p);
 		}
 		// mark any property not present in at least one class for removal
@@ -729,8 +709,7 @@ public class OwlReader {
 		for (JProperty p : properties) {
 			// add intersection class as domain
 			cls.addDomainProperty(p);
-			log.debug(LogUtils.toLogName(p) + ": Reassigning to intersection class "
-					+ LogUtils.toLogName(cls));
+			log.debug(LogUtils.toLogName(p) + ": Reassigning to intersection class " + LogUtils.toLogName(cls));
 
 			// remove operand class from domain of p
 			operandsIt = intersectionClass.listOperands();
@@ -775,13 +754,15 @@ public class OwlReader {
 			OntClass ontCls = (OntClass) subIt.next();
 			String ontUri = ontCls.getURI();
 			JClass subCls = jmodel.getJClass(ontUri);
+			subCls.removeSuperClassRelation(jmodel.getBaseThing());
 			subCls.addSuperClass(cls);
 			log.debug(LogUtils.toLogName(unionClass) + ": Registering sub class "
 					+ NamingUtils.getJavaFullName(subCls.getPackage(), subCls.getName()));
 		}
+		
 
 		// get super classes and register them
-		Iterator operandIt = unionClass.asUnionClass().listOperands();
+		Iterator operandIt = unionClass.listOperands();
 		while (operandIt.hasNext()) {
 			OntClass superClass = (OntClass) operandIt.next();
 
@@ -856,39 +837,31 @@ public class OwlReader {
 	@SuppressWarnings("unchecked")
 	protected void handleProperties() {
 		Iterator it;
-
 		log.info("");
+
 		log.info("Found " + ontModel.listObjectProperties().toList().size() + " object properties");
 		it = ontModel.listObjectProperties();
 		handleProperties(it);
 
-		log.info("");
-		log.info("Found " + ontModel.listTransitiveProperties().toList().size()
-				+ " object properties");
+		log.info("Found " + ontModel.listTransitiveProperties().toList().size() + " object properties");
 		it = ontModel.listTransitiveProperties();
 		handleProperties(it);
 
-		log.info("");
-		log.info("Found " + ontModel.listFunctionalProperties().toList().size()
-				+ " functional properties");
+
+		log.info("Found " + ontModel.listFunctionalProperties().toList().size() + " functional properties");
 		it = ontModel.listFunctionalProperties();
 		handleProperties(it);
 
-		log.info("");
 		log.info("Found " + ontModel.listInverseFunctionalProperties().toList().size()
 				+ " inverse functional properties");
 		it = ontModel.listInverseFunctionalProperties();
 		handleProperties(it);
 
-		log.info("");
-		log.info("Found " + ontModel.listSymmetricProperties().toList().size()
-				+ " symetrical properties");
+		log.info("Found " + ontModel.listSymmetricProperties().toList().size() + " symetrical properties");
 		it = ontModel.listSymmetricProperties();
 		handleProperties(it);
 
-		log.info("");
-		log.info("Found " + ontModel.listDatatypeProperties().toList().size()
-				+ " datatype properties");
+		log.info("Found " + ontModel.listDatatypeProperties().toList().size() + " datatype properties");
 		it = ontModel.listDatatypeProperties();
 		handleProperties(it);
 	}
@@ -922,8 +895,7 @@ public class OwlReader {
 				Restriction ontRestriction = cls.asRestriction();
 				OntProperty ontProperty = ontRestriction.getOnProperty();
 
-				log.info("Found Restriction on Property"
-						+ LogUtils.toLogName(ontRestriction.getOnProperty()));
+				log.info("Found Restriction on Property " + LogUtils.toLogName(ontRestriction.getOnProperty()));
 				log.debug(DebugUtils.logRestriction(ontRestriction));
 
 				// find the classes it acts on
@@ -934,8 +906,7 @@ public class OwlReader {
 					// Any anonymous class as subject of restriction is ignored. Not supported
 					// this can be union or intersection etc.
 					if (ontClass.getURI() == null) {
-						log.info(LogUtils.toLogName(ontClass)
-								+ ": Anonymous restriction class. Ignored");
+						log.info(LogUtils.toLogName(ontClass) + ": Anonymous restriction class. Ignored");
 						continue;
 					}
 

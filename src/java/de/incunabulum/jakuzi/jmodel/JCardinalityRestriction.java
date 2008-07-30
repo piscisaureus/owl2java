@@ -14,11 +14,11 @@ public class JCardinalityRestriction extends JBaseRestriction implements IReport
 	private int maxCardinality = -1;
 	private int minCardinality = 0;
 
-	// multipleXXX = true -> we need accessor methods for this type; 
+	// multipleXXX = true -> we need accessor methods for this type;
 	private boolean multipleEnabled = true;
 	private boolean singleEnabled = false;
 	// deprecated status is set depending on the max and min values
-	// multipleDeprecated == true does not mean multipe = true 
+	// multipleDeprecated == true does not mean multipe = true
 	private boolean multipleDeprecated = false;
 	private boolean singleDeprecated = false;
 
@@ -30,6 +30,25 @@ public class JCardinalityRestriction extends JBaseRestriction implements IReport
 			singleEnabled = true;
 		}
 	}
+	
+	public boolean equals(Object other) {
+		if (!(other instanceof JCardinalityRestriction))
+			return false;
+		JCardinalityRestriction cr = (JCardinalityRestriction) other;
+		if (!(maxCardinality == cr.maxCardinality))
+			return false;
+		if (!(minCardinality == cr.minCardinality))
+			return false;
+		if (!(multipleEnabled == cr.multipleEnabled))
+			return false;
+		if (!(multipleDeprecated == cr.multipleDeprecated))
+			return false;
+		if (!(singleEnabled == cr.singleEnabled))
+			return false;
+		if (!(singleDeprecated == cr.singleDeprecated))
+			return false;
+		return true;
+	}
 
 	public void mergeParent(JCardinalityRestriction parent) {
 		// empty parent cardinality restrictions (aka no restrictions) are ignored
@@ -40,11 +59,11 @@ public class JCardinalityRestriction extends JBaseRestriction implements IReport
 			multipleEnabled = multipleEnabled || parent.multipleEnabled;
 			singleEnabled = singleEnabled || parent.singleEnabled;
 			// set the deprecated and enabled status on merge cardinalities
-			updateAccessorStati();
+			updateDeprecatedStatus();
 		}
 	}
 
-	protected void updateAccessorStati() {
+	protected void updateDeprecatedStatus() {
 		if (maxCardinality == 1) {
 			multipleDeprecated = true;
 			singleEnabled = true;
@@ -56,14 +75,14 @@ public class JCardinalityRestriction extends JBaseRestriction implements IReport
 	}
 
 	public void setMaxCardinality(int max) {
-		if (maxCardinality == -1) 
+		if (maxCardinality == -1)
 			maxCardinality = max;
 		else {
 			if (maxCardinality > max)
 				maxCardinality = max;
 		}
 		isEmpty = false;
-		updateAccessorStati();
+		updateDeprecatedStatus();
 	}
 
 	public void setMinCardinality(int min) {
@@ -74,19 +93,18 @@ public class JCardinalityRestriction extends JBaseRestriction implements IReport
 				minCardinality = min;
 		}
 		isEmpty = false;
-		updateAccessorStati();
+		updateDeprecatedStatus();
 	}
 
 	public void setCardinality(int cardinality) {
 		setMaxCardinality(cardinality);
 		setMinCardinality(cardinality);
-		updateAccessorStati();
+		updateDeprecatedStatus();
 	}
-
-
 
 	public JCardinalityRestriction clone() {
 		JCardinalityRestriction restriction = new JCardinalityRestriction(onClass, onProperty);
+		restriction.isEmpty = isEmpty;
 		restriction.maxCardinality = maxCardinality;
 		restriction.minCardinality = minCardinality;
 		restriction.multipleEnabled = multipleEnabled;
@@ -97,15 +115,14 @@ public class JCardinalityRestriction extends JBaseRestriction implements IReport
 		return restriction;
 	}
 
-
 	@Override
 	public String getReport() {
 		String ret = LogUtils.toLogName(this) + ": ";
-		if (isEmpty) 
+		if (isEmpty)
 			return ret + "Empty cardinality restriction";
-		ret += "Max " + maxCardinality + ", Min " + minCardinality +"; ";
+		ret += "Max " + maxCardinality + ", Min " + minCardinality + "; ";
 		ret += "multiple " + multipleEnabled + ", deprecated " + multipleDeprecated + "; ";
-		ret += "single " + singleEnabled + ", deprecate " + singleDeprecated+ "; ";
+		ret += "single " + singleEnabled + ", deprecate " + singleDeprecated + "; ";
 		return ret;
 	}
 
@@ -115,6 +132,38 @@ public class JCardinalityRestriction extends JBaseRestriction implements IReport
 
 	public int getMinCardinality() {
 		return minCardinality;
+	}
+
+	public boolean isMultipleEnabled() {
+		return multipleEnabled;
+	}
+
+	public boolean isSingleEnabled() {
+		return singleEnabled;
+	}
+
+	public boolean isMultipleDeprecated() {
+		return multipleDeprecated;
+	}
+
+	public boolean isSingleDeprecated() {
+		return singleDeprecated;
+	}
+
+	public void setMultipleDeprecated(boolean multipleDeprecated) {
+		this.multipleDeprecated = multipleDeprecated;
+	}
+
+	public void setSingleDeprecated(boolean singleDeprecated) {
+		this.singleDeprecated = singleDeprecated;
+	}
+
+	public void setMultipleEnabled(boolean multipleEnabled) {
+		this.multipleEnabled = multipleEnabled;
+	}
+
+	public void setSingleEnabled(boolean singleEnabled) {
+		this.singleEnabled = singleEnabled;
 	}
 
 }

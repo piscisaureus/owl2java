@@ -27,11 +27,14 @@ public class JClass extends JMapped {
 	private boolean anonClass = false;
 
 	private List<JProperty> domainProperties = new ArrayList<JProperty>();
-	private List<JProperty> allProperties = new ArrayList<JProperty>();
+	private List<JProperty> aggregatedProperties = new ArrayList<JProperty>();
 	private List<JClass> equivalentClasses = new ArrayList<JClass>();
-	private Map<JProperty, JRestrictionsContainer> propertyRestrictions = new HashMap<JProperty, JRestrictionsContainer>();
+
+	private Map<JProperty, JRestrictionsContainer> domainPropertyRestrictions = new HashMap<JProperty, JRestrictionsContainer>();
+	private Map<JProperty, JRestrictionsContainer> aggregatedPropertyRestrictions = new HashMap<JProperty, JRestrictionsContainer>();
 	// PropRepresentation = (0..1) CardRestriction + 1 AllValuesRestriction + (0..1) + OtherRestriction
-	private List<JPropertyRepresentation> propertyRepresentations = new ArrayList<JPropertyRepresentation>();
+	private List<JPropertyRepresentation> domainPropertyRepresentations = new ArrayList<JPropertyRepresentation>();
+	private List<JPropertyRepresentation> aggregatedPropertyRepresentations = new ArrayList<JPropertyRepresentation>();
 
 	public JClass(JModel model, String name, String mapUri) {
 		super(name, mapUri);
@@ -39,16 +42,15 @@ public class JClass extends JMapped {
 		this.jModel.getClassGraph().addVertex(this);
 	}
 
-	
 	public void addDomainProperty(JProperty prop) {
 		if (!domainProperties.contains(prop))
 			domainProperties.add(prop);
 		if (!prop.propertyDomain.contains(this))
 			prop.propertyDomain.add(this);
-		if (!propertyRestrictions.containsKey(prop)) {
+		if (!domainPropertyRestrictions.containsKey(prop)) {
 			log.debug(LogUtils.toLogName(this, prop) + ": Creating RestrictionsContainer");
 			JRestrictionsContainer rc = new JRestrictionsContainer(this, prop);
-			propertyRestrictions.put(prop, rc);
+			domainPropertyRestrictions.put(prop, rc);
 		}
 	}
 
@@ -59,15 +61,9 @@ public class JClass extends JMapped {
 			cls.equivalentClasses.add(this);
 	}
 
-	public void addPropertyRepresentation(JPropertyRepresentation pr) {
-		if (!propertyRepresentations.contains(pr))
-			propertyRepresentations.add(pr);
-	}
-
-
-	public void addRestrictionsContainer(JProperty property, JRestrictionsContainer rc) {
-		if (!propertyRestrictions.containsKey(property))
-			propertyRestrictions.put(property, rc);
+	public void addDomainRestrictionsContainer(JProperty property, JRestrictionsContainer rc) {
+		if (!domainPropertyRestrictions.containsKey(property))
+			domainPropertyRestrictions.put(property, rc);
 	}
 
 	public void addSubClass(JClass cls) {
@@ -80,71 +76,144 @@ public class JClass extends JMapped {
 
 	public void aggegrateAll() {
 		if (jModel.isBaseThing(this)) {
-			log.info(LogUtils.toLogName(this) + ": No aggregation for BaseThing");
+			log.debug(LogUtils.toLogName(this) + ": No aggregation for BaseThing");
 			return;
 		}
-		log.info(LogUtils.toLogName(this) + ": Aggregating all definitions from parent classes");
+		log.debug(LogUtils.toLogName(this) + ": Aggregating all definitions from parent classes");
 		List<JClass> parentClasses = jModel.getClassGraph().listDirectParents(this);
-		aggregateAllProperties(parentClasses);
-		aggregateAllRestrictionContainers(parentClasses);
-		aggegrateAllRestrictionDefinitions(parentClasses);
-
+		aggregateProperties(parentClasses);
+		aggregateRestrictionContainers(parentClasses);
+		aggegrateRestrictionDefinitions(parentClasses);
+		aggregatePropertyRepresentations(parentClasses);
 	}
-	protected void aggegrateAllRestrictionDefinitions(List<JClass> parentClasses) {
-		Iterator<JProperty> it = propertyRestrictions.keySet().iterator();
+
+	protected void aggregatePropertyRepresentations(List<JClass> parentClasses) {
+		// copy local domain property representations to all representations
+		aggregatedPropertyRepresentations.addAll(domainPropertyRepresentations);
+
+		// copy parent representations to all representations
+		for (JClass cls : parentClasses) {
+			log.debug(LogUtils.toLogName(this) + ": Aggregating property presentations of parent class "
+					+ LogUtils.toLogName(cls));
+
+			for (JPropertyRepresentation representation : cls.listAggregatedPropertyRepresentations()) {
+
+				// clone the representation and add it to our list of aggregated representations
+				// we keep the UUID constant as only the deprecated status is changed here?
+				
+				JPropertyRepresentation pr = representation.clone();
+				
+				// Check for identity. Otherwise, two parent provide the same representation
+				if (hasAggregatedPropertyRepresentation(pr)) {
+					log.debug(LogUtils.toLogName(this) + ": Skipping identical representation from parent class " + LogUtils.toLogName(cls));
+					continue;
+				}
+				
+				// if we have a domain representation for a property -> mark deprecated + add
+				if (hasAggregatedPropertyRepresentation(pr.getOnProperty())) {
+					log.debug(LogUtils.toLogName(this) + ": Setting parent representation to deprecated");
+					pr.setDeprecated(true);
+				}
+				
+				// otherwise, just add
+				aggregatedPropertyRepresentations.add(pr);
+				log.debug(LogUtils.toLogName(this) + ": Adding parent representation");
+			}
+		}
+	}
+
+
+	public List<JPropertyRepresentation> listAggregatedPropertyRepresentations() {
+		return aggregatedPropertyRepresentations;
+	}
+
+	protected void aggegrateRestrictionDefinitions(List<JClass> parentClasses) {
+		Iterator<JProperty> it = aggregatedPropertyRestrictions.keySet().iterator();
 		while (it.hasNext()) {
 			JProperty property = (JProperty) it.next();
-			JRestrictionsContainer propertyRestrictionContainer = propertyRestrictions.get(property);
+			JRestrictionsContainer propertyRestrictionContainer = getAggregatedRestrictionsContainer(property
+					.getMapUri());
 			propertyRestrictionContainer.aggregateRestrictions(parentClasses);
 			log.debug(LogUtils.toLogName(this) + ": Merging restriction definitions for property "
 					+ LogUtils.toLogName(property));
 		}
 	}
 
-	protected void aggregateAllProperties(List<JClass> parentClasses) {
+	protected void aggregateProperties(List<JClass> parentClasses) {
 		// copy local domain properties to allProperites
-		allProperties.addAll(domainProperties);
+		aggregatedProperties.addAll(domainProperties);
 
 		// copy parent properties to allProperties
 		for (JClass cls : parentClasses) {
 			log.debug(LogUtils.toLogName(this) + ": Aggregating domain properties of parent class "
 					+ LogUtils.toLogName(cls));
-			allProperties.addAll(cls.listAllProperties());
-		}
-	}
 
-	protected void aggregateAllRestrictionContainers(List<JClass> parentClasses) {
-		for (JClass cls : parentClasses) {
-			log.debug(LogUtils.toLogName(this) + ": Aggregating restriction containers of parent class "
-					+ LogUtils.toLogName(cls));
-
-			// aggregate the restriction containers from parent classes
-			for (JProperty prop : cls.listAllProperties()) {
-				// already present -> skip (handled in aggegateRestrictionDefinitions)
-				if (propertyRestrictions.containsKey(prop))
-					continue;
-				// copy restriction container to here
-				JRestrictionsContainer rc = cls.getRestrictionsContainer(prop);
-				propertyRestrictions.put(prop, rc.clone());
+			for (JProperty property : cls.listAggregatedProperties()) {
+				if (!hasAggregatedProperty(property.getMapUri()))
+					aggregatedProperties.add(property);
 			}
 		}
 	}
 
-	public void createPropertyRepresentations() {
-		log.info(LogUtils.toLogName(this) + ": Creating property representations");		
+	protected void aggregateRestrictionContainers(List<JClass> parentClasses) {
+		// add our restrictions
+		for (JProperty property : domainPropertyRestrictions.keySet()) {
+			log.debug(LogUtils.toLogName(this) + ": Aggregating domain restriction containers ");			
+			JRestrictionsContainer rc = domainPropertyRestrictions.get(property);
+			aggregatedPropertyRestrictions.put(property, rc);	
+		}
+		
+		// add parent class stuff
+ 		for (JClass cls : parentClasses) {
+			log.debug(LogUtils.toLogName(this) + ": Aggregating restriction containers of parent class "
+					+ LogUtils.toLogName(cls));
+
+			// aggregate the restriction containers from parent classes
+			for (JProperty property : cls.listAggregatedProperties()) {
+				// already present -> skip (handled in aggegateRestrictionDefinitions)
+				if (hasAggregatedRestrictionsContainer(property.getMapUri()))
+					continue;
+				// copy restriction container to here
+				JRestrictionsContainer rc = cls.getAggregatedRestrictionsContainer(property);
+				aggregatedPropertyRestrictions.put(property, rc.clone());
+			}
+		}
+	}
+
+	public void createDomainPropertyRepresentations() {
+		log.debug(LogUtils.toLogName(this) + ": Creating property representations for domain properties");
 		// loop over all properties
-		for (JProperty property : allProperties) {
-			log.debug(LogUtils.toLogName(this) + ": Creating property representations for " + LogUtils.toLogName(property));
-			JRestrictionsContainer rc = propertyRestrictions.get(property);
-			
+		
+		for (JProperty property : domainPropertyRestrictions.keySet()) {
+			log.debug(LogUtils.toLogName(this) + ": Creating domain property representations for "
+					+ LogUtils.toLogName(property));
+			JRestrictionsContainer rc = domainPropertyRestrictions.get(property);
+
+			// create the default representation based on the property range
+			// if no allValues restriction for this property
+			// -> otherwise the domain property has a allValues additional restriction
+			// and is handled below
+			if (rc.listAllValuesRestrictions().isEmpty()) {
+				log.debug(LogUtils.toLogName(property) + ": Creating default representation");
+				JPropertyRepresentation jpr = new JPropertyRepresentation(property);
+				jpr.setHasDefaultPropertyRange(true);
+				if (rc.hasCardinalityRestriction())
+					jpr.setCardinalityRestriction(rc.getCardinalityRestriction().clone());
+				if (rc.hasOtherRestriction())
+					jpr.setOtherRestriction(rc.getOtherRestriction().clone());
+				domainPropertyRepresentations.add(jpr);
+			}
+
 			// for each AllValues create a single representation
 			for (JAllValuesRestriction avr : rc.listAllValuesRestrictions()) {
-				log.debug(LogUtils.toLogName(property) + ": Creating representation for AllValues " + LogUtils.toLogName(avr.getAllValues()));
+				log.debug(LogUtils.toLogName(property) + ": Creating representation for AllValues "
+						+ LogUtils.toLogName(avr.getAllValues()));
 				JPropertyRepresentation pr = new JPropertyRepresentation(property);
+				pr.setHasDefaultPropertyRange(false);
 				pr.setAllValuesRestriction(avr);
 				pr.setCardinalityRestriction(rc.getCardinalityRestriction());
 				pr.setOtherRestriction(rc.getOtherRestriction());
-				propertyRepresentations.add(pr);
+				domainPropertyRepresentations.add(pr);
 			}
 		}
 	}
@@ -191,8 +260,12 @@ public class JClass extends JMapped {
 		return jPkg;
 	}
 
-	public List<JPropertyRepresentation> getPropertyRepresentations() {
-		return propertyRepresentations;
+	public List<JPropertyRepresentation> getDomainPropertyRepresentations() {
+		return domainPropertyRepresentations;
+	}
+
+	public List<JPropertyRepresentation> getAggregatedPropertyRepresentations() {
+		return aggregatedPropertyRepresentations;
 	}
 
 	@Override
@@ -205,7 +278,7 @@ public class JClass extends JMapped {
 		while (parentIt.hasNext()) {
 			DefaultEdge edge = parentIt.next();
 			JClass parent = jModel.getClassGraph().getEdgeSource(edge);
-			report += StringUtils.indentText(parent.getJavaClassFullName() + "\n", 2);
+			report += StringUtils.indentText(parent.getJavaClassFullName(), 2) + "\n";
 		}
 
 		report += StringUtils.indentText("Child Classes\n");
@@ -213,53 +286,116 @@ public class JClass extends JMapped {
 		while (childIt.hasNext()) {
 			DefaultEdge edge = childIt.next();
 			JClass parent = jModel.getClassGraph().getEdgeTarget(edge);
-			report += StringUtils.indentText(parent.getJavaClassFullName() + "\n", 2);
+			report += StringUtils.indentText(parent.getJavaClassFullName(), 2) + "\n";
 		}
 
 		report += StringUtils.indentText("Equivalent Classes\n");
 		for (JClass child : equivalentClasses) {
-			report += StringUtils.indentText(child.getJavaClassFullName() + "\n", 2);
+			report += StringUtils.indentText(child.getJavaClassFullName(), 2) + "\n";
 		}
 
 		report += StringUtils.indentText("Domain Properties\n");
 		for (JProperty prop : domainProperties) {
-			report += StringUtils.indentText(prop.getJavaName() + "\n", 2);
+			report += StringUtils.indentText(prop.getJavaName(), 2) + "\n";
 			report += prop.getReport();
 		}
 
 		report += StringUtils.indentText("Class Restrictions\n");
-		for (JRestrictionsContainer restr : propertyRestrictions.values()) {
-			report += StringUtils.indentText(restr.getReport() + "\n", 2);
+		for (JRestrictionsContainer restr : domainPropertyRestrictions.values()) {
+			report += StringUtils.indentText(restr.getReport(), 3) + "\n";
 		}
 		return report;
 	}
 
-	public JRestrictionsContainer getRestrictionsContainer(JProperty prop) {
-		return propertyRestrictions.get(prop);
+	public JRestrictionsContainer getDomainRestrictionsContainer(JProperty prop) {
+		return getDomainRestrictionsContainer(prop.getMapUri());
+	}
+	public JRestrictionsContainer getAggregatedRestrictionsContainer(JProperty prop) {
+		return getAggregatedRestrictionsContainer(prop.getMapUri());
+	}
+
+	public JRestrictionsContainer getDomainRestrictionsContainer(String uri) {
+		for (JProperty property : domainPropertyRestrictions.keySet()) {
+			if (property.getMapUri().equals(uri))
+				return domainPropertyRestrictions.get(property);
+		}
+		return null;
+	}
+
+	public JRestrictionsContainer getAggregatedRestrictionsContainer(String uri) {
+		for (JProperty property : aggregatedPropertyRestrictions.keySet()) {
+			if (property.getMapUri().equals(uri))
+				return aggregatedPropertyRestrictions.get(property);
+		}
+		return null;
 	}
 
 	public boolean hasDomainProperty(JProperty property) {
-		return domainProperties.contains(property);
+		return hasDomainProperty(property.getMapUri());
 	}
 
 	public boolean hasDomainProperty(String uri) {
 		for (JProperty domainProp : domainProperties) {
-			if (domainProp.getMapUri() == uri)
+			if (domainProp.getMapUri().equals(uri))
 				return true;
 		}
 		return false;
 	}
 
-	public boolean hasPropertyRepresentation(JPropertyRepresentation representation) {
-		return propertyRepresentations.contains(representation);
+	public boolean hasAggregatedProperty(String uri) {
+		for (JProperty prop : aggregatedProperties) {
+			if (prop.getMapUri().equals(uri))
+				return true;
+		}
+		return false;
 	}
 
-	public boolean hasRestrictionsContainer(JProperty property) {
-		return propertyRestrictions.containsKey(property);
+	public boolean hasDomainPropertyRepresentation(JPropertyRepresentation representation) {
+		return domainPropertyRepresentations.contains(representation);
 	}
 
-	public boolean hasRestrictionsContainer(JRestrictionsContainer restriction) {
-		return propertyRestrictions.containsValue(restriction);
+
+	public boolean hasAggregatedPropertyRepresentation(JProperty property) {
+		for (JPropertyRepresentation pr : aggregatedPropertyRepresentations) {
+			if (pr.getOnProperty().getMapUri().equals(property.getMapUri()))
+				return true;
+		}
+		return false;
+	}
+	
+	private boolean hasAggregatedPropertyRepresentation(JPropertyRepresentation representation) {
+		for (JPropertyRepresentation pr: aggregatedPropertyRepresentations) {
+			if (pr.equals(representation))
+				return true;
+		}
+		return false;
+	}
+
+
+	public boolean hasDomainRestrictionsContainer(String propertyUri) {
+		for (JProperty prop : domainPropertyRestrictions.keySet()) {
+			JRestrictionsContainer rc = domainPropertyRestrictions.get(prop);
+			if (prop.getMapUri().equals(propertyUri) && rc != null)
+				return true;
+		}
+		return false;
+	}
+
+	public boolean hasAggregatedRestrictionsContainer(String propertyUri) {
+		for (JProperty prop : aggregatedPropertyRestrictions.keySet()) {
+			JRestrictionsContainer rc = aggregatedPropertyRestrictions.get(prop);
+			if (prop.getMapUri().equals(propertyUri) && rc != null)
+				return true;
+		}
+		return false;
+	}
+
+	public boolean hasDomainRestrictionsContainer(JProperty property) {
+		return hasDomainRestrictionsContainer(property.getMapUri());
+	}
+
+	public boolean hasDomainRestrictionsContainer(JRestrictionsContainer restriction) {
+		return domainPropertyRestrictions.containsValue(restriction);
 	}
 
 	public boolean hasSubClass(JClass cls, boolean recursive) {
@@ -284,18 +420,31 @@ public class JClass extends JMapped {
 		return (!hasSuperClasses());
 	}
 
-	public List<JProperty> listAllProperties() {
-		return allProperties;
+	public List<JProperty> listAggregatedProperties() {
+		return aggregatedProperties;
 	}
 
-	public List<JProperty> listDirectDomainProperties() {
+	public List<JProperty> listDomainProperties() {
 		return domainProperties;
 	}
+	
+	public List<JPropertyRepresentation> listDomainPropertyRepresentations() {
+		return domainPropertyRepresentations;
+	}
 
-	public List<JPropertyRepresentation> listDirectPropertyRepresentations(JProperty property) {
+	public List<JPropertyRepresentation> listDomainPropertyRepresentations(JProperty property) {
 		List<JPropertyRepresentation> representations = new ArrayList<JPropertyRepresentation>();
-		for (JPropertyRepresentation rep : propertyRepresentations) {
-			if (rep.getOnProperty() == property)
+		for (JPropertyRepresentation rep : domainPropertyRepresentations) {
+			if (rep.getOnProperty().getMapUri().equals(property.getMapUri()))
+				representations.add(rep);
+		}
+		return representations;
+	}
+	
+	public List<JPropertyRepresentation> listAggregatedPropertyRepresentations(JProperty property) {
+		List<JPropertyRepresentation> representations = new ArrayList<JPropertyRepresentation>();
+		for (JPropertyRepresentation rep : aggregatedPropertyRepresentations) {
+			if (rep.getOnProperty().getMapUri().equals(property.getMapUri()))
 				representations.add(rep);
 		}
 		return representations;
@@ -353,14 +502,14 @@ public class JClass extends JMapped {
 		return uri2prop;
 	}
 
-	public List<JRestrictionsContainer> listRestrictionContainers() {
+	public List<JRestrictionsContainer> listDomainRestrictionContainers() {
 		List<JRestrictionsContainer> restrictions = new ArrayList<JRestrictionsContainer>();
-		restrictions.addAll(propertyRestrictions.values());
+		restrictions.addAll(domainPropertyRestrictions.values());
 		return restrictions;
 	}
 
 	public void removeAllPropertyRepresentations() {
-		propertyRepresentations.clear();
+		domainPropertyRepresentations.clear();
 	}
 
 	public void removeDomainProperty(JProperty property) {
@@ -368,17 +517,19 @@ public class JClass extends JMapped {
 			domainProperties.remove(property);
 	}
 
-	public void removeRestrictionsContainer(JProperty property) {
-		if (propertyRestrictions.containsKey(property))
-			propertyRestrictions.remove(property);
+	public void removeDomainRestrictionsContainer(JProperty property) {
+		if (domainPropertyRestrictions.containsKey(property))
+			domainPropertyRestrictions.remove(property);
 	}
 
-	public void removeSubClass(JClass subCls) {
-		jModel.getClassGraph().removeVertex(subCls);
+	public void removeSubClassRelation(JClass subCls) {
+		jModel.getClassGraph().removeAllEdges(this, subCls);
+		//jModel.getClassGraph().removeVertex(subCls);
 	}
-
-	public void removeSuperClass(JClass superCls) {
-		jModel.getClassGraph().removeVertex(superCls);
+	
+	public void removeSuperClassRelation(JClass superCls) {
+		jModel.getClassGraph().removeAllEdges(superCls, this);
+		//jModel.getClassGraph().removeVertex(superCls);
 	}
 
 	public void setAnonymous(boolean anon) {

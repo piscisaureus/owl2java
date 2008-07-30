@@ -1,12 +1,18 @@
+Templates:
+- hasProperty($range value) for each property (see clsPropBase.vm)
 
-Use PropertyRepresentations in Templates + define helper methods in Java
-  
-Misc:
-- How about OCL as query language?
+In Templates:
+- MaxCardinality Constraints
 
- 
- JavaDocs:
+JavaDocs:
  - These are completely missing
  
- Logging:
- - Cleanup for info, warn, error 
+XsdTypes currently ignored:
+- Entity
+
+Misc:
+- add support for primitive types?
+- add helper class for XsdDuration (to create it?)
+- How about OCL as query language?
+- Count via Sparql?
+- List as LazyProxyList with loadOnDemand?

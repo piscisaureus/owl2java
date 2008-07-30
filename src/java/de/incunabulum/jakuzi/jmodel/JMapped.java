@@ -45,7 +45,7 @@ public class JMapped implements IReporting, IName {
 		return mapUri;
 	}
 
-	public String getJavaFullNameCaps() {
+	public String getJavaNameCaps() {
 		return StringUtils.toFirstUpperCase(getName());
 	}
 

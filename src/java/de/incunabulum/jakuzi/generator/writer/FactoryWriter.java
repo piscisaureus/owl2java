@@ -33,7 +33,7 @@ public class FactoryWriter {
 		String outDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
 		String outName = factoryName;
 		String outPath = outDir + "/" + outName + ".java";
-		log.info("Creating factory " + outPath);
+		log.debug("Creating factory " + outPath);
 
 		Template template;
 		try {

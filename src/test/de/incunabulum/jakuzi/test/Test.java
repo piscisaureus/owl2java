@@ -21,14 +21,16 @@ public class Test {
 		Generator gen = new Generator();
 
 		String uri = "http://owl.incunabulum.de/2007/10/kEquipment.owl";
-		gen.generate(uri, "src/test", "model.kequipment");
+		// gen.generate(uri, "src/test", "model.kequipment");
 
 		uri = "http://owl.incunabulum.de/2008/02/owl4java.owl";
-		gen.generate(uri, "src/test", "model.owl4java");
+		String file = "file:///D:/workspace/Kns-Owl/2008/02/owl4java.owl";
+		//gen.generate(uri, "src/test", "model.owl4java");
+			gen.generate(uri, file, "src/test", "model.owl4java");
 
 		// report
 		String report = gen.getReport();
-		log.error(report);
+		//log.error(report);
 
 		report = gen.getStatistics();
 		log.error(report);

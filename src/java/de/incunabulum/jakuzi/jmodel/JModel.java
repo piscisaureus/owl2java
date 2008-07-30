@@ -189,14 +189,14 @@ public class JModel implements IReporting, IStatistics {
 		Iterator<String> it = ns2prefix.keySet().iterator();
 		while (it.hasNext()) {
 			String key = (String) it.next();
-			report += StringUtils.indentText(key + ": " + ns2prefix.get(key) + "\n");
+			report += StringUtils.indentText(key + ": " + ns2prefix.get(key)) + "\n";
 		}
 
 		report += StringUtils.toSubHeader("Owl Namespaces and Java Packages ");
 		it = ns2javaPkgName.keySet().iterator();
 		while (it.hasNext()) {
 			String key = (String) it.next();
-			report += StringUtils.indentText(key + ": " + ns2prefix.get(key) + "\n");
+			report += StringUtils.indentText(key + ": " + ns2prefix.get(key)) + "\n";
 		}
 
 		report += StringUtils.toHeader("Classes");
@@ -323,7 +323,6 @@ public class JModel implements IReporting, IStatistics {
 		String propName = NamingUtils.getPropertyName(ontProp);
 		JProperty p = new JProperty(this, propName, ontProp.getURI());
 		uri2property.put(ontProp.getURI(), p);
-
 		log.debug(LogUtils.toLogName(ontProp) + ": Creating property " + p.getName());
 	}
 
@@ -350,7 +349,7 @@ public class JModel implements IReporting, IStatistics {
 		while (clsIt.hasNext()) {
 			String clsUri = (String) clsIt.next();
 			JClass cls = uri2class.get(clsUri);
-			restrictionCount += cls.listRestrictionContainers().size();
+			restrictionCount += cls.listDomainRestrictionContainers().size();
 		}
 		ret += "Restrictions: " + restrictionCount + "\n";
 		ret += "Errors: " + ontResourceErrors.size();

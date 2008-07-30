@@ -19,6 +19,7 @@ import de.incunabulum.jakuzi.jmodel.JClass;
 import de.incunabulum.jakuzi.jmodel.JModel;
 import de.incunabulum.jakuzi.jmodel.JPackage;
 import de.incunabulum.jakuzi.jmodel.utils.NamingUtils;
+import de.incunabulum.jakuzi.model.XsdMapTestData;
 import de.incunabulum.jakuzi.utils.JavaUtils;
 
 public class JavaWriter {
@@ -102,6 +103,7 @@ public class JavaWriter {
 				"org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 		// see http://minaret.biz/tips/tomcatLogging.html
 		vEngine.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.Log4JLogSystem");
+		vEngine.setProperty("velocimacro.library", "macros.vm");
 		try {
 			vEngine.init();
 		} catch (Exception e) {
@@ -124,6 +126,8 @@ public class JavaWriter {
 		vContext.put("vocabPkg", NamingUtils.getJavaPackageName(basePackage, toolsPackage));
 		vContext.put("testcaseName", testClassName);
 		vContext.put("testcasePkg", NamingUtils.getJavaPackageName(basePackage, toolsPackage));
+		XsdMapTestData xsdMap = new XsdMapTestData();
+		vContext.put("xsdMap", xsdMap);
 		return vContext;
 	}
 

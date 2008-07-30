@@ -6,16 +6,33 @@ public class StringUtils {
 	public static String preStr = "#### ";
 	public static String indent = "  ";
 
+	protected static String indentNextLines(String text, String indent) {
+		String origText = new String(text);
+		String ret = new String();
+		String[] lines = text.split("\\n");
+		for (int i = 0; i < lines.length; i++) {
+			// last line and no final \n on orig text
+			if (i == lines.length -1 && !origText.endsWith("\n"))
+
+				ret += indent + lines[i];
+			else
+				ret += indent + lines[i] + "\n";
+		}
+		return ret;
+	}
+
 	public static String indentText(String text) {
-		return StringUtils.indent + text;
+		text = indentNextLines(text, indent);
+		return text;
 	}
 
 	public static String indentText(String text, int level) {
-		String out = new String();
+		String indent = new String();
 		for (int i = 0; i < level; i++) {
-			out += indentText(new String());
+			indent += StringUtils.indent;
 		}
-		return out + text;
+		text = indentNextLines(text, indent);
+		return text;
 	}
 
 	public static String toFirstLowerCase(String string) {

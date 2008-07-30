@@ -1,0 +1,2 @@
+log.debug("    Any property $propname exist?");
+log.debug("    -> exists: " + instance.exists$propnameCaps());

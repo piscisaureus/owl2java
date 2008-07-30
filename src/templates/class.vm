@@ -1,4 +1,3 @@
-#parse("macros.vm") ##
 #set($cName = $cls.getJavaClassName())
 #set($cFName = $cls.getJavaClassFullName())
 #set($iName = $cls.getJavaInterfaceName())
@@ -6,6 +5,7 @@
 ##
 package $cls.getJavaPackageName();
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -37,6 +37,7 @@ import $iFName;
 /**
  * Class $cls.getMapUri()
  */
+@SuppressWarnings("unused")
 public class $cName extends IndividualImpl implements $iName {
 
     @SuppressWarnings("unused")
@@ -77,7 +78,6 @@ public class $cName extends IndividualImpl implements $iName {
         }
     };
 
-    public static Map1 mapper = new Mapper();
 
     /**
      * Mapping support for $cName
@@ -96,6 +96,8 @@ public class $cName extends IndividualImpl implements $iName {
             return null;
         }
     }
+
+    public static Map1 mapper = new Mapper();
 
     /**
      * Generic functions from parent class
@@ -121,11 +123,33 @@ public class $cName extends IndividualImpl implements $iName {
         return ($cFName) individual.as(${cFName}.class);
     }
 
-    public static Iterator<$cName> list(OntModel ontModel) {
-            ExtendedIterator it = ontModel.listIndividuals(${pkgBase}.${pkgTools}.${vocabName}.${cName});
-            return it.mapWith(${cFName}.mapper).filterDrop(nullFilter);
+    @SuppressWarnings("unchecked")
+    public static Iterator<$cName> iterate(OntModel ontModel) {
+        ExtendedIterator it = ontModel.listIndividuals(${pkgBase}.${pkgTools}.${vocabName}.${cName});
+        return it.mapWith(${cFName}.mapper).filterDrop(nullFilter);
     }
-
+    
+    public static List<$cName> list(OntModel ontModel) {
+		List<$cName> list = new ArrayList<$cName>();
+		Iterator <$cName> it = iterate(ontModel);
+		while (it.hasNext()) {
+			$cName cls = it.next();
+			list.add(cls);
+		}    	
+    	return list;
+    }
+    
+    public static int count(OntModel ontModel) {
+    	int count = 0;
+		Iterator<$cName> it = iterate(ontModel);
+		while (it.hasNext()) {
+			it.next();
+			count++;
+		}    	
+    	return count;    
+    }
+    
+    
     public static boolean exists(OntModel ontModel, String uri) {
         Individual individual = ontModel.getIndividual(uri);
         if (individual != null)
@@ -134,15 +158,31 @@ public class $cName extends IndividualImpl implements $iName {
     }
 
     public static $cName create(OntModel ontModel, String uri) {
-        return ($cName) ontModel.createIndividual(uri, ${pkgBase}.${pkgTools}.${vocabName}.${cName});
+    	return ($cName) ontModel.createOntResource(${cName}.class, ${pkgBase}.${pkgTools}.${vocabName}.${cName}, uri); 
     }
 
     public static $cName create(OntModel ontModel) {
         return create(ontModel, null);
     }
+    
+    public static void delete(OntModel ontModel, String uri) {
+    	${pkgBase}.${pkgTools}.${factoryName}.deleteInstance(ontModel, uri);
+    }
+    
+	// TODO: exists(OntModel ontModel) missing
+    
 
 ## add the domain property methods
-#foreach($p in $cls.listDomainProperties(true))
-#parse("clsProperty.vm")
+#foreach($prop in $cls.listAggregatedProperties())
+	#set($propnameCaps = $prop.getJavaNameCaps())  ## the java name with first letter capitalized
+	#set($propname = $prop.getJavaName())             ## the java name
+	#parse("clsPropBase.vm")
+	#if($prop.isObjectProperty())
+		#parse("clsPropObj.vm")
+	#else
+		#set($rangeMethod = $prop.getDataRangeMethod()) ## the name of the method to acess a dataproperty range
+		#set($rangeURI = $prop.getRangeUri())      ## the uri of the range. Used for datatype properties
+		#parse("clsPropDT.vm")
+	#end
 #end
 }
