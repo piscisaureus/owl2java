@@ -36,7 +36,7 @@ public class JPackage implements IReporting, IName {
 		return packageName;
 	}
 	
-	public String getJavaFullName() {
+	public String getJavaName() {
 		return packageName;
 	}
 

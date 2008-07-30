@@ -1,6 +1,7 @@
 package de.incunabulum.owl4java.jmodel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -27,20 +28,24 @@ public class JProperty extends JMapped {
 	protected List<JProperty> superProps = new ArrayList<JProperty>();
 	protected List<JProperty> inverseProps = new ArrayList<JProperty>();
 
-	// TODO: Merge datatypeRange, objectRange? 
-	protected List<String> datatypeRange = new ArrayList<String>();
-	protected List<JClass> propertyRange = new ArrayList<JClass>();
+	// propertyRange is of type:
+	// - List<String> for a datatype property
+	// - List<JClass> for a object property
+	@SuppressWarnings("unchecked")
+	protected List propertyRange = new ArrayList();
 	protected List<JClassRestriction> restrictions = new ArrayList<JClassRestriction>();
 	protected boolean isFunctional = false;
 
-	public void addObjectRange(JClass range) {
+	@SuppressWarnings("unchecked")
+	public void addRange(JClass range) {
 		if (!this.propertyRange.contains(range))
 			this.propertyRange.add(range);
 	}
 
-	public void addDatatypeRange(String range) {
-		if (!this.datatypeRange.contains(range))
-			this.datatypeRange.add(range);
+	@SuppressWarnings("unchecked")
+	public void addRange(String range) {
+		if (!this.propertyRange.contains(range))
+			this.propertyRange.add(range);
 	}
 
 	public void addInverse(JProperty prop) {
@@ -50,8 +55,16 @@ public class JProperty extends JMapped {
 			prop.inverseProps.add(this);
 	}
 
-	public boolean hasInverse(JProperty prop) {
+	public boolean hasInverseProperty(JProperty prop) {
 		return this.inverseProps.contains(prop);
+	}
+
+	public boolean hasInverseProperties() {
+		return (!this.inverseProps.isEmpty());
+	}
+
+	public boolean hasParentProperties() {
+		return (!this.superProps.isEmpty());
 	}
 
 	public JProperty(String name, String mappedTo) {
@@ -71,33 +84,46 @@ public class JProperty extends JMapped {
 		if (!prop.superProps.contains(this))
 			prop.superProps.add(this);
 	}
-	
-	public String getJavaFullName() {
+
+	public String getJavaName() {
 		return NamingUtils.getPropertyName(ontProperty);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String getReport() {
-		String rng = "";
+		String rng = new String();
 
 		// Super, sub
 		for (JProperty superProperty : superProps)
-			rng += superProperty.getJavaFullName() + ", ";
+			rng += superProperty.getJavaName() + ", ";
 		String report = StringUtils.indentText("Parent Properties: " + rng + "\n", 3);
 
 		for (JProperty subProperty : subProps)
-			rng += subProperty.getJavaFullName() + ", ";
+			rng += subProperty.getJavaName() + ", ";
 		report = StringUtils.indentText("Child Properties: " + rng + "\n", 3);
 
-		rng = "";
-		for (JClass cls : propertyRange) {
-			rng += cls.getJavaInterfaceFullName() + ", ";
+		String range = new String();
+		if (propertyType == DataTypeProperty) {
+			Iterator it = propertyRange.iterator();
+			while (it.hasNext()) {
+				String rangeUri = (String) it.next();
+				range += (String) rangeUri + ", ";
+			}
+		} else {
+			Iterator it = propertyRange.iterator();
+			while (it.hasNext()) {
+				JClass cls = (JClass) it.next();
+				range += cls.getJavaInterfaceFullName() + ", ";
+			}
+
 		}
-		report = StringUtils.indentText("Range: " + rng + "\n", 3);
+
+		report = StringUtils.indentText("Range: " + range + "\n", 3);
 
 		report += StringUtils.indentText("Inverse Properties: " + "\n", 3);
 		for (JProperty property : inverseProps)
-			report += StringUtils.indentText(property.getJavaFullName() + "\n", 3);
+			report += StringUtils.indentText(property.getJavaName() + "\n", 3);
 
 		report += StringUtils.indentText("Property Restrictions\n", 3);
 		for (JClassRestriction restriction : restrictions) {
@@ -137,12 +163,8 @@ public class JProperty extends JMapped {
 		this.propertyType = propertyType;
 	}
 
-	public List<JClass> getObjectRange() {
+	public List<JClass> getRange() {
 		return propertyRange;
-	}
-
-	public List<String> getDatatypeRange() {
-		return datatypeRange;
 	}
 
 	public boolean equals(Object other) {
@@ -154,20 +176,29 @@ public class JProperty extends JMapped {
 	public String getRangeString() {
 		String rangeStr;
 		if (this.getPropertyType() == JProperty.DataTypeProperty)
-			if (datatypeRange.size() > 1 || datatypeRange.isEmpty()) {
-				log.info(NamingUtils.toLogName(this) + ": Multiple datatypes as range or empty! Setting range to Object");
+			if (propertyRange.isEmpty()) {
+				log.info(NamingUtils.toLogName(this) + ": Range is empty! Setting range to Object");
+				rangeStr = "Object";
+			} else if (propertyRange.size() > 1) {
+				log.warn(NamingUtils.toLogName(this)
+						+ ": ultiple range! This should have been be handled before. Setting range to Object");
 				rangeStr = "Object";
 			} else {
-				rangeStr = getDatatypeRange().get(0);
+				rangeStr = (String) propertyRange.get(0);
 				rangeStr = XsdUtils.xsd2Java(rangeStr);
 				log.info(NamingUtils.toLogName(this) + ": Setting range to " + rangeStr);
 			}
 		else {
-			if (propertyRange.size() > 1 || propertyRange.isEmpty()) {
-				log.warn(NamingUtils.toLogName(this) + ": Multiple objects as range or empty! Setting range to Object");
+			if (propertyRange.isEmpty()) {
+				log.info(NamingUtils.toLogName(this) + ": Range is empty! Setting range to Object");
+				rangeStr = "Object";
+			} else if (propertyRange.size() > 1) {
+				log.warn(NamingUtils.toLogName(this)
+						+ ": Multiple range! This should have been be handled before. Setting range to Object");
 				rangeStr = "Object";
 			} else {
-				rangeStr = propertyRange.get(0).getJavaInterfaceName();
+				JClass cls = (JClass) propertyRange.get(0);
+				rangeStr = cls.getJavaInterfaceName();
 			}
 		}
 		return rangeStr;

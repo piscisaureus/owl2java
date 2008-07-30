@@ -1,12 +1,9 @@
-#macro( mixedcase $name )$name.substring(0,1).toUpperCase()$name.substring(1)#end
-#macro( lowercase $name )$name.toLowerCase()#end
-#macro( uppercase $name )$name.toUpperCase()#end
-#macro( n $jmapped)$jmapped.getJavaFullName()#end
     /**
      * Vocabulary for all items in this class
      */
-    public static final String #uppercase($cls.getJavaFullName()) = "$cls.getMapUri()";
+    public static String URI = "$cls.getMapUri()";
+    public static final String #uppercase($cls.getJavaInterfaceName()) = "$cls.getMapUri()";
 
-#foreach($p in $if.getDomainProperties(true))
-    public static final String #uppercase($p.getJavaFullName()) = "$p.getMapUri()";
+#foreach($p in $cls.getDomainProperties(true))
+    public static final String #uppercase($p.getJavaName()) = "$p.getMapUri()";
 #end

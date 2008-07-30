@@ -1,9 +1,11 @@
-#set($iName = $if.getJavaName())
-#set($iFName = $if.getJavaFullName())
+#set($iNamee = $cls.getJavaClassName())
+#set($iFName = $cls.getJavaClassFullName())
+#set($iName = $cls.getJavaInterfaceName())
+#set($iFName = $cls.getJavaInterfaceFullName())
 ##
 ##
     /**
-     * Interface / Class $if.getMapUri()
+     * Interface $cls.getMapUri()
      */
     public $iFName get$iName(String uri) {
         return null;
@@ -28,4 +30,3 @@
     public $iFName create$iName(OntModel model) {
         return null;
     }
-     

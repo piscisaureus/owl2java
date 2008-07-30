@@ -32,8 +32,8 @@ public class ClassWriter {
 		String outDir = JavaUtils.toDirectoryFromPackage(cls.getJavaPackageName(), baseDir);
 		String outName = cls.getJavaClassName();
 		String outPath = outDir + "/" + outName + ".java";
-		log.info("Creating cls " + outName);
-		log.debug("Creating cls as " + outPath);
+		log.info("Creating class " + outName);
+		log.debug("Creating class as " + outPath);
 
 		Template template;
 		try {

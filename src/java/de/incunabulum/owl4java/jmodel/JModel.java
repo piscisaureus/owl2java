@@ -6,23 +6,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntProperty;
-import com.hp.hpl.jena.ontology.OntResource;
+import com.hp.hpl.jena.ontology.UnionClass;
 
 import de.incunabulum.owl4java.jmodel.utils.NamingUtils;
 import de.incunabulum.owl4java.utils.IReporting;
 import de.incunabulum.owl4java.utils.IStatistics;
+import de.incunabulum.owl4java.utils.ResourceError;
 import de.incunabulum.owl4java.utils.StringUtils;
 
 public class JModel implements IReporting, IStatistics {
 
 	private static Log log = LogFactory.getLog(JModel.class);
 
-	public static String THINGNAME = "Thing";
+	private static String THINGNAME = "Thing";
+	private static String BASEPREFIX = "";
 
 	public Map<String, String> ns2prefix = new HashMap<String, String>();
 	public Map<String, String> ns2javaPkgName = new HashMap<String, String>();
@@ -30,7 +33,7 @@ public class JModel implements IReporting, IStatistics {
 	public Map<String, JClass> uri2class = new HashMap<String, JClass>();
 	public Map<String, JProperty> uri2property = new HashMap<String, JProperty>();
 
-	public List<OntResource> ontResourceErrors = new ArrayList<OntResource>();
+	public List<ResourceError> ontResourceErrors = new ArrayList<ResourceError>();
 	public String baseThingUri;
 
 	public void addPackage(String pkgName, JPackage pkg) {
@@ -45,27 +48,77 @@ public class JModel implements IReporting, IStatistics {
 		return this.pkgName2Package.get(packageName);
 	}
 
+	@SuppressWarnings("unchecked")
+	public JClass getAnonymousJClass(List<JClass> operandClasses) {
+		// loop over all classes in the model
+		Iterator<String> clsUris = uri2class.keySet().iterator();
+		while (clsUris.hasNext()) {
+			String uri = (String) clsUris.next();
+			JClass cls = uri2class.get(uri);
+
+			// if class is not anonymous > continue
+			if (!cls.isAnonymous())
+				continue;
+
+			// if both anonymous classes have identical super classes
+			// > identical > return it
+			List<JClass> superClasses = cls.getSuperClasses();
+			// different size > super classes are not identical
+			if (superClasses.size() != operandClasses.size())
+				continue;
+			// difference of list is empty > lists are identical > return
+
+			if (ListUtils.subtract(superClasses, operandClasses).isEmpty())
+				return cls;
+		}
+
+		return null;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public JClass getAnonymousJClass(UnionClass unionClass) {
+		// find all super classes (operands) of the anonymous class
+		List<JClass> operandClasses = new ArrayList<JClass>();
+		Iterator operandIt = unionClass.listOperands();
+		while (operandIt.hasNext()) {
+			OntClass cls = (OntClass) operandIt.next();
+			String clsUri = cls.getURI();
+			if (uri2class.containsKey(clsUri)) {
+				operandClasses.add(uri2class.get(clsUri));
+			}
+		}
+
+		return getAnonymousJClass(operandClasses);
+	}
+
 	public boolean hasPackage(String packageName) {
 		return this.pkgName2Package.containsKey(packageName);
 	}
 
+	public static String getBaseThingName() {
+		return THINGNAME;
+	}
+
 	@Override
 	public String getReport() {
-		String report = "";
+		String report = new String();
 		report += StringUtils.toHeader("JModel report");
 
 		report += StringUtils.toSubHeader("Owl Namespaces and Prefixes");
 		Iterator<String> it = ns2prefix.keySet().iterator();
 		while (it.hasNext()) {
 			String key = (String) it.next();
-			report += StringUtils.indentText(key + ": " + ns2prefix.get(key) + "\n");
+			report += StringUtils.indentText(key + ": " + ns2prefix.get(key)
+					+ "\n");
 		}
 
 		report += StringUtils.toSubHeader("Owl Namespaces and Java Packages ");
 		it = ns2javaPkgName.keySet().iterator();
 		while (it.hasNext()) {
 			String key = (String) it.next();
-			report += StringUtils.indentText(key + ": " + ns2prefix.get(key) + "\n");
+			report += StringUtils.indentText(key + ": " + ns2prefix.get(key)
+					+ "\n");
 		}
 
 		report += StringUtils.toHeader("Classes");
@@ -77,8 +130,8 @@ public class JModel implements IReporting, IStatistics {
 		}
 
 		report += StringUtils.toHeader("Errors");
-		for (OntResource res : ontResourceErrors) {
-			report += res.toString() + "\n";
+		for (ResourceError res : ontResourceErrors) {
+			report += res.getReport() + "\n";
 		}
 		return report;
 	}
@@ -92,6 +145,14 @@ public class JModel implements IReporting, IStatistics {
 				return ns;
 		}
 		return null;
+	}
+
+	public String getBaseNamespace() {
+		return getNamespace(BASEPREFIX);
+	}
+
+	public static String getBasePrefix() {
+		return BASEPREFIX;
 	}
 
 	public boolean hasJClass(String uri) {
@@ -129,8 +190,8 @@ public class JModel implements IReporting, IStatistics {
 		uri2class.put(clsUri, cls);
 
 		getJPackage(pkgName).addClass(cls);
-		log.debug(NamingUtils.toLogName(cls) + ": Creating class " + cls.getName() + " in package "
-				+ cls.getJavaPackageName());
+		log.debug(NamingUtils.toLogName(cls) + ": Creating class "
+				+ cls.getName() + " in package " + cls.getJavaPackageName());
 	}
 
 	public void createJClass(OntClass ontClass, String basePackage) {
@@ -166,7 +227,8 @@ public class JModel implements IReporting, IStatistics {
 		JProperty p = new JProperty(propName, ontProp.getURI());
 		uri2property.put(ontProp.getURI(), p);
 
-		log.debug(NamingUtils.toLogName(ontProp) + ": Creating property " + p.getName());
+		log.debug(NamingUtils.toLogName(ontProp) + ": Creating property "
+				+ p.getName());
 	}
 
 	public String createNewPrefix() {
@@ -182,7 +244,7 @@ public class JModel implements IReporting, IStatistics {
 
 	@Override
 	public String getStatistics() {
-		String ret = "";
+		String ret = new String();
 		ret += StringUtils.toHeader("Statistics");
 		ret += "Classes: " + uri2class.size() + "\n";
 		ret += "Properties: " + uri2property.size() + "\n";
@@ -194,7 +256,8 @@ public class JModel implements IReporting, IStatistics {
 			JClass cls = uri2class.get(clsUri);
 			restrictionCount += cls.restrictions.size();
 		}
-		ret += "Restrictions: " + restrictionCount;
+		ret += "Restrictions: " + restrictionCount + "\n";
+		ret += "Errors: " + ontResourceErrors.size();
 		return ret;
 	}
 

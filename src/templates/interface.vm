@@ -1,26 +1,28 @@
-package $if.getJavaPackageName();
+#parse("macros.vm") ##
+package $cls.getJavaPackageName();
 
 import java.util.List;
 import java.util.Iterator;
+import de.incunabulum.owl4java.utils.SimpleUrl;
 
 // import parent interfaces
-#foreach($iface in $if.getSuperInterfaces())
-import $iface.getJavaFullName();
+#foreach($c in $cls.getSuperClasses())
+import $c.getJavaInterfaceFullName();
 #end
 
 ## for all domain properties import all range interfaces
 // import interfaces for properties
-#foreach($p in $if.getDomainProperties())
+#foreach($p in $cls.getDomainProperties())
 #foreach($i in $p.getObjectRange())
-import $i.getJavaFullName();
+import $i.getJavaInterfaceFullName();
 #end
 #end
 
 ## include root interface or child interface template
 /*
- * Interface $if.getMapUri()
+ * Interface $cls.getMapUri()
  */
-#if($if.isRootInterface())
+#if($cls.isRootClass())
 #parse("ifaceRoot.vm")
 #else
 #parse("ifaceChild.vm")

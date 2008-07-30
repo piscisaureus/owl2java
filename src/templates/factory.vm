@@ -1,8 +1,9 @@
-#macro( uppercase $name )$name.toUpperCase()#end
+#parse("macros.vm") ##
 package $fPkg;
 
 import java.util.List;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.HashMap;
 
 import com.hp.hpl.jena.ontology.OntModel;
 
@@ -11,15 +12,32 @@ import com.hp.hpl.jena.ontology.OntModel;
  */
 public class $fName {
 
-	private OntModel model;
+
+    // Type Mapper
+    public static Map<String, String> uri2Type;
+
+    static {
+        uri2Type = new HashMap<String, String>();
+#foreach($cls in $model.getJClasses())
+        uri2Type.put("$cls.getMapUri()","$cls.getJavaInterfaceFullName()");
+#end
+    }
+
+    private OntModel model;
 
 	public $fName(OntModel model) {
 		this.model = model;
 	}
 
-#foreach($if in $model.getJInterfaces())
+    public static String getType(String uri) {
+        return uri2Type.get(uri);
+    }
+
+    public static boolean hasType(String uri) {
+        return uri2Type.containsKey(uri);
+    }
+
+#foreach($cls in $model.getJClasses())
 #parse("factMethods.vm")
 #end
-
-
 }

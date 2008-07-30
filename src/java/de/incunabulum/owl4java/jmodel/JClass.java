@@ -21,6 +21,7 @@ public class JClass extends JMapped {
 
 	private OntClass ontClass;
 
+	protected boolean anonymous = false; 
 	protected JPackage pkg;
 	protected List<JClass> subClasses = new ArrayList<JClass>();
 	protected List<JClass> superClasses = new ArrayList<JClass>();
@@ -35,6 +36,7 @@ public class JClass extends JMapped {
 		if (!restrictions.contains(res))
 			this.restrictions.add(res);
 	}
+	
 	public boolean hasRestriction(JProperty property) {
 		for (JClassRestriction clsRestriction : restrictions) {
 			if (clsRestriction.getOnProp() == property)
@@ -42,8 +44,30 @@ public class JClass extends JMapped {
 		}
 		return false;
 	}
+	
+	public boolean isAnonymous() {
+		return anonymous;
+	}
+	
+	
+	public void setAnonymous(boolean anon) {
+		log.debug(NamingUtils.toLogName(this) + ": Marking as anonymous class");
+		anonymous = anon;
+	}
+	
+	public boolean hasModifiesRestriction(JProperty property) {
+		boolean propIsFunctional = property.isFunctional;
+		List<JClassRestriction> restrictions = getRestrictions(property);
+		for (JClassRestriction clsRestriction : restrictions) {
+			if (!propIsFunctional && clsRestriction.maxCardinality == 1)
+				return true;
+			if (clsRestriction.hasAllValuesRestriction())
+				return true;
+		}
+		return false;
+	}
 
-	public List<JClassRestriction> getRestriction(JProperty property) {
+	public List<JClassRestriction> getRestrictions(JProperty property) {
 		List<JClassRestriction> r = new ArrayList<JClassRestriction>();
 		for (JClassRestriction clsRestriction : restrictions) {
 			if (clsRestriction.getOnProp() == property)
@@ -101,7 +125,7 @@ public class JClass extends JMapped {
 
 	@Override
 	public String getReport() {
-		String report = "";
+		String report = new String();
 		report += StringUtils.toSubHeader("Class " + getJavaClassFullName());
 		report += StringUtils.indentText("Parent Classes\n");
 		for (JClass parent : superClasses) {
@@ -115,7 +139,7 @@ public class JClass extends JMapped {
 
 		report += StringUtils.indentText("Domain Properties\n");
 		for (JProperty prop : domainProps) {
-			report += StringUtils.indentText(prop.getJavaFullName() + "\n", 2);
+			report += StringUtils.indentText(prop.getJavaName() + "\n", 2);
 			report += prop.getReport();
 		}
 
@@ -132,12 +156,12 @@ public class JClass extends JMapped {
 			return NamingUtils.getJavaInterfaceName(this.ontClass);
 
 		// no OntClass given (base.thing e. g. )
-		String javaName = NamingUtils.getJavaInterfaceName(getName(), "");
+		String javaName = NamingUtils.getJavaInterfaceName(getName(), JModel.getBasePrefix());
 		return javaName;
 	}
 
 	public String getJavaInterfaceFullName() {
-		return pkg.getJavaFullName() + "." + getJavaInterfaceName();
+		return NamingUtils.getJavaFullName(pkg, getJavaInterfaceName());
 	}
 
 	public String getJavaClassName() {
@@ -145,12 +169,11 @@ public class JClass extends JMapped {
 			return NamingUtils.getJavaClassName(this.ontClass);
 
 		// no OntClass given (base.thing e. g. )
-		String javaName = NamingUtils.getJavaClassName(getName(), "");
-		return javaName;
+		return NamingUtils.getJavaClassName(getName(), JModel.getBasePrefix());
 	}
 
 	public String getJavaClassFullName() {
-		return pkg.getJavaFullName() + "." + getJavaClassName();
+		return NamingUtils.getJavaFullName(pkg, getJavaClassName());
 
 	}
 

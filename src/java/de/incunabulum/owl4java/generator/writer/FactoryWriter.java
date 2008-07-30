@@ -28,13 +28,12 @@ public class FactoryWriter {
 		this.vContext = vContext;
 	}
 
-	public void writeFactory(JModel jmodel, String baseDir,
-			String basePackage) {
+	public void writeFactory(JModel jmodel, String baseDir, String basePackage) {
 		String pkgName = NamingUtils.getJavaPackageName(basePackage, toolsPackage);
 		String outDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
 		String outName = factoryName;
 		String outPath = outDir + "/" + outName + ".java";
-		log.info("Creating factory" + outPath);
+		log.info("Creating factory " + outPath);
 
 		Template template;
 		try {
@@ -68,8 +67,4 @@ public class FactoryWriter {
 		this.toolsPackage = toolsPackage;
 	}
 
-
-	// XXX: Add factory package options and factory name configurable
-	
-	
 }

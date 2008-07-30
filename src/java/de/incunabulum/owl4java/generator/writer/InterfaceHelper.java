@@ -20,7 +20,7 @@ public class InterfaceHelper {
 	}
 
 	public String getExtends() {
-		String ret = "";
+		String ret = new String();
 
 		// no super classes > base.Thing
 		List<JClass> superClasses = cls.getSuperClasses();

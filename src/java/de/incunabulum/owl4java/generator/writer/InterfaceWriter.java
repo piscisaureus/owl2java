@@ -49,7 +49,7 @@ public class InterfaceWriter {
 
 		InterfaceHelper ifaceHelper = new InterfaceHelper(cls);
 		vContext.put("ifh", ifaceHelper);
-		vContext.put("if", cls);
+		vContext.put("cls", cls);
 
 		try {
 			FileWriter fWriter = new FileWriter(outPath);

@@ -1,12 +1,14 @@
-#set($cName = $cls.getJavaName())
-#set($cFName = $cls.getJavaFullName())
-#set($iName = $cls.getInterface().getJavaName())
-#set($iFName = $cls.getInterface().getJavaFullName())
+#parse("macros.vm") ##
+#set($cName = $cls.getJavaClassName())
+#set($cFName = $cls.getJavaClassFullName())
+#set($iName = $cls.getJavaInterfaceName())
+#set($iFName = $cls.getJavaInterfaceFullName())
 ##
 package $cls.getJavaPackageName();
 
 import java.util.List;
 import java.util.Iterator;
+import de.incunabulum.owl4java.utils.SimpleUrl;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.impl.IndividualImpl;
@@ -18,23 +20,25 @@ import $iFName;
 
 ## for all domain properties import all range interfaces
 // import interfaces for properties
-#foreach($p in $if.getDomainProperties(true))
-#foreach($i in $p.getObjectRange())
-import $i.getJavaFullName();
+#foreach($p in $cls.getDomainProperties(true))
+#foreach($c in $p.getObjectRange())
+import $c.getJavaInterfaceFullName();
 #end
 #end
 
 /*
  * Class $cls.getMapUri()
  */
-public class $cls.getJavaName() extends IndividualImpl implements $iName {
+public class $cName extends IndividualImpl implements $iName {
+
+    private OntModel model;
 
 #parse("clsVocab.vm")
 
     /**
      * Generic functions from parent class
      */
-    public $cls.getJavaName()(Node n, EnhGraph g) {
+    public $cName(Node n, EnhGraph g) {
         super(n, g);
     }
 
@@ -69,8 +73,7 @@ public class $cls.getJavaName() extends IndividualImpl implements $iName {
         return null;
     }
 
-
-#foreach($p in $if.getDomainProperties(true))
+#foreach($p in $cls.getDomainProperties(true))
 #parse("clsProperty.vm")
 #end
 }

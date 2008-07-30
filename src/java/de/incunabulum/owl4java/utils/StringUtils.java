@@ -11,9 +11,9 @@ public class StringUtils {
 	}
 
 	public static String indentText(String text, int level) {
-		String out = "";
+		String out = new String();
 		for (int i = 0; i < level; i++) {
-			out += indentText("");
+			out += indentText(new String());
 		}
 		return out + text;
 	}

@@ -1,8 +1,8 @@
-public interface $if.getJavaName()
+public interface $cls.getJavaInterfaceName()
 extends
 $ifh.getExtends() {
 
-#foreach($p in $if.getDomainProperties())
+#foreach($p in $cls.getDomainProperties())
 #parse("ifaceProperty.vm")
 #end
 }

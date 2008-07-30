@@ -5,7 +5,7 @@
     /**
      * Domain property $p.getMapUri()
      */
-    public boolean has$name (String uri) {
+    public boolean exists$name (SimpleUrl uri) {
         return false;
     }
 
@@ -19,9 +19,7 @@
     }
 
     public void set$name($range value) {
-        
     }
-
 #else
     public void add$name($range value) {
         
@@ -47,9 +45,16 @@
         return null;
     }
 
-    // TODO: parent properties? how to handle them? Restrictions
-    
-#if($cls.hasRestriction($p))
-// XXX: Restrictions apply!
+#if($cls.hasModifiesRestriction($p))
+    // XXX: Restrictions apply!
 #end
+##
+#if($p.hasParentProperties())
+    // XXX: Parent properites present
 #end
+##
+#if($p.hasInversePropertyies())
+    // XXX: Inverse properites present
+#end
+
+#end ## if/else/end

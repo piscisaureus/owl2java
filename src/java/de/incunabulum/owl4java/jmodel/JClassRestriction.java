@@ -29,6 +29,12 @@ public class JClassRestriction implements IReporting {
 	public void setMaxCardinality(int maxCardinality) {
 		this.maxCardinality = maxCardinality;
 	}
+	
+	public boolean hasAllValuesRestriction() {
+		if (allValues != null)
+			return true;
+		return false;
+	}
 
 	public void setMinCardinality(int minCardinality) {
 		this.minCardinality = minCardinality;
@@ -41,7 +47,7 @@ public class JClassRestriction implements IReporting {
 	@Override
 	public String getReport() {
 		String report = StringUtils.indentText("- On Class: " + onCls.getJavaClassFullName() + "\n",3);
-		report += StringUtils.indentText("  On Property: " + onProp.getJavaFullName() + "\n",3);
+		report += StringUtils.indentText("  On Property: " + onProp.getJavaName() + "\n",3);
 		if (allValues != null)
 			report += StringUtils.indentText("  AllValues from: " + allValues.getJavaClassFullName() + "\n",3);
 		report += StringUtils.indentText("  Cardinality: Max=" + maxCardinality + ", Min=" + minCardinality + "\n",3);
