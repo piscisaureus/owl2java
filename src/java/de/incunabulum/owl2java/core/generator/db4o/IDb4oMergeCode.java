@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.generator.db4o;
+package de.incunabulum.owl2java.core.generator.db4o;
 
 import com.hp.hpl.jena.ontology.OntModel;
 

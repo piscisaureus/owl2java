@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.generator.db4o;
+package de.incunabulum.owl2java.core.generator.db4o;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,12 +8,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
 
-import de.incunabulum.owl2java.Db4oGenerator;
+import de.incunabulum.owl2java.core.Db4oGenerator;
+import de.incunabulum.owl2java.core.generator.AbstractWriter;
 import de.incunabulum.owl2java.core.model.jmodel.JClass;
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
 import de.incunabulum.owl2java.core.model.xsd.XsdMapTestData;
-import de.incunabulum.owl2java.generator.AbstractWriter;
 
 public class Db4oWriter extends AbstractWriter {
 	

@@ -5,7 +5,7 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import de.incunabulum.owl2java.JenaGenerator;
+import de.incunabulum.owl2java.core.JenaGenerator;
 
 public class GenerateJena {
 

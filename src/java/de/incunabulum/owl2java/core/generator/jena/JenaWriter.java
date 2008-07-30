@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.generator.jena;
+package de.incunabulum.owl2java.core.generator.jena;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,11 +8,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
 
+import de.incunabulum.owl2java.core.generator.AbstractWriter;
 import de.incunabulum.owl2java.core.model.jmodel.JClass;
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
 import de.incunabulum.owl2java.core.model.xsd.XsdMapTestData;
-import de.incunabulum.owl2java.generator.AbstractWriter;
 
 public class JenaWriter extends AbstractWriter {
 	

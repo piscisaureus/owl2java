@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.generator.jena;
+package de.incunabulum.owl2java.core.generator.jena;
 
 import java.io.FileWriter;
 
@@ -14,27 +14,27 @@ import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
 import de.incunabulum.owl2java.core.utils.JavaUtils;
 
-public class JenaVocabularyWriter {
-	private static Log log = LogFactory.getLog(JenaVocabularyWriter.class);
-	private static final String TEMPLATE_NAME = "vocabulary.vm";
+public class JenaTestWriter {
+	
+	private static Log log = LogFactory.getLog(JenaFactoryWriter.class);
+	private static final String TEMPLATE_NAME = "test.vm";
 
 	private VelocityEngine vEngine;
 	private VelocityContext vContext;
-	private String vocabularyName;
+	private String testClassName;
 	private String toolsPackage;
 
-	public JenaVocabularyWriter(VelocityEngine vEngine, VelocityContext vContext) {
+	public JenaTestWriter(VelocityEngine vEngine, VelocityContext vContext) {
 		this.vEngine = vEngine;
 		this.vContext = vContext;
 	}
 
-	public void writeVocabulary(JModel jmodel, String baseDir,
-			String basePackage) {
+	public void writeTestCases(JModel jmodel, String baseDir, String basePackage) {
 		String pkgName = NamingUtils.getJavaPackageName(basePackage, toolsPackage);
 		String outDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
-		String outName = vocabularyName;
+		String outName = testClassName;
 		String outPath = outDir + "/" + outName + ".java";
-		log.debug("Creating vocabulary " + outPath);
+		log.debug("Creating test cases " + outPath);
 
 		Template template;
 		try {
@@ -47,7 +47,6 @@ public class JenaVocabularyWriter {
 			throw new RuntimeException();
 		}
 
-
 		try {
 			FileWriter fWriter = new FileWriter(outPath);
 			template.merge(vContext, fWriter);
@@ -57,8 +56,8 @@ public class JenaVocabularyWriter {
 		}
 	}
 
-	public void setVocabularyName(String vocabularyName) {
-		this.vocabularyName = vocabularyName;
+	public void setTestClassName(String testClassName) {
+		this.testClassName = testClassName;
 	}
 
 	public void setToolsPackage(String toolsPackage) {
@@ -66,3 +65,5 @@ public class JenaVocabularyWriter {
 	}
 
 }
+
+

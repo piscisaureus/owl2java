@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.generator.jena;
+package de.incunabulum.owl2java.core.generator.jena;
 
 import java.util.Iterator;
 import java.util.List;

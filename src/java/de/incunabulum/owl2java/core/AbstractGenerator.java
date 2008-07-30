@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java;
+package de.incunabulum.owl2java.core;
 
 import java.util.Date;
 

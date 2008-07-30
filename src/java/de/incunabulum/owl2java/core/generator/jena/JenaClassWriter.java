@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.generator.db4o;
+package de.incunabulum.owl2java.core.generator.jena;
 
 import java.io.FileWriter;
 
@@ -14,20 +14,21 @@ import de.incunabulum.owl2java.core.model.jmodel.JClass;
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.utils.JavaUtils;
 
-public class Db4oClassWriter {
-
-	private static Log log = LogFactory.getLog(Db4oClassWriter.class);
+public class JenaClassWriter {
+	
+	
+	private static Log log = LogFactory.getLog(JenaClassWriter.class);
 
 	private static String TEMPLATE_NAME = "class.vm";
 
 	private VelocityEngine vEngine;
 	private VelocityContext vContext;
 
-	public Db4oClassWriter(VelocityEngine vEngine, VelocityContext vContext) {
+	public JenaClassWriter(VelocityEngine vEngine, VelocityContext vContext) {
 		this.vEngine = vEngine;
 		this.vContext = vContext;
 	}
-	
+
 	public void writeClass(JModel jmodel, JClass cls, String baseDir) {
 		String outDir = JavaUtils.toDirectoryFromPackage(cls.getJavaPackageName(), baseDir);
 		String outName = cls.getJavaClassName();
@@ -57,6 +58,4 @@ public class Db4oClassWriter {
 		}
 	}
 	
-
-
 }

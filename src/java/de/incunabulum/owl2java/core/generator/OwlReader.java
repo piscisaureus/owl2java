@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.generator;
+package de.incunabulum.owl2java.core.generator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
