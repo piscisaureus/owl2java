@@ -1,0 +1,160 @@
+package $instancePkg;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.config.Configuration;
+import com.db4o.ta.TransparentPersistenceSupport;
+import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.Individual;
+import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+
+import de.incunabulum.owl2java.model.jenautils.NullFilter;
+
+
+/**
+ * Instance Mapping
+ */
+public class $instanceName {
+
+    @SuppressWarnings("unused")
+    private static Log log = LogFactory.getLog(${instanceName}.class);
+    
+    private static Map<String, Object> uri2db4oObject = new HashMap<String, Object>();
+    
+    static NullFilter nullFilter = new NullFilter();
+        
+    static ObjectContainer db;
+	static OntModel ontModel;
+    
+   
+    public static void run(OntModel ontModel, String dbPath) {
+    	${instanceName}.ontModel = ontModel;
+    	
+    	openDbContainer(dbPath);
+
+    	createInstances();
+		mapDTProperties();
+		mapObjectProperties();
+
+		log.info("Closing db");
+    	${instanceName}.db.close();
+    	log.info("Done");
+    	
+    }
+    
+    protected static void openDbContainer(String dbPath) {
+    	log.info("Opening db4o Database");
+    	Configuration conf = Db4o.newConfiguration();
+    	conf.add(new TransparentPersistenceSupport());
+    	${instanceName}.db = Db4o.openFile(conf, dbPath);
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected static void createInstances() {
+    	log.info("Adding all instances to the db4o database");
+    	OntClass ontClass;
+    	Iterator it;
+        #foreach ($cls in $jmodel.listJClasses())
+        	log.info("Creating instances of class $cls.getJavaClassFullName()");
+        	ontClass = ontModel.getOntClass("$cls.getMapUri()");
+        	it = ontClass.listInstances(true);
+        	while (it.hasNext()) {
+        		Individual ontInst = (Individual) it.next();
+        		log.debug("  Creating instance for uri " + ontInst.getURI());
+        		$cls.getJavaClassFullName() objInst = new $cls.getJavaClassFullName()();
+        		uri2db4oObject.put(ontInst.getURI(), objInst);
+        		${instanceName}.db.store(objInst);
+			}
+			        	
+        #end
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected static void mapDTProperties() {
+    	log.info("Mapping datatype properties");
+        OntClass ontClass;
+        Iterator it;
+        
+        #foreach ($cls in $jmodel.listJClasses())
+		#set($clsFullName = $cls.getJavaClassFullName())
+			// Class $clsFullName
+    		log.info("Mapping datatype properties for class $clsFullName");
+    		ontClass = ontModel.getOntClass("$cls.getMapUri()");
+        	
+        	// iterate over all direct instances
+        	it = ontClass.listInstances(true);
+        	while (it.hasNext()) {
+        		Individual ontInst = (Individual) it.next();
+        		String uri = ontInst.getURI();
+        		log.debug("Mapping instance " + uri);
+        		
+        		@SuppressWarnings("unused")
+        		$clsFullName objInst  = ($clsFullName) uri2db4oObject.get(uri);
+
+				// map class datatype property
+				@SuppressWarnings("unused")
+				Property ontProp;
+				@SuppressWarnings("unused")
+				ExtendedIterator itProp; 
+				
+				#foreach($prop in $cls.listAggregatedProperties()) 
+					#if($prop.isDataTypeProperty())
+						#parse("mapPropDT.vm")
+					#end
+				#end
+			}
+			
+		#end    	
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected static void mapObjectProperties() {
+    	log.info("Mapping object properties");
+        OntClass ontClass;
+        Iterator it;
+        #foreach ($cls in $jmodel.listJClasses())
+		#set($clsFullName = $cls.getJavaClassFullName())
+        	// Class $clsFullName
+    		log.info("Mapping datatype properties for class $clsFullName");
+    		ontClass = ontModel.getOntClass("$cls.getMapUri()");
+        	
+        	// iterate over all instances
+        	it = ontClass.listInstances(true);
+        	while (it.hasNext()) {
+        		Individual ontInst = (Individual) it.next();
+        		String uri = ontInst.getURI();
+        		log.debug("Mapping instance " + uri);
+        		
+        		@SuppressWarnings("unused")
+        		$clsFullName objInst  = ($clsFullName) uri2db4oObject.get(uri);
+
+				// map object properties property 
+				@SuppressWarnings("unused")
+				Property ontProp;
+				@SuppressWarnings("unused")
+				ExtendedIterator objPropIt; 
+				
+				#foreach($prop in $cls.listAggregatedProperties())
+					#if($prop.isObjectProperty())
+						#parse("mapPropObj.vm")
+					#end
+				#end
+			}
+			
+		#end    	
+    }
+    	    
+    
+
+
+}

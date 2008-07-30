@@ -1,0 +1,63 @@
+## loop over all presentations and create functions
+#set($range = $prop.getRangeJava())
+#set($rangeFull = $prop.getRangeJavaFull())
+
+#if(!$prop.isFunctional())
+	List<$rangeFull> $propname = new ArrayList4<$rangeFull>();
+	
+	public int count$propnameCaps() {
+		activate(ActivationPurpose.READ);
+		return ${propname}.size();
+	}
+	
+    @SuppressWarnings("unchecked")
+	public Iterator<$rangeFull> iterate${propnameCaps}() {
+		activate(ActivationPurpose.READ);
+		return ${propname}.iterator();		
+   		}
+   		
+	public List<$rangeFull> list${propnameCaps}() {
+		activate(ActivationPurpose.READ);
+		return $propname;		
+		}
+  
+		
+	public void add$propnameCaps($rangeFull #mixedlowercase($range)Value) {
+		activate(ActivationPurpose.WRITE);
+		${propname}.add(#mixedlowercase($range)Value);		
+	}
+	
+	public void addAll$propnameCaps(List<$rangeFull> #mixedlowercase($range)List) {
+		activate(ActivationPurpose.WRITE);
+		${propname}.addAll(#mixedlowercase($range)List);				
+	}
+	
+	public void remove$propnameCaps($rangeFull #mixedlowercase($range)Value) {
+		activate(ActivationPurpose.WRITE);
+		${propname}.remove(#mixedlowercase($range)Value);						
+	}
+	
+	public void removeAll$propnameCaps() {
+		activate(ActivationPurpose.WRITE);
+		${propname}.clear();						
+	}
+#end
+
+#if($prop.isFunctional())
+	$rangeFull $propname;
+			
+	public $rangeFull get$propnameCaps () {
+		activate(ActivationPurpose.READ);
+		return $propname;								
+	}
+	
+	public void set$propnameCaps($rangeFull #mixedlowercase($range)Value) {
+		activate(ActivationPurpose.WRITE);
+		${propname} = #mixedlowercase($range)Value;						
+	}
+	
+	public void remove$propnameCaps() {
+		activate(ActivationPurpose.WRITE);
+		${propname} = null;			
+	}						
+#end

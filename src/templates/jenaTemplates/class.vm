@@ -1,0 +1,205 @@
+#set($cName = $cls.getJavaClassName())
+#set($cFName = $cls.getJavaClassFullName())
+#set($cUri = $cls.getMapUri())
+#set($iName = $cls.getJavaInterfaceName())
+#set($iFName = $cls.getJavaInterfaceFullName())
+##
+package $cls.getJavaPackageName();
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Iterator;
+
+import de.incunabulum.owl2java.model.jenautils.NullFilter;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.hp.hpl.jena.enhanced.BuiltinPersonalities;
+import com.hp.hpl.jena.enhanced.EnhGraph;
+import com.hp.hpl.jena.enhanced.EnhNode;
+import com.hp.hpl.jena.enhanced.Implementation;
+import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.ontology.Individual;
+import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.Profile;
+import com.hp.hpl.jena.ontology.impl.IndividualImpl;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.util.iterator.WrappedIterator;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+import com.hp.hpl.jena.util.iterator.Map1;
+// import interface
+import $iFName;
+
+/**
+ * Class $cls.getMapUri()
+ */
+@SuppressWarnings("unused")
+public class $cName extends IndividualImpl implements $iName {
+
+    @SuppressWarnings("unused")
+    private static Log log = LogFactory.getLog(${cName}.class);
+
+    static NullFilter nullFilter = new NullFilter();
+
+    /**
+     * Implementation factory for $cName
+     */
+    static final public Implementation factory = new Implementation() {
+
+        /**
+         * Convert a Node into an instance of the class
+         */
+        public EnhNode wrap(Node n, EnhGraph eg) {
+            if (canWrap(n, eg)) {
+                return new $cName(n, eg);
+            } else {
+                log.warn("Cannot convert node " + n.toString() + " to  $cName");
+                return null;
+            }
+        }
+
+        /**
+         * Return true iff the node can be converted to an instance of
+         * this class ($cName)
+         */
+        public boolean canWrap(Node n, EnhGraph eg) {
+            Profile profile;
+            if (eg instanceof OntModel)
+                profile = ((OntModel)eg).getProfile();
+            else
+                return false;
+
+            return profile.isSupported(n, eg, Individual.class) &&
+                   eg.asGraph().contains(n, com.hp.hpl.jena.vocabulary.RDF.type.asNode(), ${pkgBase}.${pkgTools}.${vocabName}.${cName}.asNode());
+        }
+    };
+
+
+    /**
+     * Mapping support for $cName
+     */
+    protected static class Mapper implements Map1 {
+
+        public Object map1(Object x) {
+            if (x instanceof Statement) {
+                Resource r = ((Statement)x).getResource();
+                if (r.canAs(${cName}.class))
+                    return r.as(${cName}.class);
+            } else if (x instanceof RDFNode) {
+                if (((RDFNode)x).canAs(${cName}.class))
+                    return ((RDFNode)x).as(${cName}.class);
+            }
+            return null;
+        }
+    }
+
+    public static Map1 mapper = new Mapper();
+
+    /**
+     * Generic functions from parent class
+     */
+    public $cName(Node n, EnhGraph g) {
+        super(n, g);
+    }
+
+    /**
+     * Registers all custom classes with jena
+     */
+    public static void register() {
+        log.debug("Registering custom class $cName with jena");
+        BuiltinPersonalities.model.add(${cName}.class, ${cName}.factory);
+        BuiltinPersonalities.model.add(${cFName}.class, ${cName}.factory);
+     }
+
+    /**
+     * Static Functions for instance handling
+     */
+    public static $cName get(OntModel ontModel, String uri) {
+        Individual individual = ontModel.getIndividual(uri);
+        return ($cFName) individual.as(${cFName}.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Iterator<$cName> iterate(OntModel ontModel) {
+        ExtendedIterator it = ontModel.listIndividuals(${pkgBase}.${pkgTools}.${vocabName}.${cName});
+        return it.mapWith(${cFName}.mapper).filterDrop(nullFilter);
+    }
+    
+    public static List<$cName> list(OntModel ontModel) {
+		List<$cName> list = new ArrayList<$cName>();
+		Iterator <$cName> it = iterate(ontModel);
+		while (it.hasNext()) {
+			$cName cls = it.next();
+			list.add(cls);
+		}    	
+    	return list;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Iterator<$cName> iterate(OntModel ontModel, boolean direct) {
+    	OntClass cls = ontModel.getOntClass("$cUri");
+    	ExtendedIterator it = cls.listInstances(direct);
+        return it.mapWith(${cFName}.mapper).filterDrop(nullFilter);
+    }
+    
+    public static List<$cName> list(OntModel ontModel, boolean direct) {
+		List<$cName> list = new ArrayList<$cName>();
+		Iterator <$cName> it = iterate(ontModel, direct);
+		while (it.hasNext()) {
+			$cName cls = it.next();
+			list.add(cls);
+		}    	
+    	return list;
+    }
+    
+    public static int count(OntModel ontModel) {
+    	int count = 0;
+		Iterator<$cName> it = iterate(ontModel);
+		while (it.hasNext()) {
+			it.next();
+			count++;
+		}    	
+    	return count;    
+    }
+    
+    
+    public static boolean exists(OntModel ontModel, String uri) {
+        Individual individual = ontModel.getIndividual(uri);
+        if (individual != null)
+            return true;
+        return false;
+    }
+
+    public static $cName create(OntModel ontModel, String uri) {
+    	return ($cName) ontModel.createOntResource(${cName}.class, ${pkgBase}.${pkgTools}.${vocabName}.${cName}, uri); 
+    }
+
+    public static $cName create(OntModel ontModel) {
+        return create(ontModel, null);
+    }
+    
+    public static void delete(OntModel ontModel, String uri) {
+    	${pkgBase}.${pkgTools}.${factoryName}.deleteInstance(ontModel, uri);
+    }
+    
+    
+
+## add the domain property methods
+#foreach($prop in $cls.listAggregatedProperties())
+	#set($propnameCaps = $prop.getJavaNameCaps())  ## the java name with first letter capitalized
+	#set($propname = $prop.getJavaName())             ## the java name
+	#parse("clsPropBase.vm")
+	#if($prop.isObjectProperty())
+		#parse("clsPropObj.vm")
+	#else
+		#set($rangeMethod = $prop.getDataRangeMethod()) ## the name of the method to acess a dataproperty range
+		#set($rangeURI = $prop.getRangeUri())      ## the uri of the range. Used for datatype properties
+		#parse("clsPropDT.vm")
+	#end
+#end
+}

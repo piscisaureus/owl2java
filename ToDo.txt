@@ -1,18 +1,37 @@
-Templates:
-- hasProperty($range value) for each property (see clsPropBase.vm)
 
-In Templates:
-- MaxCardinality Constraints
+General:
+########################
+- JavaDocs: These are completely missing
+- add support for primitive types (float, int ...)? How about lists, iterators then? 
+- add helper class for XsdDuration (namely for creating a XsdDuration instance)
+- XsdTypes: Entity currently ignored
 
-JavaDocs:
- - These are completely missing
- 
-XsdTypes currently ignored:
-- Entity
 
-Misc:
-- add support for primitive types?
-- add helper class for XsdDuration (to create it?)
+Jena:
+########################
 - How about OCL as query language?
-- Count via Sparql?
-- List as LazyProxyList with loadOnDemand?
+- Use Sparql for Count?
+- Use Sparql for Count?
+
+Generated Code:
+Use maxCardinality, transitive, inverse functional etc. property characteristics
+
+
+
+Db4o:
+########################
+- Add interface based code generation
+- Non functional properties with  a subclassOf definition of "max 1" on all occurences
+  are functional, too! 
+
+
+
+
+
+
+
+
+
+
+ 
+

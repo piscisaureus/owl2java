@@ -1,0 +1,32 @@
+#set($propName = $prop.getJavaName())
+#set($propNameCaps = $prop.getJavaNameCaps()) 
+#set($propUri = $prop.getMapUri())
+#set($propRange = $prop.getRangeJava())
+#set($propRangeFull = $prop.getRangeJavaFull())
+#set($suffix = $rep.getJavaMethodSuffix())
+// Map property $propUri
+log.debug("  Mapping property $propUri");
+
+ontProp = ontModel.getOntProperty("$propUri");
+objPropIt = ontInst.listProperties(ontProp);
+
+while (objPropIt.hasNext()) {
+	Resource ind = (Resource) objPropIt.next();
+	if (ind.getURI() == null)
+		continue;
+	String indUri = ind.getURI();
+	$propRangeFull indObj = ($propRangeFull) uri2db4oObject.get(indUri);
+	#if ($prop.isFunctional())
+		objInst.set${propNameCaps}(indObj);
+		log.debug("  Set property to " + indObj);
+	#else
+		objInst.add${propNameCaps}(indObj);
+		log.debug("  Add property " + indObj);
+	#end
+	
+}
+
+            
+            
+            
+            

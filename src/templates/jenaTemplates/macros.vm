@@ -1,0 +1,4 @@
+#macro( mixedcase $name )$name.substring(0,1).toUpperCase()$name.substring(1)#end
+#macro( mixedlowercase $name )$name.substring(0,1).toLowerCase()$name.substring(1)#end
+#macro( lowercase $name )$name.toLowerCase()#end
+#macro( uppercase $name )$name.toUpperCase()#end
