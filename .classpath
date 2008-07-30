@@ -4,16 +4,11 @@
 	<classpathentry kind="src" path="src/templates"/>
 	<classpathentry kind="src" path="src/testOut"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/commons-codec-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/commons-collections-3.2.jar"/>
-	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/velocity-dep-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/db4o-7.2.44.10827-java5.jar"/>
 	<classpathentry kind="lib" path="lib/jgraph.jar"/>
 	<classpathentry kind="lib" path="lib/jgrapht-jdk1.5.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="lib/velocity-1.5.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/db4o 7.2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Jena-2.5.5"/>
-	<classpathentry kind="lib" path="lib/velocity-dep-1.5.jar"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
