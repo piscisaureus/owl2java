@@ -19,12 +19,19 @@ public class Db4oWriter extends AbstractWriter {
 	
 	static Log log = LogFactory.getLog(Db4oWriter.class);
 	
-	public static String templateDirClassBased = "db4oTemplatesCB";
-	public static String templateDirIfaceBased = "db4oTemplatesIB";
+	public static String templateDirDb4oClassBased = "db4oTemplatesCB";
+	public static String templateDirDb4oIfaceBased = "db4oTemplatesIB";
+	
+	private static String templateDirCurrent = "";
 
 	private String instanceClassName;
 	private int generationType;
 	private boolean generateMergeCode;
+	
+	public static String getTemplatePath(String templateName) {
+		return "/" + templateDirCurrent + "/" + templateName;
+	}
+
 	
 	@Override
 	public void generate(JModel model, String baseDir, String basePackage) {
@@ -40,10 +47,12 @@ public class Db4oWriter extends AbstractWriter {
 
 		// init the templating engine
 		if (generationType == Db4oGenerator.ClassBasedGeneration) {
-			initVelocityEngine(templateDirClassBased);
+			templateDirCurrent = templateDirDb4oClassBased;
+			initVelocityEngine();
 			createClasses();
 		} else {
-			initVelocityEngine(templateDirIfaceBased);
+			templateDirCurrent = templateDirDb4oIfaceBased;
+			initVelocityEngine();
 			// TODO: createInterfaces missing
 			createClasses();
 		}

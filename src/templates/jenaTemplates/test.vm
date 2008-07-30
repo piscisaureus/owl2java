@@ -124,15 +124,15 @@ public class $testcaseName {
 				#set($propname = $prop.getJavaName())          ## the java name				
 				log.info("  Testing property $propname of class $clsName");
 				
-				#parse("testPropBase.vm")				
+				#parse("/jenaTemplates/testPropBase.vm")				
 				
 				#foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
 				#if($prop.isObjectProperty())
-					#parse("testPropObj.vm")
+					#parse("/jenaTemplates/testPropObj.vm")
 				#else
 					#set($rangeMethod = $prop.getDataRangeMethod()) ## the name of the method to acess a dataproperty range
 					#set($rangeURI = $prop.getRangeUri())      		## the uri of the range. Used for datatype properties
-					#parse("testPropDT.vm")
+					#parse("/jenaTemplates/testPropDT.vm")
 				#end				
 				#end
 			#end

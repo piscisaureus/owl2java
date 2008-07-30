@@ -110,13 +110,13 @@ import com.db4o.ta.Activatable;
 #foreach($prop in $cls.listDomainProperties())
 	#set($propnameCaps = $prop.getJavaNameCaps())  		## the java name with first letter capitalized
 	#set($propname = $prop.getJavaName())          		## the java name
-	#parse("clsPropBase.vm")
+	#parse("/db4oTemplatesCB/clsPropBase.vm")
 	#if($prop.isObjectProperty())
-		#parse("clsPropObj.vm")
+		#parse("/db4oTemplatesCB/clsPropObj.vm")
 	#else
 		#set($rangeMethod = $prop.getDataRangeMethod()) ## the name of the method to acess a dataproperty range
 		#set($rangeURI = $prop.getRangeUri())      		## the uri of the range. Used for datatype properties
-		#parse("clsPropDT.vm")
+		#parse("/db4oTemplatesCB/clsPropDT.vm")
 	#end
 #end
 }

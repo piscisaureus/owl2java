@@ -13,20 +13,20 @@ import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
 import de.incunabulum.owl2java.core.utils.JavaUtils;
 
 public abstract class AbstractWriter {
-	
+
 	static Log log = LogFactory.getLog(AbstractWriter.class);
-	
-	public static String templateBasePath = JavaUtils.getCurrentDirectory() +  File.separator + "bin"  ;
-	
+
+	static String templateDirBase = "";
+
 	protected String baseDir;
 	protected String basePackage;
 	protected String toolsPackage;
 
 	protected JModel jmodel;
 	protected VelocityEngine vEngine;
-	
+
 	public abstract void generate(JModel model, String baseDir, String basePackage);
-	
+
 	@SuppressWarnings("unchecked")
 	protected void createPackageDirectories() {
 		boolean success = true;
@@ -52,21 +52,20 @@ public abstract class AbstractWriter {
 		success &= new File(pkgDir).mkdirs();
 	}
 
-	protected void initVelocityEngine(String templateDir) {
+	protected void initVelocityEngine() {
 		log.info("Init velocity engine");
 
-		// FIXME fix template location issues! (or make it configurable)
-		
 		vEngine = new VelocityEngine();
 
-		vEngine.setProperty("resource.loader", "file");
-		vEngine.setProperty("file.resource.loader.class",
-				"org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-
-		vEngine.setProperty("file.resource.loader.path", templateBasePath + File.separator + templateDir); 
+		vEngine.setProperty("resource.loader", "class");
+		vEngine.setProperty("class.resource.loader.description",
+				"Velocity Classpath Resource Loasder");
+		vEngine.setProperty("class.resource.loader.class",
+				"org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
 
 		// see http://minaret.biz/tips/tomcatLogging.html
-		vEngine.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.Log4JLogSystem");
+		vEngine.setProperty("runtime.log.logsystem.class",
+				"org.apache.velocity.runtime.log.Log4JLogSystem");
 		vEngine.setProperty("velocimacro.library", "macros.vm");
 		try {
 			vEngine.init();
@@ -75,12 +74,9 @@ public abstract class AbstractWriter {
 		}
 
 	}
-	
+
 	public void setToolsPackage(String toolsPackage) {
 		this.toolsPackage = toolsPackage;
 	}
-
-
-
 
 }

@@ -135,7 +135,7 @@ public class OwlReader {
 
 		// All values
 		if (res.isAllValuesFromRestriction()) {
-			// TODO: currently, only ObjectProperties can be handled
+			// TODO: currently, only allValues from ObjectProperties can be handled
 			if (prop.isDatatypeProperty()) {
 				log.warn(LogUtils.toLogName(prop) + ": Not creating allValues restriction on datatype property");
 				return;
@@ -149,7 +149,7 @@ public class OwlReader {
 		}
 
 		if (res.isHasValueRestriction()) {
-			// TODO: currently, only ObjectProperties can be handled
+			// TODO: currently, only allValues from ObjectProperties can be handled
 			if (prop.isDatatypeProperty()) {
 				log.warn(LogUtils.toLogName(prop) + ": Not creating hasValue restriction on datatype property");
 				return;
@@ -163,7 +163,7 @@ public class OwlReader {
 		}
 
 		if (res.isSomeValuesFromRestriction()) {
-			// TODO: currently, only ObjectProperties can be handled
+			// TODO: currently, only allValues from ObjectProperties can be handled
 			if (prop.isDatatypeProperty()) {
 				log.warn(LogUtils.toLogName(prop) + ": Not creating someValues restriction on datatype property");
 				return;

@@ -17,11 +17,16 @@ import de.incunabulum.owl2java.core.model.xsd.XsdMapTestData;
 public class JenaWriter extends AbstractWriter {
 	
 	static Log log = LogFactory.getLog(JenaWriter.class);
+	public static final String templateDirJena = "jenaTemplates"; 
 
 	private String vocabularyName;
 	private String factoryName;
 	private String testClassName;
 	private boolean generateTestClass;
+	
+	public static String getTemplatePath(String templateName) {
+		return "/" + templateDirJena + "/" + templateName;
+	}
 
 
 	public void generate(JModel model, String baseDir, String basePackage) {
@@ -36,7 +41,7 @@ public class JenaWriter extends AbstractWriter {
 		createPackageDirectories();
 
 		// init the templating engine
-		initVelocityEngine("jenaTemplates");
+		initVelocityEngine();
 
 		// write interfaces
 		createInterfaces();

@@ -37,7 +37,8 @@ public class JenaFactoryWriter {
 
 		Template template;
 		try {
-			template = vEngine.getTemplate(TEMPLATE_NAME);
+			String templatePath = JenaWriter.getTemplatePath(TEMPLATE_NAME);
+			template = vEngine.getTemplate(templatePath);
 		} catch (ResourceNotFoundException e) {
 			throw new RuntimeException();
 		} catch (ParseErrorException e) {
