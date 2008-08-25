@@ -28,7 +28,7 @@ public class Db4oGenerator extends AbstractGenerator {
 	
 	private int	generationType = ClassBasedGeneration;
 	private boolean generateMergeCode = true;
-	private String instanceClassName = "MergeCode";
+	private String mergeCodeClassName = "MergeCode";
 	
 	public Db4oGenerator() {
 		log.info("Adding 'uriInstance', 'uriClass', 'activator' to reserved java keywords");
@@ -96,7 +96,7 @@ public class Db4oGenerator extends AbstractGenerator {
 		startToDisk = new Date();
 		Db4oWriter mWriter = new Db4oWriter();
 		mWriter.setToolsPackage(toolsPackage);
-		mWriter.setInstanceClassName(instanceClassName);
+		mWriter.setInstanceClassName(mergeCodeClassName);
 		mWriter.setGenerateMergeCode(generateMergeCode);
 		mWriter.setGenerationType(generationType);
 		mWriter.generate(this.jmodel, baseDir, basePackage);
@@ -121,8 +121,8 @@ public class Db4oGenerator extends AbstractGenerator {
 		// TODO: what to test for InterfaceBasedGeneration?
 	}
 
-	public void setInstanceClassName(String instanceClassName) {
-		this.instanceClassName = instanceClassName;
+	public void setMergeCodeClassName(String mergeCodeClassName) {
+		this.mergeCodeClassName = mergeCodeClassName;
 	}
 
 	public void setGenerationType(int generationType) {
