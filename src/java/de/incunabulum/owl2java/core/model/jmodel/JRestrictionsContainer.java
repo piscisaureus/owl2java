@@ -17,7 +17,6 @@ public class JRestrictionsContainer implements IReporting {
 // restrictions of type JAllValuesRestriction 
 
 
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(JRestrictionsContainer.class);
 
 	private JClass onClass;

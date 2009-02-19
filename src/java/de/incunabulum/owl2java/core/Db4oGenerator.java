@@ -19,7 +19,6 @@ import de.incunabulum.owl2java.core.utils.JavaUtils;
 
 public class Db4oGenerator extends AbstractGenerator {
 	
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(Db4oGenerator.class);
 
 	

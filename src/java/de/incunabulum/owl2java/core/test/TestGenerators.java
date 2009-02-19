@@ -12,7 +12,6 @@ import de.incunabulum.owl2java.core.JenaGenerator;
 
 public class TestGenerators extends TestCase{
 
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(TestGenerators.class);
 
 	public static void testJenaGeneratorFull() {

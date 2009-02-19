@@ -91,7 +91,6 @@ public class Db4oWriter extends AbstractWriter {
 	}
 
 	
-	@SuppressWarnings("unchecked")
 	protected void createClasses() {
 		log.info("Creating java classes");
 		Db4oClassWriter clsWriter = new Db4oClassWriter(vEngine, getBaseVelocityContext());

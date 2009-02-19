@@ -18,7 +18,6 @@ import de.incunabulum.owl2java.core.utils.StringUtils;
 
 public class JClass extends JMapped {
 
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(JClass.class);
 
 	private OntClass ontClass;

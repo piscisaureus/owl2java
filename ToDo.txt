@@ -11,7 +11,6 @@ Generate Jena Code:
 ########################
 - How about OCL as query language?
 - Use Sparql for Count?
-- Use Sparql for Count?
 
 Generated Code:
 Use maxCardinality, transitive, inverse functional etc. property characteristics

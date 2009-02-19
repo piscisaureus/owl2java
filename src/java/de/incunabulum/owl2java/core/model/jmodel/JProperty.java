@@ -24,7 +24,6 @@ public class JProperty extends JMapped {
 	public static final String DataTypeProperty = "DataTypeProperty";
 	public static final String ObjectProperty = "ObjectProperty";
 
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(JProperty.class);
 
 	private OntProperty ontProperty;

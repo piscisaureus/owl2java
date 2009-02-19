@@ -32,7 +32,6 @@ import de.incunabulum.owl2java.core.generator.db4o.IDb4oMergeCode;
  */
 public class $instanceName implements IDb4oMergeCode {
 
-    @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(${instanceName}.class);
     
     private static Map<String, Object> uri2db4oObject = new HashMap<String, Object>();
@@ -142,13 +141,10 @@ public class $instanceName implements IDb4oMergeCode {
         		String uri = ontInst.getURI();
         		log.debug("Mapping instance " + uri);
         		
-        		@SuppressWarnings("unused")
         		$clsFullName objInst  = ($clsFullName) uri2db4oObject.get(uri);
 
 				// map class datatype property
-				@SuppressWarnings("unused")
 				Property ontProp;
-				@SuppressWarnings("unused")
 				ExtendedIterator itProp; 
 				
 				#foreach($prop in $cls.listAggregatedProperties()) 
@@ -179,13 +175,10 @@ public class $instanceName implements IDb4oMergeCode {
         		String uri = ontInst.getURI();
         		log.debug("Mapping instance " + uri);
         		
-        		@SuppressWarnings("unused")
         		$clsFullName objInst  = ($clsFullName) uri2db4oObject.get(uri);
 
 				// map object properties property 
-				@SuppressWarnings("unused")
 				Property ontProp;
-				@SuppressWarnings("unused")
 				ExtendedIterator objPropIt; 
 				
 				#foreach($prop in $cls.listAggregatedProperties())

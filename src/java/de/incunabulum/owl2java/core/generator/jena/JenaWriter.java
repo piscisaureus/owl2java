@@ -105,7 +105,6 @@ public class JenaWriter extends AbstractWriter {
 		return vContext;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void createInterfaces() {
 		log.info("Creating java interfaces");
 
@@ -118,7 +117,6 @@ public class JenaWriter extends AbstractWriter {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void createClasses() {
 		log.info("Creating java classes");
 		JenaClassWriter clsWriter = new JenaClassWriter(vEngine, getBaseVelocityContext());

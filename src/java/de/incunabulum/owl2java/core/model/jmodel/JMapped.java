@@ -9,7 +9,6 @@ import de.incunabulum.owl2java.core.utils.StringUtils;
 
 public class JMapped implements IReporting, IName {
 
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(JMapped.class);
 
 	private String name;

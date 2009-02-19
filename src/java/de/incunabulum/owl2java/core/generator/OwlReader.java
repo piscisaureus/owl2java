@@ -51,7 +51,6 @@ public class OwlReader {
 		forbiddenPrefixes.add(prefix);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void createJPackages() {
 		// add a default model for all classes /wo a prefix
 		JPackage defaultPkg = new JPackage(jmodel, basePackage);

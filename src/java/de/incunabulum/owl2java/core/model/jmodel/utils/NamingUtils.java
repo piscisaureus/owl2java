@@ -22,7 +22,6 @@ import de.incunabulum.owl2java.core.utils.StringUtils;
 
 public class NamingUtils {
 
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(NamingUtils.class);
 
 	public static int anonCounter = 0;

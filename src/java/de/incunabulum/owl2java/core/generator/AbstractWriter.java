@@ -27,7 +27,6 @@ public abstract class AbstractWriter {
 
 	public abstract void generate(JModel model, String baseDir, String basePackage);
 
-	@SuppressWarnings("unchecked")
 	protected void createPackageDirectories() {
 		boolean success = true;
 

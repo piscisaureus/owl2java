@@ -21,7 +21,6 @@ import com.hp.hpl.jena.util.iterator.Map1;
 
 public class XsdUtils {
 
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(XsdUtils.class);
 
 	// ///////////////////////////////////////////////////

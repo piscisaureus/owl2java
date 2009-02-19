@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 
 public class JavaUtils {
 	
-	@SuppressWarnings("unused")
 	private static Log log = LogFactory.getLog(JavaUtils.class);
 
 	static final public String[] java_keywords = {"abstract", "double", "int", "strictfp", "boolean", "else", "interface",

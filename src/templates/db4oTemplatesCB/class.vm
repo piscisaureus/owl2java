@@ -31,7 +31,6 @@ import com.db4o.ta.Activatable;
 #end
 
 #if( ! $cls.hasSuperClasses())    
-    @SuppressWarnings("unused")
     public static transient Log log;
 #end
 

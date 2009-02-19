@@ -78,7 +78,6 @@ public class JModel implements IReporting, IStatistics {
 	}
 
 
-	@SuppressWarnings("unchecked")
 	public JClass getAnonymousJClass(List<JClass> operandClasses) {
 		// loop over all classes in the model
 		Iterator<String> clsUris = uri2class.keySet().iterator();
@@ -165,7 +164,6 @@ public class JModel implements IReporting, IStatistics {
 		return pkgs;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<String> listImportURIs() {
 		Set<String> importsSet = new HashSet<String>();
 		Iterator<String> nsIt = ns2prefix.keySet().iterator();

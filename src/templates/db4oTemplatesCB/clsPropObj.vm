@@ -10,7 +10,6 @@
 		return ${propname}.size();
 	}
 	
-    @SuppressWarnings("unchecked")
 	public Iterator<$rangeFull> iterate${propnameCaps}() {
 		activate(ActivationPurpose.READ);
 		return ${propname}.iterator();
