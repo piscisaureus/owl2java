@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Owl2Java Code Generator - Core Component
 Bundle-SymbolicName: de.incunabulum.owl2java.core
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.2
 Bundle-Vendor: Michael Zimmermann, incunabulum.de
 Export-Package: de.incunabulum.owl2java.core
 Require-Bundle: org.eclipse.core.resources,
