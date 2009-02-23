@@ -15,7 +15,6 @@ public class ResourceError implements IReporting {
 	}
 	
 	
-	@Override
 	public String getJModelReport() {
 		return LogUtils.toLogName(item) + ": " + string;
 	}

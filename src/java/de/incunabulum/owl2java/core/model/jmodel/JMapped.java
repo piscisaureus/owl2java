@@ -21,13 +21,11 @@ public class JMapped implements IReporting, IName {
 		this.mapUri = mappedTo;
 	}
 
-	@Override
 	public String getJModelReport() {
 		log.warn("JMapped.toReport not implemented");
 		return null;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}

@@ -28,7 +28,6 @@ public abstract class AbstractGenerator implements IStatistics, IReporting {
 
 	protected boolean reasignDomainlessProperties = true;
 
-	@Override
 	public String getStatistics() {
 		String str = new String();
 		if (this.jmodel != null)
@@ -42,7 +41,6 @@ public abstract class AbstractGenerator implements IStatistics, IReporting {
 		return str;
 	}
 
-	@Override
 	public String getJModelReport() {
 		if (this.jmodel != null)
 			return jmodel.getJModelReport();

@@ -5,6 +5,7 @@ General:
 - add support for primitive types (float, int ...)? How about lists, iterators then? 
 - add helper class for XsdDuration (namely for creating a XsdDuration instance)
 - XsdTypes: Entity currently ignored
+- Output path: Either absolute or otherwise relative to project root!
 
 
 Generate Jena Code:

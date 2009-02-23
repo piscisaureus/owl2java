@@ -178,7 +178,6 @@ public class JModel implements IReporting, IStatistics {
 		return new ArrayList<String>(importsSet);
 	}
 
-	@Override
 	public String getJModelReport() {
 		String report = new String();
 		report += StringUtils.toHeader("JModel report");
@@ -336,7 +335,6 @@ public class JModel implements IReporting, IStatistics {
 		return prefix;
 	}
 
-	@Override
 	public String getStatistics() {
 		String ret = new String();
 		ret += StringUtils.toHeader("Statistics");

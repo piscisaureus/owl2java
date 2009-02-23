@@ -30,7 +30,6 @@ public class SimpleUrl implements Serializable, Comparable<SimpleUrl> {
 		return url;
 	}
 
-	@Override
 	public int compareTo(SimpleUrl o) {
 			return url.compareTo(o.getUrl());
 	}

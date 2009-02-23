@@ -24,7 +24,6 @@ public class JBaseRestriction implements IReporting {
 		this.onProperty = onProperty;
 	}
 
-	@Override
 	public String getJModelReport() {
 		return (LogUtils.toLogName(this) + ": Base restriction");
 	}

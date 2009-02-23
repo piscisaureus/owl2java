@@ -29,7 +29,6 @@ public class JPackage implements IReporting, IName {
 		this.jmodel = model;
 	}
 
-	@Override
 	public String getJModelReport() {
 		log.warn("JPackage.toReport not implemented");
 		return null;
@@ -62,7 +61,6 @@ public class JPackage implements IReporting, IName {
 
 
 
-	@Override
 	public String getName() {
 		return getPackageName();
 	}

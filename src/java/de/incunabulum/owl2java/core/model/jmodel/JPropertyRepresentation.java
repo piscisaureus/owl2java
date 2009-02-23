@@ -102,7 +102,6 @@ public class JPropertyRepresentation implements IReporting {
 
 	}
 
-	@Override
 	public String getJModelReport() {
 		String ret = new String();
 

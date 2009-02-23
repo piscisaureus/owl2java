@@ -91,7 +91,6 @@ public class JRestrictionsContainer implements IReporting {
 		return rc;
 	}
 
-	@Override
 	public String getJModelReport() {
 		String report = LogUtils.toLogName(onClass, onProperty) + " Restriction Container:\n";
 		report += StringUtils.indentText(cardinalityRestriction.getJModelReport()+"\n", 1) ;
