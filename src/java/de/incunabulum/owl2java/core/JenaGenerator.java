@@ -24,7 +24,6 @@ public class JenaGenerator extends AbstractGenerator {
 	private String factoryName = "Factory";
 	private String testClassName = "Owl2JavaTest";
 
-
 	private boolean createTestClass = true;
 
 	public void generate(String uri, String altLocation, String baseDir, String basePackage) {
@@ -34,6 +33,7 @@ public class JenaGenerator extends AbstractGenerator {
 		OntDocumentManager owlDocMgr = owlModel.getDocumentManager();
 		owlDocMgr.setProcessImports(true);
 		owlDocMgr.addAltEntry(uri, altLocation);
+		addMappings(owlDocMgr, uri);
 		owlModel.read(uri);
 
 		generate(owlModel, baseDir, basePackage);
@@ -45,6 +45,7 @@ public class JenaGenerator extends AbstractGenerator {
 		OntModel owlModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
 		OntDocumentManager owlDocMgr = owlModel.getDocumentManager();
 		owlDocMgr.setProcessImports(true);
+		addMappings(owlDocMgr, uri);
 		owlModel.read(uri);
 
 		generate(owlModel, baseDir, basePackage);
