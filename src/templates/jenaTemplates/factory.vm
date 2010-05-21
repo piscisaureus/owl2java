@@ -72,7 +72,7 @@ public class $factoryName {
      * Adds imports statements to an ontology and adds
      * imported subModels to a model.
      *
-     * Currently, this uses the namespace URI without trailing '#'
+     * Currently, this uses the namespace URI without trailing '#' or ':'
      * as location.
      */
     public void registerImports(OntModel ontModel, Ontology ontology) {

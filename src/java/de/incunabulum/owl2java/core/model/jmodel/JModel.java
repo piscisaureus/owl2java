@@ -164,15 +164,25 @@ public class JModel implements IReporting, IStatistics {
 		return pkgs;
 	}
 
+	public List<String> listNamespaceURIs() {
+		Set<String> namespaceSet = new HashSet<String>();
+		Iterator<String> nsIt = ns2prefix.keySet().iterator();
+		while (nsIt.hasNext()) {
+			String ns = (String) nsIt.next();
+			if (!NamespaceUtils.defaultNs2UriMapping.containsKey(ns)) {
+				namespaceSet.add(ns);
+			}
+		}
+		return new ArrayList<String>(namespaceSet);
+	}
+
 	public List<String> listImportURIs() {
 		Set<String> importsSet = new HashSet<String>();
 		Iterator<String> nsIt = ns2prefix.keySet().iterator();
 		while (nsIt.hasNext()) {
 			String ns = (String) nsIt.next();
 			if (!NamespaceUtils.defaultNs2UriMapping.containsKey(ns)) {
-				// Strip trailing namespace #
-				ns = ns.substring(0, ns.length() - 1);
-				importsSet.add(ns);
+				importsSet.add(ns.replaceFirst("[:#]$", ""));
 			}
 		}
 		return new ArrayList<String>(importsSet);
@@ -209,10 +219,6 @@ public class JModel implements IReporting, IStatistics {
 			report += res.getJModelReport() + "\n";
 		}
 		return report;
-	}
-
-	public String getPrefixFromImport(String imp) {
-		return getPrefix(imp + "#");
 	}
 
 	public String getPrefix(String namespace) {

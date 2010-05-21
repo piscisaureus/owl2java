@@ -28,13 +28,13 @@ public class $vocabName {
     public static final List<String> NAMESPACES;
     static {
         NAMESPACES = new ArrayList<String>();
-        #foreach($ns in $jmodel.listImportURIs())
-            NAMESPACES.add("$ns#");
+        #foreach($ns in $jmodel.listNamespaceURIs())
+            NAMESPACES.add("$ns");
         #end
     }
 
-    #foreach ($ns in $jmodel.listImportURIs())
-        #set($prefix = $jmodel.getPrefixFromImport($ns))
+    #foreach ($ns in $jmodel.listNamespaceURIs())
+        #set($prefix = $jmodel.getPrefix($ns))
         public static final Resource NS#uppercase($prefix) = ontModel.createResource("$ns");
     #end
 
