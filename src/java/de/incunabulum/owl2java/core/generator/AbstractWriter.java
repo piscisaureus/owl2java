@@ -39,10 +39,12 @@ public abstract class AbstractWriter {
 		Iterator<JPackage> pkgIt = jmodel.listPackages().iterator();
 		while (pkgIt.hasNext()) {
 			JPackage pkg = pkgIt.next();
-			String pkgName = pkg.getPackageName();
-			String pkgDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
-			log.debug("Creating directory for package " + pkgName);
-			success &= new File(pkgDir).mkdirs();
+			if (pkg.listJClasses().size() > 0) {
+				String pkgName = pkg.getPackageName();
+				String pkgDir = JavaUtils.toDirectoryFromPackage(pkgName, baseDir);
+				log.debug("Creating directory for package " + pkgName);
+				success &= new File(pkgDir).mkdirs();
+			}
 		}
 		// finally for the tools package
 		String pkgName = NamingUtils.getJavaPackageName(basePackage, toolsPackage);
