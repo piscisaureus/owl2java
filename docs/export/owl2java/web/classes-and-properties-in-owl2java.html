@@ -1,0 +1,1144 @@
+
+
+
+<!DOCTYPE html PUBLIC
+  "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en">
+
+  
+    
+    
+    
+    
+    
+
+  
+
+  <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+<head>
+
+    <meta http-equiv="Content-Type"
+          content="text/html;charset=utf-8" />
+
+    
+      <base  /><!--[if lt IE 7]></base><![endif]-->
+    
+
+    <meta name="generator" content="Plone - http://plone.org" />
+
+    <link rel="kss-base-url" href="classes-and-properties-in-owl2java.html" />
+
+  
+  
+    
+      <script type="text/javascript"
+              src="js/jquery-cachekey9181.js">
+      </script>
+    
+    
+  
+
+  
+    
+      <script type="text/javascript"
+              src="js/ie5fixes-cachekey6308.js">
+      </script>
+    
+    
+  
+
+  
+    
+      <script type="text/javascript"
+              src="js/resourcebase2-dom-fp-cachekey7122.js">
+      </script>
+    
+    
+  
+
+  
+    
+      <script type="text/javascript"
+              src="js/input-label-cachekey2970.js">
+      </script>
+    
+    
+  
+
+  
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/base.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/public.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/columns.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/authoring.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/portlets.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/controlpanel.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="print"><!-- @import url(css/print.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/deprecated.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/navtree.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/invisibles.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/forms.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/plonekss.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(main.html); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(main-2.html); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/andreas02.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/mzredplanet3.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/main.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="all"><!-- @import url(css/plonecustom.css); --></style>
+    
+    
+  
+
+  
+  <link rel="kinetic-stylesheet" type="text/css"
+        href="../external.html?link=http://www.incunabulum.de/portal_kss/MzRedPlanet3/at-cachekey3308.kss" />
+
+
+<title>Classes and Properties in Owl2java &mdash; incunabulum.de</title>
+
+    <meta content="In contrast to java OWL allows the definition of classes and properties independently. For both multiple language constructs are defined. On this page a short overview of the implications of these constructs for owl2java and the solutions developed are presented."
+          name="description" />
+
+    <!-- Internet Explorer Fixes -->
+    <!--[if IE]>
+        <style type="text/css" media="all">@import url(http://www.incunabulum.de/IEFixes.css);</style>
+        
+        <script type="text/javascript"
+                src="http://www.incunabulum.de/iefixes.js">
+        </script>
+        
+    <![endif]-->
+
+    
+    <link rel="author"
+          href="../external.html?link=http://www.incunabulum.de/author/mz"
+          title="Author information" />
+
+
+
+    <link rel="shortcut icon" type="image/x-icon"
+          href="../external.html?link=http://www.incunabulum.de/favicon.ico" />
+
+
+
+    <link rel="home" href="../external.html?link=http://www.incunabulum.de/"
+          title="Front page" />
+
+    <link rel="contents"
+          href="../external.html?link=http://www.incunabulum.de/sitemap"
+          title="Site Map" />
+
+
+
+
+
+
+    <link rel="search"
+          href="../external.html?link=http://www.incunabulum.de/search_form"
+          title="Search this site" />
+
+
+
+    <!-- Disable IE6 image toolbar -->
+    <meta http-equiv="imagetoolbar" content="no" />
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+  </head>
+
+  <body class="section-projects template-document_view"
+        dir="ltr">
+    <div id="visual-portal-wrapper">
+
+      <div id="portal-top">
+        <div id="portal-header">
+<p class="hiddenStructure">
+  <a accesskey="2"
+     href="classes-and-properties-in-owl2java.html#documentContent">Skip to content.</a> |
+
+  <a accesskey="6"
+     href="classes-and-properties-in-owl2java.html#portlet-navigation-tree">Skip to navigation</a>
+</p>
+
+<ul id="portal-siteactions">
+
+    <li id="siteaction-sitemap"><a
+    href="../external.html?link=http://www.incunabulum.de/sitemap" accesskey="3"
+    title="Site Map">Site Map</a></li>
+    <li id="siteaction-accessibility"><a
+    href="../external.html?link=http://www.incunabulum.de/accessibility-info"
+    accesskey="0" title="Accessibility">Accessibility</a></li>
+
+</ul>
+
+<div id="portal-searchbox">
+    <form name="searchform"
+          action="../external.html?link=http://www.incunabulum.de/search">
+
+        <label for="searchGadget" class="hiddenStructure">Search Site</label>
+
+        <div class="LSBox">
+        <input name="SearchableText" type="text" size="18"
+               title="Search Site" accesskey="4"
+               class="inputLabel" id="searchGadget" />
+
+        <input class="searchButton" type="submit"
+               value="Search" />
+    
+        <div class="searchSection">
+            <input id="searchbox_currentfolder_only"
+                   class="noborder" type="checkbox"
+                   name="path"
+                   value="/incunabulum_de_www/projects/it/owl2java" />
+            <label for="searchbox_currentfolder_only"
+                   style="cursor: pointer">
+                only in current section
+            </label>
+        </div>
+
+        <div class="LSResult" id="LSResult" style=""><div class="LSShadow" id="LSShadow"></div></div>
+        </div>
+    </form>
+
+    <div id="portal-advanced-search" class="hiddenStructure">
+        <a href="../external.html?link=http://www.incunabulum.de/search_form"
+           accesskey="5">
+            Advanced Search&hellip;
+        </a>
+    </div>
+
+</div>
+
+
+    <!-- the logo -->
+    <div id="logo">
+      <h1><a href="../external.html?link=http://www.incunabulum.de/" title="Home">
+                   incunabulum.de</a></h1>
+    </div>
+
+
+    <!-- the logo image -->
+    <a href="../external.html?link=http://www.incunabulum.de/" id="portal-logo"
+       accesskey="1">
+      <img src="jpg/header.jpg" alt="" title="" height="140" width="877" /></a>
+
+
+    <h5 class="hiddenStructure">Sections</h5>
+
+    <ul id="portal-globalnav">
+        <li id="portaltab-index_html" class="selected"><a
+    href="../external.html?link=http://www.incunabulum.de/" title="">Home</a></li>
+        <li id="portaltab-poel" class="plain"><a
+    href="../external.html?link=http://www.incunabulum.de/poel" title="">Poel</a></li>
+        <li id="portaltab-poelcontrol" class="plain"><a
+    href="../external.html?link=http://www.incunabulum.de/poelcontrol" title="">PoelControl</a></li>
+    </ul>
+
+</div>
+
+<div id="portal-personaltools-wrapper">
+
+<h5 class="hiddenStructure">Personal tools</h5>
+
+<ul id="portal-personaltools" class="visualInline">
+   
+
+    
+        <li>
+            <a href="../external.html?link=http://www.incunabulum.de/login_form">Log in</a>
+        </li>
+    
+    
+        <li>
+            <a href="#">Register</a>
+        </li>
+    
+
+</ul>
+</div>
+
+
+    
+
+
+<div id="portal-breadcrumbs">
+
+    <span id="breadcrumbs-you-are-here">You
+are here:</span>
+    <a href="../external.html?link=http://www.incunabulum.de/">Home</a>
+    <span class="breadcrumbSeparator">
+        &rarr;
+        
+    </span>
+    <span dir="ltr">
+        
+            <a href="../external.html?link=http://www.incunabulum.de/projects">projects</a>
+            <span class="breadcrumbSeparator">
+                &rarr;
+                
+            </span>
+            
+         
+    </span>
+    <span dir="ltr">
+        
+            <a href="../external.html?link=http://www.incunabulum.de/projects/it">IT Projects</a>
+            <span class="breadcrumbSeparator">
+                &rarr;
+                
+            </span>
+            
+         
+    </span>
+    <span dir="ltr">
+        
+            <a href="owl2java.html">Owl2Java</a>
+            <span class="breadcrumbSeparator">
+                &rarr;
+                
+            </span>
+            
+         
+    </span>
+    <span dir="ltr">
+        
+            
+            
+            <span>Classes and Properties in Owl2java</span>
+         
+    </span>
+
+</div>
+
+      </div>
+
+      <div class="visualClear" id="clear-space-before-wrapper-table"><!-- --></div>
+
+      <table id="portal-columns">
+        <tbody>
+          <tr>
+            
+            <td id="portal-column-one">
+              <div class="visualPadding">
+                
+                  
+<div id="portletwrapper-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f696e63756e6162756c756d5f64655f7777770a6e617669676174696f6e"
+     class="portletWrapper kssattr-portlethash-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f696e63756e6162756c756d5f64655f7777770a6e617669676174696f6e">
+<dl class="portlet portletNavigationTree">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a href="../external.html?link=http://www.incunabulum.de/sitemap"
+           class="tile">Navigation</a>
+       
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem lastItem">
+        <ul class="navTree navTreeLevel0">
+            <li class="navTreeItem">
+                <div>
+                   <a href="../external.html?link=http://www.incunabulum.de/"
+                      class=""
+                      title="Personal site for Michael Zimmermann">
+                   <img src="gif/site_icon.gif"
+                        height="16" width="16" alt="" />
+                   Home
+                   
+                   </a>
+                </div>
+            </li>
+            
+
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/contact"
+           class="state-published navTreeFolderish"
+           title="contact information">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>contact</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/personal"
+           class="state-published navTreeFolderish"
+           title="Who am I?">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>personal</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeItemInPath navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects"
+           class="state-published navTreeItemInPath navTreeFolderish"
+           title="In my spare time I like to work on mostly small projects. So, this section is a collection of everything I work on and that is not related to  naval architecture . I hope that some of the information might help you.">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>projects</span>
+        </a>
+        
+    </div>
+
+    <ul class="navTree navTreeLevel1">  
+        
+
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/biking"
+           class="state-published navTreeFolderish"
+           title="Being an avid cyclist my bike is the main means of transportation for commuting in town. Furthermore I also like to do extended fully self supported trips on holidays. Here, you can find some information about bike related projects. These include e. g. a new high power light installation, technical drawings for a recumbent bike....">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Biking</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/electronics"
+           class="state-published navTreeFolderish" title="">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Electronics</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeItemInPath navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/it"
+           class="state-published navTreeItemInPath navTreeFolderish"
+           title="Computers are everywhere, we do use them more and more often. Unfortunatley to make these machines to what you like a certain level of skill and the appropriate programs are needed. These pages give a summary of some of my activities related to programming. 
+">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>IT Projects</span>
+        </a>
+        
+    </div>
+
+    <ul class="navTree navTreeLevel2">  
+        
+
+
+
+
+
+
+
+
+    </ul>
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/environmental"
+           class="state-published navTreeFolderish"
+           title="Even in the time of economic stagnation environmental protection is necessary to give rise to the hope of a stable and  sustainable environment to life in. This section gives some information about projects related to environmental protection.">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Environmental Projects</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/model_building"
+           class="state-published navTreeFolderish"
+           title="In this section a collection of ship models as well as other model building projects is given. For some of them detailed reports or technical drawings are available for download.">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Model Building</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/poel"
+           class="state-published navTreeFolderish" title="">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Pfanzenöl im Dieselmotor</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/poelcontrol"
+           class="state-published navTreeFolderish"
+           title="PoelControl ist eine mikocontroller-gesteuerte Schaltung mit dem Ziel, einen weitgehend automatisierten Betrieb von modernen Direkteinspritzern mit Pflanzenöl zu ermöglichen. Umfangreiche Anschlußmöglichkeiten für verschiedenste Sensoren stehen zur Verfügung, um detailierte Infos über Betriebszustände, Temperaturen etc. zu messen. Wichtig: Infos hier sind &quot;work in progress&quot; und daher z. T. unvollständig oder veraltet!">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>PoelControl</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/passat"
+           class="state-published navTreeFolderish" title="">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>VW Passat</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+
+
+    </ul>
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/restricted"
+           class="state-published navTreeFolderish"
+           title="This is a restricted folder. Access to subfolders is only granted to users with adequate permissions. Please ask the webmaster for an account.  ">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>restricted</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/travel"
+           class="state-published navTreeFolderish"
+           title="Traveling is fun, traveling is nice. In this section you can find various reports about tirps I did in the past as well as notes about my experience with certain pieces of equipment, packing your stuff ...">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>travel</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/work"
+           class="state-published navTreeFolderish"
+           title="In this section you can find work related information. This includes publications, information about projects I work on as well as everything related to naval architecture.
+">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>work</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+
+
+        </ul>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</dl>
+
+</div>
+
+
+
+
+                
+                &nbsp;
+              </div>
+            </td>
+            
+
+            
+            <td id="portal-column-content">
+
+              
+                <div class="">
+
+                  
+
+
+                  <div id="region-content" class="documentContent">
+
+                    <span id="contentTopLeft"></span>
+                    <span id="contentTopRight"></span>
+                    
+                    <a name="documentContent"></a>
+
+                    
+
+    <dl class="portalMessage info" id="kssPortalMessage" style="display:none">
+        <dt>Info</dt>
+        <dd></dd>
+    </dl>
+
+
+                    
+                    <div id="viewlet-above-content"></div>
+
+                    
+                    
+                    <div id="content">
+                      
+                      
+    
+
+        
+
+        <h1 class="documentFirstHeading"> 
+            
+        <span class="" id="parent-fieldname-title">
+            Classes and Properties in Owl2java
+        </span>
+    
+        </h1>
+
+        <div class="documentByLine" id="plone-document-byline">
+  
+
+  
+    <span class="documentAuthor">
+      by
+      <a href="../external.html?link=http://www.incunabulum.de/author/mz">Michael Zimmermann</a>
+
+    </span>
+  
+
+  <span class="documentModified">
+    &mdash;
+    <span>
+      last modified
+    </span>
+    May 29, 2008 08:57 PM
+  </span>
+
+  
+
+  
+
+  
+
+</div>
+
+
+
+
+        <p class="documentDescription">
+            
+        <span class="" id="parent-fieldname-description">
+            In contrast to java OWL allows the definition of classes and properties independently. For both multiple language constructs are defined. On this page a short overview of the implications of these constructs for owl2java and the solutions developed are presented.
+        </span>
+    
+        </p>
+
+        
+
+
+
+        
+
+        
+        <div class="" id="parent-fieldname-text">
+            <h2>Pretext</h2>
+<p> Generating accessor methods for OWL ontologies in java needs to bridge the gap in the semantics of the different languages. Next to Closed-World vs. Open-World and the Unique-Name-Assumption in OWL another issue is the underlying understanding of inheritance in OWL and java. </p>
+<p> In java inheritance allows to modify and extend a parent object. E. g. additional attributes or methods are defined; present methods are overwritten and hence changed. In OWL a different approach is chosen. Here, subclasses are assumed to restrict the degrees of freedom of a parent class. Examples:</p>
+
+<ul>
+<li>A property with domain ClassA is disbaled in a subclass ClassB via a restriction <em>myProperty max 0</em>.</li>
+<li>A Class <em>MyClass intersectionOf(ClassA, ClassB)</em> is classified as subclass of ClassA and ClassB by a reasoner. From a java perspective MyClass as intersection should be modelled as parent class of ClassA and ClassB</li>
+
+</ul>
+<p> Therefore, not all concepts from OWL can be applied to native java interfaces. </p>
+<p> In the following sections details about the relevant constructs of <em>OWL Lite</em> and <em>OWL DL</em> are presented. The implementation and handling of these constructs in Java is explained. Also, see the excellent paper <a href="../external.html?link=http://www.mindswap.org/~aditkal/SEKE04.pdf">Automatic Mapping of OWL Ontologies into Java</a> about the generation of interfaces and classes from OWL. This work is mostly based on the solutions presented in the paper.</p>
+<h2>Classes and Properties</h2>
+<p> Classes and properties are key elements of any ontology. The list of possible constructs for these elements can be categorized as follows:</p>
+
+<ul>
+<li>RDFS schema features</li>
+<li>Class features and axioms</li>
+<li>Property characteristics</li>
+<li>Equality and Inequality</li>
+<li>Versioning</li>
+
+</ul>
+<h2>Basic RDF schema features</h2>
+<p> <strong>Classes:</strong> In owl2java for each OWL Class a java interface and the implementing java class is generated. Properties are defined as class attributes with accessor methods following the java bean notation.</p>
+<p> As java does not support multiple inheritance (but OWL does) interfaces are used to define the <em>rdfs:subClassOf</em> relationships. E. g. the OWL class definitions <em>Class subClassOf ClassA</em> and <em>Class subClassOf </em>ClassB* are defined via interfaces as follows:
+<pre>
+  interface IClass extends IClassA, IClassB {}
+</pre>
+</p>
+<p> The corresponding java class <em>Class</em> then implements the interface <em>IClass</em> hereby inheriting all methods and properties defined in <em>IClassA</em>, <em>IClassB</em>.</p>
+<p> <strong>Properties:</strong> In OWL properties can be defined independently from OWL classes and without any definition of the type of the property. All unbound properties are assumed to have Owl:Thing as <em>domain</em>  and a <em>range</em> of Owl:Thing for object properties or XMLLiteral for datatype properties.</p>
+<p> In owl2java a base class and interface named <em>Thing</em> / <em>IThing</em> is defined in the base java package where all properties without a domain are defined. All defined classes in an ontology have the <em>IThing</em> interface as parent. For properties without a range the range is set to <em>IThing</em> for object properties or <em>java.lang.String</em> for datatype properties.</p>
+<p> If a <em>domain</em> is defined for a property the property is added to the corresponding interface. According to the OWL standard for properties with multiple domains the intersection of the domain classes should be used. In contrast to the technical recommendation a property with multiple domains is added to each interface and class directly. Intersection classes are neither generated nor used as the approach chosen is a better fit with the java semantics.</p>
+<p> In owl2java properties without a given domain are added to the root class OwlThing, i. e. the domain of the property is set to OwlThing. If enabled, for all properties without a domain but with existing <em>allValuesFrom</em> restrictions on a class, the domain is set to this class. If multiple classes are present the property is added to all classes.</p>
+<p> A <em>range</em> defines the types a property can use have. For object properties the corresponding interface is used. For datatype properties the jena data types or a custom mapping from XSD datatype to java class can be used. For the latter, see the configuration options in XsdUtils.java. </p>
+<p> Multiple ranges are handled as intersections for object properties. UnionClasses are generated for them, see comments.</p>
+<p> For datatype properties multiple ranges are currently set to <em>java.lang.String</em>. Here, following the <a href="../external.html?link=http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built-in-datatypes">XML Schema Datatype Hierarchy</a> it would be possible to find the nearest common datatype for the ranges given. E. g. a range of:
+<pre>
+  property knows range xsd:long
+  property knows range xsd:nonNegativeInteger
+</pre>
+</p>
+<p> could be merged into the datatype <em>xsd:integer</em>. </p>
+<p> Similar to the class hierarchy defined via <em>rdfs:subClassOf</em> a property hierarchy can be defined with <em>rdfs:subPropertyOf</em> definitions. Note that any range definitions on properties in a hierarchy are inherited bottom-up. A complement in java land does not exists.</p>
+<p> From an implementation perspective adding a property value for a property and adhering to the property hierarchy would require that this value is also added to all parent properties in the class instance. Reversed, removing a property requires that the value is also removed from all child properties of the class instance. <em>This is currently not implemented</em> therefore use a reasoner to find these entailments.</p>
+<h2>Class features and axioms</h2>
+<p> In addition to the simple <em>rdfs:subClassOf</em> construct OWL Lite and especially OWL DL allows more complex constructs to define classes, namely with <em>intersectionOf, unionOf, complementOf, disjointWith, oneOf</em>.</p>
+<p> For the first two construct types a new class is generated as the union or intersection of two or more primitive classes. For e. g. if a class <em>MyClass</em> is an intersection of <em>ClassA</em> and <em>ClassB</em> in OWL this is expressed via an internal anonymous class as follows:
+<pre>
+  AnonClass intersectionOf(ClassA, ClassB)
+  MyClass subClassOf AnonClass
+</pre>
+</p>
+<p> The anonymous class does not have a valid URI and is thus not referenceable directly via a qualified name. </p>
+<p> The java implementation creates new classes and interfaces, marked as anonymous, to represent anonymous classes and uses these interfaces as parents. For the naming schema used see <em>NamingUtils.java</em>. Identical anonymous class definitions in multiple OWL constructs are merged into a single java class / interface representation. E. g. the following OWL definition:
+<pre>
+  A1 unionOf(ClassA, ClassB)
+  MyClass subClassOf A1
+  A2 unionOf(ClassA, ClassB)
+  MyClass2 subClassOf A2
+</pre>
+</p>
+<p> is defined in Java as:
+<pre>
+  interface A1 extends ClassA, ClassB
+  interface MyClass extends A1
+  interface MyClass2 extends A1
+</pre>
+</p>
+<p> Note though, that the concept of intersection classes is difficult to transfer to java. See the introduction above on this page.</p>
+<p> A class defined as <strong>unionOf</strong> of two or more parent classes inherits all properties from all parent classes. Using an anonymous class for an owl construct <em>MyClass unionOf(ClassA, ClassB)</em> in java this is defined as follows:
+<pre>
+  interface AnonClass extends ClassA, ClassB
+  interface MyClass extends AnonClass
+</pre>
+</p>
+<p> In contrast to the <em>unionOf</em> construct an <strong>intersectionOf</strong> defines a subclass that inherits only the properties and characteristics that are present in both parent classes or their instances. Using an anonymous class for an owl construct <em>MyClass intersectionOf(ClassA, ClassB)</em> in java this is defined as follows:
+<pre>
+  interface AnonClass
+  interface ClassA extends AnonClass
+  interface ClassB extends AnonClass
+  interface MyClass extends AnonClass
+</pre>
+</p>
+<p> with the domain of all common properties changed to <em>AnonClass</em>.</p>
+<p> For class constructs with <strong>complementOf</strong> and <strong>disjointWith</strong> no equivalent java constructs are available. <em>These are ignored.</em></p>
+<p> An enumerated class defined with a <strong>oneOf</strong> construct restricts the instances allowed to certain individual. In owl2java it would be possible to test upon creating an instance to a class if the instance is part of the <em>oneOf</em> construct. <em>Currently, this is not supported</em> as I do not see much benefit from such a solution.</p>
+<p> <strong>Note:</strong> With OWL DL the set operators <em>unionOf</em> and <em>intersectionOf</em> can operate on arbitrary complex definitions. E. g. the following definition is valid OWL DL:
+<pre>
+  WhiteWhine intersectionOf(Whine, Restriction(hasColor = #White))
+</pre>
+</p>
+<p> For java this would require 1) the creation of an additional anonymous class / interface with the restriction on hasColor set and 2) registering the class WhiteWhine as subclass of the new anonymous class. With arbitrary complex constructs allowed the usability of the interface as well as the generation process can become arbitrarily complex.</p>
+<h2>Property characteristics</h2>
+<p> A property can either be an <strong>ObjectProperty</strong> or a <strong>DatatypeProperty</strong>. Object properties reference class instances while datatype properties contain values of a type according to <a href="../external.html?link=http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/datatypes.html#built-in-datatypes.">XML Schema</a>, see above. </p>
+<p> <strong>Functional properties</strong> are properties that allow only a single instance of this property for a class instance, i.e. for an instance <em>Peter</em> the property <em>knows</em> can only have a single Item. In owl2java for functional properties as accessor methods only get/set/removed are generated. Any list-type accessor methods are removed hence restricting the property instance count to one. </p>
+<p> <strong>Inverse functional properties</strong> can be seen as the logical opposite of <em>functional properties</em>. Here, any property triple can only be referenced by a single class instance. E. g. <em>Peter knows Paul</em> is valid iff no other person also knows Paul. The following is invalid:
+<pre>
+   Peter knows Paul
+   Henry knows Paul
+</pre>
+</p>
+<p> Adding tests if a property value is used also from a second instance would require the implementation of property change listeners etc. Very complex and probably poor from a performance POV.</p>
+<p> <strong>Transitive properties</strong> are often used to define part-whole dependencies. E. g. from a transitive property <em>partOf</em> and the following constructs <em>Germany partOf Europe</em> and <em>Rostock partOf Germany</em> it can be deduced that <em>Rostock partOf Europe. 
+Support for </em>transitive properties* requires reasoning over all class instances in the model. Poor performance.</p>
+<p> A <strong>symmetric property</strong> is a property where domain and range are equal and that is the instance of itself. They are treated as primitive properties with range and domain set accordingly. Also, it is guaranteed that for each modification to a property instance the inverse property is modified, too. E. g. if a construct <em>Peter knows Paul</em> is added to the model, the construct <em>Paul knows Peter</em> is added simultaneously by the generated java code.</p>
+<p> <strong>inverseOf</strong> object properties define "links" in the opposite direction of the property they reference. E. g. for the construct <em>Peter parentOf Paul</em> the inverse property is <em>Paul childOf Peter</em>. To keep the ontology consistent in owl2java upon adding, changing or removing a property value the corresponding values of inverse properties are changed accordingly. </p>
+<h2>Equality and Inequality</h2>
+<p> With OWL proposition about equality and inequality are possible on the class, property and instance level.  With the scope of owl2javav in mind statements about individuals as done via the <strong>sameAs</strong> and <strong>differentFrom</strong> statement are ignored. As java does not adhere to the open world assumption but treats each individual as instance as unique the construct <strong>AllDifferent</strong> can also be ignored.</p>
+<p> The <strong>equivalentClass</strong> and <strong>equivalentProperty</strong> constructs are used to define <strong>necessary and sufficient</strong> conditions for a class or property i. e. to state an <em>axiom</em> about an item. </p>
+<p> For primitive definitions like <em>ClassA equivalentClass ClassB</em> equivalent classes and properties are handled. Creation of an instance of <em>ClassA</em> leads to the creation of an instance of <em>ClassB</em> and vica versa. </p>
+<p> For more complex definitions currently <em>no support is available</em>. Any distinction between <em>necessary</em> (rdfs:subClassOf) and <em>necessary and sufficient</em> (owl:equivalentClass) declarations as stated by OWL is ignored. See the explanations regarding <em>unionOf</em> above.</p>
+<h2>Versioning</h2>
+<p> Under the aspect of versioning meta-data about properties and classes can be defined. As these only add sugar to the cake aka ontology they are ignored. </p>
+<p> In the long run it would be possible to evaluate the <strong>DeprecatedClass</strong> and <strong>DeprecatedProperty</strong> definitions and mark the classes or accessor methods with <i>@Deprecated</i> java annotations.</p>
+
+            
+        </div>
+    
+
+        <div class="relatedItems">
+    
+        
+            
+        
+    
+</div>
+    
+        <div class="visualClear"><!-- --></div>
+<div class="documentActions">
+    
+
+    <h5 class="hiddenStructure">Document Actions</h5>
+
+    <ul>
+    
+        <li id="document-action-print">
+            <a href="javascript:this.print();" title="">Print this</a>
+        </li>
+    
+
+    </ul>
+    
+
+    
+
+</div>
+
+<div class="reviewHistory" id="review-history">
+    
+</div>
+
+
+    
+
+                    </div>
+                    
+
+                    
+                    
+                      
+    
+
+
+
+
+                    
+                    
+
+                    <span id="contentBottomLeft"></span>
+                    <span id="contentBottomRight"></span>
+
+                  </div>
+
+                </div>
+
+              
+            </td>
+            
+
+            
+            
+            
+          </tr>
+        </tbody>
+      </table>
+      
+
+      <div class="visualClear" id="clear-space-before-footer"><!-- --></div>
+      
+      
+
+      
+
+        <div id="portal-footer">
+
+     &copy; 2000-<span>2010</span> <a href="maito:webmaster@incunabulum.de">Michael Zimmermann</a>
+     - powered by <a href="../external.html?link=http://www.zope.org/">zope</a> and <a href="../external.html?link=http://www.plone.org/">plone</a>
+</div>
+
+  <div id="portal-colophon">
+      
+
+      
+
+      <div class="colophonWrapper">
+      <ul>
+        <li>
+          <a href="../external.html?link=http://plone.org/"
+             title="This site was built using Plone CMS, the Open Source Content Management System. Click for more information.">
+            Powered by Plone</a>
+        </li>
+        <li>
+          <a href="../external.html?link=http://validator.w3.org/check/referer"
+             title="This site is valid XHTML.">
+            Valid XHTML</a>
+        </li>
+        <li>
+          <a href="../external.html?link=http://jigsaw.w3.org/css-validator/check/referer&amp;warning=no&amp;profile=css3&amp;usermedium=all"
+             title="This site was built with valid CSS.">
+            Valid CSS</a>
+        </li>
+        <li>
+          <a href="../external.html?link=http://www.section508.gov/"
+             title="This site conforms to the US Government Section 508 Accessibility Guidelines.">
+            Section 508</a>
+        </li>
+        <li>
+          <a href="../external.html?link=http://www.w3.org/WAI/WCAG1AA-Conformance"
+             title="This site conforms to the W3C-WAI Web Content Accessibility Guidelines.">
+            WCAG</a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+
+
+
+      
+
+      <div class="visualClear"><!-- --></div>
+    </div>
+<div id="kss-spinner"><img alt=""
+                           src="gif/spinner.gif" /></div>
+</body>
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+</html>
+
+

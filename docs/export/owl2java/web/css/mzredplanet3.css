@@ -1,0 +1,480 @@
+
+/* - mzredplanet3.css - */
+@media screen {
+/*
+  This file is based on the ploneCustom.css.dtml file shipped with Plone.
+
+   (do not remove this)
+   (not this either)
+*/
+
+/* YOUR CSS RULES START HERE */
+
+/* #########################*/
+/* Main layout definitions */
+/* #########################*/
+
+#portal-colophon {
+display: none;}
+
+    #visual-portal-wrapper {
+        width: 877px;
+        margin: 0 auto;
+        padding: 0px 35px  35px 35px;
+	background: #FFFFFF
+    }
+
+ /* footer */
+    #portal-footer {
+        padding-top: 2em;
+        text-align: center;
+        font-size: 75%;
+    }
+
+    /* Logo */
+    #portal-logo {
+	background:transparent ;
+  border-left:10px solid #FFFFFF;
+  border-right:10px solid #FFFFFF;
+  height:140px;
+  margin:0 auto;
+  width:837px;
+    }
+
+#portal-column-one {
+  padding-top: 1em;
+}
+
+    #logo * {
+        text-decoration: none;
+    }
+
+    #logo h1 {
+        border-bottom: none;
+        float: left;
+        margin-left: -5px;
+        padding: 40px 0px 0px 20px;
+        font-size: 2.6em;
+        line-height: 100%;
+    }
+
+    #logo h1 a {
+        color: #444;
+    }
+
+    /* Splash */
+    #splash {
+        width: 877px;
+        height: 140px;
+        margin: 0 auto;
+        background: url(../jpg/header-2.jpg) no-repeat center bottom;
+        border-right: 20px solid #FFFFFF;
+        border-left: 20px solid  #FFFFFF;
+    }
+
+    /* menu */
+    #menu {
+        float: right;
+        height: 45px;
+        padding: 70px 25px 0 0;
+    }
+
+
+    #menu ul {
+        position: relative;
+        top: -20px;
+    }
+
+
+    /* footer */
+    #footer {
+        padding-top: 2em;
+        text-align: center;
+        font-size: 75%;
+    }
+
+
+/* #########################*/
+/* Basic formatting options */
+/* #########################*/
+    * {
+        font-family: Verdana,&quot;Trebuchet MS&quot;, Arial, Helvetica, sans-serif;
+    }
+
+   body {
+        margin: 30px 0;
+        background: #efefef;
+        font-size: 0.76em;
+        color: #444;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: Georgia, Verdana, Serif;
+        font-weight: normal;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+        font-size: 180%;
+        border-bottom: #c0c0c0 solid 1px;
+    }
+
+    h1.documentFirstHeading {
+	margin: 0px;
+	padding: 0px;
+    }
+
+    h2 {
+        font-size: 150%;
+        margin-bottom: 10px;
+        border-bottom: #c0c0c0 solid 1px;
+    }
+
+    h3 {
+        margin-bottom: 5px;
+        font-size: 125%;
+        border-bottom: none;
+        font-weight: normal;
+    }
+
+    p, ol, ul, blockquote {
+        line-height: 150%;
+    }
+
+    pre {
+	font-size:150%;
+	line-heigt:150% !important;
+	margin:1em;
+	padding:5px;
+	border-left:#900 2px solid;
+	color:#666666;
+    }
+
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-image:url(../png/bullet.png);
+    }
+
+    a {
+        color: #c00;
+        text-decoration: none;
+    }
+
+    img {
+        border: none;
+    }
+
+    blockquote {
+        margin:1em;
+        padding:5px;
+        border-left:#900 2px solid;
+        color:#666;
+    }
+
+    .clear {
+        clear:both;
+    }
+
+    .hiddenStructure {
+        display: none;
+    }
+
+    textarea {
+        font: 100% Monaco, "Courier New", Courier, monospace;
+        border: 1px solid #c0c0c0;
+    	color: Black;
+    	background: White url(../gif/input_background.gif) repeat-x;
+    	width: 100%;
+    }
+
+/* #########################*/
+/* Sidebar --------------------- */
+/* #########################*/
+
+    #sidebar ul {
+        list-style: none;
+        list-style-image: none;
+    }
+
+    #sidebar li {
+    }
+
+    #sidebar li li {
+        margin-left: 0.5em;
+    }
+    
+    #sidebar dl.portlet {
+	margin-top: 0px;
+    }
+
+/* #########################*/
+/* Plone customization for RedPlanet */
+/* #########################*/
+
+/* Content */
+    #content ul {
+        margin-left:2em;
+    }
+
+    .documentDescription {
+        font-weight: bold
+    }
+
+    .documentContent{
+        padding-bottom: 10px !important;
+    }
+
+   .documentByLine,
+   .weblog-about,
+   .listingBar {
+        margin: 0;
+        font-size:75%;
+        padding: 5px;
+        background:#fdfdfd url(../gif/bylinebg.gif) repeat-x;
+        border: 1px solid #F2F2F2;
+    }
+
+    .weblog-day-title {
+        border-bottom: none !important;
+    }
+
+    .weblog-entry {
+        padding-bottom: 1em;
+    }
+
+    .weblog-entry h3 {
+        border-bottom: red solid 1px;
+    }
+
+   .weblog-footer {
+        margin: 0;
+        font-size:75%;
+        padding: 5px;
+        background:none;
+        border-top: 1px solid #F2F2F2;
+    }
+
+
+
+/* #########################*/
+/* Tools */
+/* #########################*/
+
+
+
+    /* personaltools -------------------- */
+	#portal-personaltools-wrapper {
+	    line-height: 1.6em;
+	    text-align: right;
+	    list-style: none;
+	    position: relative;
+	    top: -3em;
+	    background-color: #FFFFFF;
+	    z-index: 10;
+	}
+
+	#portal-personaltools .portalUser {
+	    background: White url(../gif/user.gif) center left no-repeat;
+	    padding-left: 18px;
+	}
+
+	#portal-personaltools li {
+        padding-left: 5px;
+        padding-right: 5px;
+	    margin-left: 1em;
+	    display: inline;
+	}
+
+	#portal-personaltools li a {
+	    text-decoration: none;
+	}
+
+	#portal-personaltools .visualIconPadding {
+    	padding-left: 10px;
+	}
+
+    /* portal breadcrump --------------------  */
+    #portal-breadcrumbs {
+        text-transform: lowercase;
+        line-height: 1.6em;
+        position: relative;
+        top: -4.6em;
+        background-color: transparent;
+        padding-left: 20px;
+        margin-left: 0px;
+        padding-right: 5px;
+        margin-right: -5px;
+        z-index: 10;
+	width: 600px;
+    }
+
+    #portal-breadcrumbs a {
+        text-decoration: none;
+    }
+
+    .breadcrumbSeparator {
+        font-size: 120%;
+    }
+
+    /* portal-siteactions --------------------  */
+    #portal-siteactions-header {
+        width: 917px;
+        height: 2em;
+        margin: 0 auto;
+        background: transparent;
+    }
+
+	#portal-siteactions {
+        float:right;
+	    background-color: transparent;
+	    line-height: 1.6em;
+	    text-align: right;
+	    text-transform: lowercase;
+	    list-style: none;
+        position: relative;
+        top: 0.4em;
+        padding-right:25px;
+	}
+
+	#portal-siteactions li {
+	    border: none;
+	    margin-left: 1em;
+	    display: inline;
+	    border-collapse: collapse;
+	}
+
+	#portal-siteactions li a {
+	    text-decoration: none;
+	}
+
+	#portal-siteactions .visualIconPadding {
+    	padding-left: 10px;
+	}
+
+    /* portal-globalnav */
+	#portal-globalnav {
+	  position: relative;
+top: -17em;
+  
+        float: right;
+
+    }
+
+    /* portal search --------------------  */
+	#portal-searchbox {
+	    float: right;
+	    clear: right;
+	    position: relative;
+	    top:+9em;
+	    background-color: transparent;
+	    margin: 2em 0 0 0;
+	    padding: 0 14px 0 0;
+	    text-align: right;
+	    text-transform: lowercase;
+	    white-space: nowrap;
+	    z-index: 2;
+	}
+
+.searchSection {display: none;}
+
+	.LSResult {
+
+		display:none!important;
+	 }
+
+
+
+    /* document-actions -------------------- */
+	.documentActions {
+	    float: right;
+	    margin: 0.4em 0 0 0.5em;
+	    text-align: right;
+	}
+	.documentActions ul {
+	    margin: 1px 0 2px 0;
+	    display: block;
+	}
+	.documentActions li {
+	    display: inline;
+	    list-style: none;
+	    list-style-image: none;
+	}
+	.documentActions a {
+	    border: none !important;
+	    text-decoration: none;
+	}
+
+/* #########################*/
+/* Portlets --------------------  */
+/* #########################*/
+
+    .portletHeader {
+        border-bottom: #c0c0c0 solid 1px;
+        font-size: 120%;
+    }
+
+    .portletHeader a {
+        color: #444 !important;
+        font-family: Georgia, Verdana, Serif;
+    }
+
+    .portletFooter {
+        margin-left: 0em;
+        border-top: none !important;
+    }
+
+    .portletItem  {
+        padding-left: -1.5em;
+        margin-left: -1.5em;
+        line-height: 150%;
+        
+
+    }
+
+    /* Contenttype Icon: Comment this statement for content-type icons */
+    #sidebar .visualIcon {
+        background-image:none !important;
+        margin-left: -1.5em;
+    }
+
+    #sidebar .visualIcon a:hover {
+        background-image:none !important;
+    }
+
+    #portlet-navigation-tree .portletItem {
+        line-height: 150%;
+        padding-left:1.5em;
+        margin-left: -1.5em;
+        background: transparent;
+    }
+
+    #portlet-navigation-tree .portletItem li {
+        background: White url(../png/bullet.png) top left no-repeat;
+    }
+
+    /* Contenttype Icon: Comment this statement for content-type icons */
+    #portlet-navigation-tree a.navTreeCurrentItem {
+        background-image: none !important;
+    }
+
+    .navTreeItem {
+        margin-left: 0em;
+        padding-left: 1.5em;
+    }
+
+
+
+
+
+/* YOUR CSS RULES STOP HERE */
+
+/*  */
+
+/* Latest version of the documentation on pre-defined properties from Plone
+   can be found in CMFPlone/skins/plone_styles/ploneCustom.css.dtml */
+
+
+}
+

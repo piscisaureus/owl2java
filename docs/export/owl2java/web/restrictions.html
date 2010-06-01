@@ -1,0 +1,1098 @@
+
+
+
+<!DOCTYPE html PUBLIC
+  "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en">
+
+  
+    
+    
+    
+    
+    
+
+  
+
+  <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+<head>
+
+    <meta http-equiv="Content-Type"
+          content="text/html;charset=utf-8" />
+
+    
+      <base  /><!--[if lt IE 7]></base><![endif]-->
+    
+
+    <meta name="generator" content="Plone - http://plone.org" />
+
+    <link rel="kss-base-url" href="restrictions.html" />
+
+  
+  
+    
+      <script type="text/javascript"
+              src="js/jquery-cachekey9181.js">
+      </script>
+    
+    
+  
+
+  
+    
+      <script type="text/javascript"
+              src="js/ie5fixes-cachekey6308.js">
+      </script>
+    
+    
+  
+
+  
+    
+      <script type="text/javascript"
+              src="js/resourcebase2-dom-fp-cachekey7122.js">
+      </script>
+    
+    
+  
+
+  
+    
+      <script type="text/javascript"
+              src="js/input-label-cachekey2970.js">
+      </script>
+    
+    
+  
+
+  
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/base.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/public.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/columns.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/authoring.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/portlets.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/controlpanel.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="print"><!-- @import url(css/print.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/deprecated.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/navtree.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/invisibles.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/forms.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/plonekss.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(main.html); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(main-2.html); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/andreas02.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/mzredplanet3.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="screen"><!-- @import url(css/main.css); --></style>
+    
+    
+  
+
+  
+    
+    
+      <style type="text/css" media="all"><!-- @import url(css/plonecustom.css); --></style>
+    
+    
+  
+
+  
+  <link rel="kinetic-stylesheet" type="text/css"
+        href="../external.html?link=http://www.incunabulum.de/portal_kss/MzRedPlanet3/at-cachekey3308.kss" />
+
+
+<title>Property Restrictions in Owl2java &mdash; incunabulum.de</title>
+
+    <meta content="In OWL adding additional rdfs:subclass and owl:equivalentClass constructs allows to define restrictions for properties to a class definition hence augmenting the information model with additional information about the range or cardinality of a property. On this page the handling of property restrictions in owl2java is presented."
+          name="description" />
+
+    <!-- Internet Explorer Fixes -->
+    <!--[if IE]>
+        <style type="text/css" media="all">@import url(http://www.incunabulum.de/IEFixes.css);</style>
+        
+        <script type="text/javascript"
+                src="http://www.incunabulum.de/iefixes.js">
+        </script>
+        
+    <![endif]-->
+
+    
+    <link rel="author"
+          href="../external.html?link=http://www.incunabulum.de/author/mz"
+          title="Author information" />
+
+
+
+    <link rel="shortcut icon" type="image/x-icon"
+          href="../external.html?link=http://www.incunabulum.de/favicon.ico" />
+
+
+
+    <link rel="home" href="../external.html?link=http://www.incunabulum.de/"
+          title="Front page" />
+
+    <link rel="contents"
+          href="../external.html?link=http://www.incunabulum.de/sitemap"
+          title="Site Map" />
+
+
+
+
+
+
+    <link rel="search"
+          href="../external.html?link=http://www.incunabulum.de/search_form"
+          title="Search this site" />
+
+
+
+    <!-- Disable IE6 image toolbar -->
+    <meta http-equiv="imagetoolbar" content="no" />
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+  </head>
+
+  <body class="section-projects template-document_view"
+        dir="ltr">
+    <div id="visual-portal-wrapper">
+
+      <div id="portal-top">
+        <div id="portal-header">
+<p class="hiddenStructure">
+  <a accesskey="2"
+     href="restrictions.html#documentContent">Skip to content.</a> |
+
+  <a accesskey="6"
+     href="restrictions.html#portlet-navigation-tree">Skip to navigation</a>
+</p>
+
+<ul id="portal-siteactions">
+
+    <li id="siteaction-sitemap"><a
+    href="../external.html?link=http://www.incunabulum.de/sitemap" accesskey="3"
+    title="Site Map">Site Map</a></li>
+    <li id="siteaction-accessibility"><a
+    href="../external.html?link=http://www.incunabulum.de/accessibility-info"
+    accesskey="0" title="Accessibility">Accessibility</a></li>
+
+</ul>
+
+<div id="portal-searchbox">
+    <form name="searchform"
+          action="../external.html?link=http://www.incunabulum.de/search">
+
+        <label for="searchGadget" class="hiddenStructure">Search Site</label>
+
+        <div class="LSBox">
+        <input name="SearchableText" type="text" size="18"
+               title="Search Site" accesskey="4"
+               class="inputLabel" id="searchGadget" />
+
+        <input class="searchButton" type="submit"
+               value="Search" />
+    
+        <div class="searchSection">
+            <input id="searchbox_currentfolder_only"
+                   class="noborder" type="checkbox"
+                   name="path"
+                   value="/incunabulum_de_www/projects/it/owl2java" />
+            <label for="searchbox_currentfolder_only"
+                   style="cursor: pointer">
+                only in current section
+            </label>
+        </div>
+
+        <div class="LSResult" id="LSResult" style=""><div class="LSShadow" id="LSShadow"></div></div>
+        </div>
+    </form>
+
+    <div id="portal-advanced-search" class="hiddenStructure">
+        <a href="../external.html?link=http://www.incunabulum.de/search_form"
+           accesskey="5">
+            Advanced Search&hellip;
+        </a>
+    </div>
+
+</div>
+
+
+    <!-- the logo -->
+    <div id="logo">
+      <h1><a href="../external.html?link=http://www.incunabulum.de/" title="Home">
+                   incunabulum.de</a></h1>
+    </div>
+
+
+    <!-- the logo image -->
+    <a href="../external.html?link=http://www.incunabulum.de/" id="portal-logo"
+       accesskey="1">
+      <img src="jpg/header.jpg" alt="" title="" height="140" width="877" /></a>
+
+
+    <h5 class="hiddenStructure">Sections</h5>
+
+    <ul id="portal-globalnav">
+        <li id="portaltab-index_html" class="selected"><a
+    href="../external.html?link=http://www.incunabulum.de/" title="">Home</a></li>
+        <li id="portaltab-poel" class="plain"><a
+    href="../external.html?link=http://www.incunabulum.de/poel" title="">Poel</a></li>
+        <li id="portaltab-poelcontrol" class="plain"><a
+    href="../external.html?link=http://www.incunabulum.de/poelcontrol" title="">PoelControl</a></li>
+    </ul>
+
+</div>
+
+<div id="portal-personaltools-wrapper">
+
+<h5 class="hiddenStructure">Personal tools</h5>
+
+<ul id="portal-personaltools" class="visualInline">
+   
+
+    
+        <li>
+            <a href="../external.html?link=http://www.incunabulum.de/login_form">Log in</a>
+        </li>
+    
+    
+        <li>
+            <a href="#">Register</a>
+        </li>
+    
+
+</ul>
+</div>
+
+
+    
+
+
+<div id="portal-breadcrumbs">
+
+    <span id="breadcrumbs-you-are-here">You
+are here:</span>
+    <a href="../external.html?link=http://www.incunabulum.de/">Home</a>
+    <span class="breadcrumbSeparator">
+        &rarr;
+        
+    </span>
+    <span dir="ltr">
+        
+            <a href="../external.html?link=http://www.incunabulum.de/projects">projects</a>
+            <span class="breadcrumbSeparator">
+                &rarr;
+                
+            </span>
+            
+         
+    </span>
+    <span dir="ltr">
+        
+            <a href="../external.html?link=http://www.incunabulum.de/projects/it">IT Projects</a>
+            <span class="breadcrumbSeparator">
+                &rarr;
+                
+            </span>
+            
+         
+    </span>
+    <span dir="ltr">
+        
+            <a href="owl2java.html">Owl2Java</a>
+            <span class="breadcrumbSeparator">
+                &rarr;
+                
+            </span>
+            
+         
+    </span>
+    <span dir="ltr">
+        
+            
+            
+            <span>Property Restrictions in Owl2java</span>
+         
+    </span>
+
+</div>
+
+      </div>
+
+      <div class="visualClear" id="clear-space-before-wrapper-table"><!-- --></div>
+
+      <table id="portal-columns">
+        <tbody>
+          <tr>
+            
+            <td id="portal-column-one">
+              <div class="visualPadding">
+                
+                  
+<div id="portletwrapper-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f696e63756e6162756c756d5f64655f7777770a6e617669676174696f6e"
+     class="portletWrapper kssattr-portlethash-706c6f6e652e6c656674636f6c756d6e0a636f6e746578740a2f696e63756e6162756c756d5f64655f7777770a6e617669676174696f6e">
+<dl class="portlet portletNavigationTree">
+
+    <dt class="portletHeader">
+        <span class="portletTopLeft"></span>
+        <a href="../external.html?link=http://www.incunabulum.de/sitemap"
+           class="tile">Navigation</a>
+       
+        <span class="portletTopRight"></span>
+    </dt>
+
+    <dd class="portletItem lastItem">
+        <ul class="navTree navTreeLevel0">
+            <li class="navTreeItem">
+                <div>
+                   <a href="../external.html?link=http://www.incunabulum.de/"
+                      class=""
+                      title="Personal site for Michael Zimmermann">
+                   <img src="gif/site_icon.gif"
+                        height="16" width="16" alt="" />
+                   Home
+                   
+                   </a>
+                </div>
+            </li>
+            
+
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/contact"
+           class="state-published navTreeFolderish"
+           title="contact information">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>contact</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/personal"
+           class="state-published navTreeFolderish"
+           title="Who am I?">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>personal</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeItemInPath navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects"
+           class="state-published navTreeItemInPath navTreeFolderish"
+           title="In my spare time I like to work on mostly small projects. So, this section is a collection of everything I work on and that is not related to  naval architecture . I hope that some of the information might help you.">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>projects</span>
+        </a>
+        
+    </div>
+
+    <ul class="navTree navTreeLevel1">  
+        
+
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/biking"
+           class="state-published navTreeFolderish"
+           title="Being an avid cyclist my bike is the main means of transportation for commuting in town. Furthermore I also like to do extended fully self supported trips on holidays. Here, you can find some information about bike related projects. These include e. g. a new high power light installation, technical drawings for a recumbent bike....">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Biking</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/electronics"
+           class="state-published navTreeFolderish" title="">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Electronics</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeItemInPath navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/it"
+           class="state-published navTreeItemInPath navTreeFolderish"
+           title="Computers are everywhere, we do use them more and more often. Unfortunatley to make these machines to what you like a certain level of skill and the appropriate programs are needed. These pages give a summary of some of my activities related to programming. 
+">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>IT Projects</span>
+        </a>
+        
+    </div>
+
+    <ul class="navTree navTreeLevel2">  
+        
+
+
+
+
+
+
+
+
+    </ul>
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/environmental"
+           class="state-published navTreeFolderish"
+           title="Even in the time of economic stagnation environmental protection is necessary to give rise to the hope of a stable and  sustainable environment to life in. This section gives some information about projects related to environmental protection.">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Environmental Projects</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/model_building"
+           class="state-published navTreeFolderish"
+           title="In this section a collection of ship models as well as other model building projects is given. For some of them detailed reports or technical drawings are available for download.">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Model Building</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/poel"
+           class="state-published navTreeFolderish" title="">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>Pfanzenöl im Dieselmotor</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/poelcontrol"
+           class="state-published navTreeFolderish"
+           title="PoelControl ist eine mikocontroller-gesteuerte Schaltung mit dem Ziel, einen weitgehend automatisierten Betrieb von modernen Direkteinspritzern mit Pflanzenöl zu ermöglichen. Umfangreiche Anschlußmöglichkeiten für verschiedenste Sensoren stehen zur Verfügung, um detailierte Infos über Betriebszustände, Temperaturen etc. zu messen. Wichtig: Infos hier sind &quot;work in progress&quot; und daher z. T. unvollständig oder veraltet!">
+            <img width="16" height="16" src="gif/folder_icon-2.gif" alt="Folder" />
+            <span>PoelControl</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/projects/passat"
+           class="state-published navTreeFolderish" title="">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>VW Passat</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+
+
+    </ul>
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/restricted"
+           class="state-published navTreeFolderish"
+           title="This is a restricted folder. Access to subfolders is only granted to users with adequate permissions. Please ask the webmaster for an account.  ">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>restricted</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/travel"
+           class="state-published navTreeFolderish"
+           title="Traveling is fun, traveling is nice. In this section you can find various reports about tirps I did in the past as well as notes about my experience with certain pieces of equipment, packing your stuff ...">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>travel</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+
+    
+
+      <div>
+
+        <a href="../external.html?link=http://www.incunabulum.de/work"
+           class="state-published navTreeFolderish"
+           title="In this section you can find work related information. This includes publications, information about projects I work on as well as everything related to naval architecture.
+">
+            <img width="16" height="16" src="gif/folder_icon.gif" alt="Folder" />
+            <span>work</span>
+        </a>
+        
+    </div>
+
+    
+    
+</li>
+
+
+
+
+        </ul>
+        <span class="portletBottomLeft"></span>
+        <span class="portletBottomRight"></span>
+    </dd>
+</dl>
+
+</div>
+
+
+
+
+                
+                &nbsp;
+              </div>
+            </td>
+            
+
+            
+            <td id="portal-column-content">
+
+              
+                <div class="">
+
+                  
+
+
+                  <div id="region-content" class="documentContent">
+
+                    <span id="contentTopLeft"></span>
+                    <span id="contentTopRight"></span>
+                    
+                    <a name="documentContent"></a>
+
+                    
+
+    <dl class="portalMessage info" id="kssPortalMessage" style="display:none">
+        <dt>Info</dt>
+        <dd></dd>
+    </dl>
+
+
+                    
+                    <div id="viewlet-above-content"></div>
+
+                    
+                    
+                    <div id="content">
+                      
+                      
+    
+
+        
+
+        <h1 class="documentFirstHeading"> 
+            
+        <span class="" id="parent-fieldname-title">
+            Property Restrictions in Owl2java
+        </span>
+    
+        </h1>
+
+        <div class="documentByLine" id="plone-document-byline">
+  
+
+  
+    <span class="documentAuthor">
+      by
+      <a href="../external.html?link=http://www.incunabulum.de/author/mz">Michael Zimmermann</a>
+
+    </span>
+  
+
+  <span class="documentModified">
+    &mdash;
+    <span>
+      last modified
+    </span>
+    May 29, 2008 08:57 PM
+  </span>
+
+  
+
+  
+
+  
+
+</div>
+
+
+
+
+        <p class="documentDescription">
+            
+        <span class="" id="parent-fieldname-description">
+            In OWL adding additional rdfs:subclass and owl:equivalentClass constructs allows to define restrictions for properties to a class definition hence augmenting the information model with additional information about the range or cardinality of a property. On this page the handling of property restrictions in owl2java is presented.
+        </span>
+    
+        </p>
+
+        
+
+
+
+        
+
+        
+        <div class="" id="parent-fieldname-text">
+            <h2>Pretext</h2>
+<p> A proper handling of all restriction cases is difficult. See the the document <a href="pdf/restrictions-and-accessormethods.pdf">Restrictions and Accessor Methods</a> for complex example cases and conculsions.</p>
+<p> In the following sections details about the handling of restrictions is presented. Each section starts with a short definition of the key characteristics of the restrictions and moves on to discuss the implications for owl2java.</p>
+<h2>Restrictions in OWL</h2>
+<p> According to the <a href="../external.html?link=http://www.w3.org/TR/owl-features/">OWL DL technical recommendation</a>, for properties the following restrictions are possible:</p>
+
+<ul>
+<li>property restrictions</li>
+<li>restricted cardinality</li>
+<li>filler information</li>
+
+</ul>
+<h2>Property Restrictions</h2>
+
+<ul>
+<li><em>allValuesFrom</em> defines a local range restriction for the property defined.</li>
+<li><em>someValuesFrom</em> defines that at least one value for the property is of a certain type.</li>
+
+</ul>
+<p><strong>allValuesFrom:</strong> Defining multiple property ranges for a certain property may lead to unwanted side effects. E. g. assume a property <em>knows</em> with the ranges <em>Cities</em> and <em>Persons</em> and an instance:
+<pre>
+ Person(Peter) 
+   knows City(Rome)
+   knows Person(Paul)
+</pre>
+</p>
+<p>As it can be inferred that the object of the statement  is an instance of all classes in the range of the property it follows that <em>Rome</em> and <em>Paul</em> are both of the type <em>City</em> and <em>Person</em>. Not good. Using a restriction of type <em>allValuesFrom</em> it is possible to define that the property <em>knows</em> should only contain values of the types <em>Person</em> or <em>City</em> without incorrect results provided by a reasoner.</p>
+<p>For a general purpose java code generator the following problems should be considered:</p>
+
+<ul>
+<li>A class adds an allValuesFrom restriction to a property without a domain: If enabled owl2javav changes the domain of the property from owl:thing aka OwlThing to the class where the restriction for the property is defined. If not enabled, see the next point.</li>
+<li>A subclass adds a second allValuesFrom restriction to a property: In this case owl2java generates new accessor methods (get/set/list) for the subclass named get<em>ClassName</em>R1 etc. The accessor methods of the parent class are also implemented yet are marked as deprecated via the <i>@Deprecated</i> java annotation tag. </li>
+<li>Multiple allValuesFrom restrictions in a single class: In contrast to the OWL standard, if multiple allValuesFrom restrictions are present a union class is created and added as new range for the property, see the explanation <a href="classes-and-properties-in-owl2java.html">here</a>. Accessor methods named get<em>ClassName</em>R1 etc. are created. Parent accessor methods are marked deprecated.</li>
+<li>Union, Intersection in a property restriction:. For simple unions and intersections corresponding anonymous classes are created and set as range, see above. </li>
+
+</ul>
+<p><strong>someValuesFrom:</strong> Under the <a href="../external.html?link=http://en.wikipedia.org/wiki/Open_world_assumption">Open World Assumption</a> everything that is not explicitly stated as either true or false is not known. Therefore, in OWL <em>someValuesFrom</em> can be used to determine if certain instance types are missing or to derive that an element of this property also has a different class. </p>
+<p>With the closed world reasoning done in java imho the only usage scenario for this type of restriction is to deny deletion of an object property or value if it is the last in an instance. </p>
+<h2>Restricted Cardinality</h2>
+
+<ul>
+<li><em>minCardinality</em> states that each instance of the class must have at least the given number of values (datatype property) or instances (object property) for the given property.</li>
+<li><em>maxCardinality</em> defines that each instance of the class must not have more than the given number of values (datatype property) or instances (object property) for the given property.</li>
+<li><em>cardinality</em> is a convenience definition stating that <em>maxCardinality</em> = <em>minCardinality</em> = <em>cardinality</em>.</li>
+
+</ul>
+<p>Under the closed world assumption using a <strong>maxCardinality</strong> restriction allows to restrict the maximum permissible number of elements for a property on a certain class.  From a java perspective the following cases are relevant:</p>
+
+<ul>
+<li><em>maxCardinality</em> restriction &gt; 1 for a non functional property: If adding an element to the property, the class implementations checks if the maximum number of elements is reached and throws an exception if this is the case. </li>
+<li><em>maxCardinality</em> restriction = 1 for a non functional property: This defines the property as functional property for this class and subclasses. All list-style accessor methods are disabled and marked as deprecated via the <i>@Deprecared</i> java annotation tag. </li>
+<li><em>maxCardinality</em> restriction = 0 for any property: The property is not allowed for the class. All accessor methods from parent classes / interfaces are disabled and marked as deprecated via the <i>@Deprecated</i> java annotation tag.</li>
+<li><em>maxCardinality</em> &gt; 1 for a functional property: The global definition as functional property overrides the local cardinality constraint. Hence, the restriction is ignored.</li>
+
+</ul>
+<p>Similar to the <em>someValuesFrom</em> restriction a <strong>minCardinality</strong> restriction can be used to disable removal of an element if the minimum permissible number of elements has been reached. Currently, this is *not supported.</p>
+<p>As defined in the OWL standard a <strong>cardinality</strong> restriction is handled as:
+<pre>
+ maxCardinality = cardinality
+ minCardinality = cardinality
+</pre>
+</p>
+<h2>Filler Information</h2>
+
+<ul>
+<li><em>hasValue</em> defines that a property has a certain individual as value.</li>
+
+</ul>
+<p>Similar to the <em>someValuesFrom</em> restriction this could be used to lock certain properties, i. e. to deny the removal of the element. </p>
+
+            
+        </div>
+    
+
+        <div class="relatedItems">
+    
+        
+            
+        
+    
+</div>
+    
+        <div class="visualClear"><!-- --></div>
+<div class="documentActions">
+    
+
+    <h5 class="hiddenStructure">Document Actions</h5>
+
+    <ul>
+    
+        <li id="document-action-print">
+            <a href="javascript:this.print();" title="">Print this</a>
+        </li>
+    
+
+    </ul>
+    
+
+    
+
+</div>
+
+<div class="reviewHistory" id="review-history">
+    
+</div>
+
+
+    
+
+                    </div>
+                    
+
+                    
+                    
+                      
+    
+
+
+
+
+                    
+                    
+
+                    <span id="contentBottomLeft"></span>
+                    <span id="contentBottomRight"></span>
+
+                  </div>
+
+                </div>
+
+              
+            </td>
+            
+
+            
+            
+            
+          </tr>
+        </tbody>
+      </table>
+      
+
+      <div class="visualClear" id="clear-space-before-footer"><!-- --></div>
+      
+      
+
+      
+
+        <div id="portal-footer">
+
+     &copy; 2000-<span>2010</span> <a href="maito:webmaster@incunabulum.de">Michael Zimmermann</a>
+     - powered by <a href="../external.html?link=http://www.zope.org/">zope</a> and <a href="../external.html?link=http://www.plone.org/">plone</a>
+</div>
+
+  <div id="portal-colophon">
+      
+
+      
+
+      <div class="colophonWrapper">
+      <ul>
+        <li>
+          <a href="../external.html?link=http://plone.org/"
+             title="This site was built using Plone CMS, the Open Source Content Management System. Click for more information.">
+            Powered by Plone</a>
+        </li>
+        <li>
+          <a href="../external.html?link=http://validator.w3.org/check/referer"
+             title="This site is valid XHTML.">
+            Valid XHTML</a>
+        </li>
+        <li>
+          <a href="../external.html?link=http://jigsaw.w3.org/css-validator/check/referer&amp;warning=no&amp;profile=css3&amp;usermedium=all"
+             title="This site was built with valid CSS.">
+            Valid CSS</a>
+        </li>
+        <li>
+          <a href="../external.html?link=http://www.section508.gov/"
+             title="This site conforms to the US Government Section 508 Accessibility Guidelines.">
+            Section 508</a>
+        </li>
+        <li>
+          <a href="../external.html?link=http://www.w3.org/WAI/WCAG1AA-Conformance"
+             title="This site conforms to the W3C-WAI Web Content Accessibility Guidelines.">
+            WCAG</a>
+        </li>
+      </ul>
+      </div>
+
+    </div>
+
+
+
+      
+
+      <div class="visualClear"><!-- --></div>
+    </div>
+<div id="kss-spinner"><img alt=""
+                           src="gif/spinner.gif" /></div>
+</body>
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+</html>
+
+

@@ -1,0 +1,31 @@
+
+/* - deprecated.css - */
+@media screen {
+/* Deprecated CSS elements - do not depend on these, they will disappear in
+   the next version of Plone. They are here for backwards compatibility only. */
+
+/*  (do not remove this :) */
+/*  (not this either :) */
+
+/* .system-message and #error-handling are reST error indicators */
+div.portalMessage,
+p.portalMessage,
+.system-message,
+#error-handling {
+    background-color: #ffce7b;
+    border: 1px solid #ffa500;
+    color: Black;
+    font-size: 85%;
+    margin: 1em 0em;
+    padding: 0.5em 1em 0.5em 3em;
+    vertical-align: middle;
+    background-image: url(../gif/info_icon.gif);
+    background-repeat: no-repeat;
+    background-position: 5px 50%;
+}
+
+
+/*  */
+
+}
+
