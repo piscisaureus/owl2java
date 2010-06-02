@@ -63,8 +63,8 @@
 		$singleDeprecated
 		public $rangeFull get$propnameCaps${suffix} () {
             RDFNode n = getPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            if (n.canAs(${range}.class))
-                return ($rangeFull) n.as(${range}.class);
+            if (n.canAs(${rangeFull}.class))
+                return ($rangeFull) n.as(${rangeFull}.class);
             else {
                 log.warn("Could not convert property $prop.getMapUri() to type $rangeFull");
                 return null;
