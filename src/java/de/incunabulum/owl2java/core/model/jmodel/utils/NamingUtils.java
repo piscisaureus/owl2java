@@ -1,6 +1,8 @@
 package de.incunabulum.owl2java.core.model.jmodel.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.ontology.UnionClass;
 import com.hp.hpl.jena.rdf.model.Property;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.model.jmodel.JPackage;
@@ -174,7 +177,7 @@ public class NamingUtils {
 	@SuppressWarnings("unchecked")
 	public static String createUnionClassName(UnionClass cls) {
 		String name = unionClassPrefix;
-		Iterator operandIt = cls.listOperands();
+		Iterator operandIt = sortOperandClasses(cls.listOperands()).iterator();
 		while (operandIt.hasNext()) {
 			OntClass c = (OntClass) operandIt.next();
 			name += StringUtils.toFirstUpperCase(c.getLocalName());
@@ -189,7 +192,7 @@ public class NamingUtils {
 	@SuppressWarnings("unchecked")
 	public static String createIntersectionClassName(IntersectionClass cls) {
 		String name = intersectionClassPrefix;
-		Iterator operandIt = cls.listOperands();
+		Iterator operandIt = sortOperandClasses(cls.listOperands()).iterator();
 		while (operandIt.hasNext()) {
 			OntClass c = (OntClass) operandIt.next();
 			// avoid problems with anonymous classes in intersections
@@ -204,6 +207,33 @@ public class NamingUtils {
 			}
 		}
 		return name;
+	}
+
+	/*
+	 * Put operand classes (provided as an iterator) in alphabetical order
+	 */
+	private static List<? extends OntClass> sortOperandClasses(ExtendedIterator<? extends OntClass> operands) {
+		// Copy the operand classes to a list
+		List<? extends OntClass> operandList = operands.toList();
+
+		// Sort the list
+		Collections.sort(operandList, new Comparator<OntClass>() {
+			@Override
+			public int compare(OntClass a, OntClass b) {
+				// Compare by local name first
+				int result = a.getLocalName().compareToIgnoreCase(b.getLocalName());
+
+				// If local names comparison has no result, compare URIs
+				if (result == 0) {
+					result = a.getURI().compareToIgnoreCase(b.getLocalName());
+				}
+
+				return result;
+			}
+		});
+
+		// Return the sorted operand classes as an ordered list
+		return operandList;
 	}
 
 }
