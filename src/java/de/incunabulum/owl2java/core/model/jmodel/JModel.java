@@ -13,11 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jgraph.graph.DefaultEdge;
 
-import com.hp.hpl.jena.ontology.IntersectionClass;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntProperty;
-import com.hp.hpl.jena.ontology.UnionClass;
 
 import de.incunabulum.owl2java.core.model.jenautils.ResourceError;
 import de.incunabulum.owl2java.core.model.jmodel.utils.LogUtils;
@@ -77,62 +75,33 @@ public class JModel implements IReporting, IStatistics {
 		return this.pkgName2Package.get(packageName);
 	}
 
+	public JClass getAnonymousJClass(JClass.AnonymousClassType type, List<? extends OntClass> operands) {
+		Iterator<JClass> classIterator = uri2class.values().iterator();
 
-	public JClass getAnonymousJClass(List<JClass> operandClasses) {
-		// loop over all classes in the model
-		Iterator<String> clsUris = uri2class.keySet().iterator();
-		while (clsUris.hasNext()) {
-			String uri = (String) clsUris.next();
-			JClass cls = uri2class.get(uri);
-
-			// if class is not anonymous > continue
-			if (!cls.isAnonymous())
-				continue;
-
-			// if both anonymous classes have identical super classes
-			// > identical > return it
-			List<JClass> superClasses = cls.listDirectSuperClasses();
-			// different size > super classes are not identical
-			if (superClasses.size() != operandClasses.size())
-				continue;
-
-			// difference of list is empty > lists are identical > return
-			if (ListUtils.subtract(superClasses, operandClasses).isEmpty())
-				return cls;
+		// Loop over all known classes to see whether it matches the signature of the anonymous class we are looking for
+		while (classIterator.hasNext()) {
+			JClass candidate = classIterator.next();
+						
+			// Is the candidate class of the type we are looking for  
+			if (candidate.getAnonymousClassType() == type) {
+				List<? extends OntClass> candidateOperands = candidate.getAnonymousClassOperands();
+				// See whether either either of the operands lists is null
+				if (operands == null || candidateOperands == null) {
+					// If both operand lists are null, this is the class we are looking for
+					if (operands == candidateOperands) {
+						return candidate;
+					}
+				} else {
+					// If both operand lists contain the same classes, this is the class we are looking for
+					if (operands.size() == candidateOperands.size() && ListUtils.subtract(operands, candidateOperands).isEmpty()) {
+						return candidate;
+					}
+				}
+			}
 		}
 
+		// We did not find any classes matching the signature of the anonymous class we are loking for
 		return null;
-
-	}
-
-	@SuppressWarnings("unchecked")
-	public JClass getAnonymousJClassUnion(UnionClass unionClass) {
-		// find all super classes (operands) of the anonymous class
-		List<JClass> operandClasses = new ArrayList<JClass>();
-		Iterator operandIt = unionClass.listOperands();
-		while (operandIt.hasNext()) {
-			OntClass cls = (OntClass) operandIt.next();
-			String clsUri = cls.getURI();
-			if (uri2class.containsKey(clsUri)) {
-				operandClasses.add(uri2class.get(clsUri));
-			}
-		}
-		return getAnonymousJClass(operandClasses);
-	}
-
-	@SuppressWarnings("unchecked")
-	public JClass getAnonymousJClassIntersection(IntersectionClass intersectionClass) {
-		// find all super classes (operands) of the anonymous class
-		List<JClass> operandClasses = new ArrayList<JClass>();
-		Iterator operandIt = intersectionClass.listOperands();
-		while (operandIt.hasNext()) {
-			OntClass cls = (OntClass) operandIt.next();
-			String clsUri = cls.getURI();
-			if (uri2class.containsKey(clsUri)) {
-				operandClasses.add(uri2class.get(clsUri));
-			}
-		}
-		return getAnonymousJClass(operandClasses);
 	}
 
 	public boolean hasPackage(String packageName) {

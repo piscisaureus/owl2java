@@ -568,7 +568,7 @@ public class OwlReader {
 		// right now. -> we skip it
 
 		// get or create the intersection class
-		JClass cls = jmodel.getAnonymousJClassIntersection(intersectionClass);
+		JClass cls = jmodel.getAnonymousJClass(JClass.AnonymousClassType.INTERSECTION, intersectionClass.listOperands().toList());
 		// an identical intersection class exists > we use it
 		if (cls != null)
 			log.info("Reusing existing anonymous intersection class " + LogUtils.toLogName(cls));
@@ -587,7 +587,7 @@ public class OwlReader {
 			if (!jmodel.hasJClass(intersectionClass.getURI()))
 				jmodel.createJClass(intersectionClass, basePackage);
 			cls = jmodel.getJClass(intersectionClass.getURI());
-			cls.setAnonymous(true);
+			cls.setAnonymous(JClass.AnonymousClassType.INTERSECTION, intersectionClass.listOperands().toList());
 			cls.setOntClass(intersectionClass);
 		}
 
@@ -726,7 +726,7 @@ public class OwlReader {
 
 	@SuppressWarnings("unchecked")
 	protected JClass createUnionClass(UnionClass unionClass) {
-		JClass cls = jmodel.getAnonymousJClassUnion(unionClass);
+		JClass cls = jmodel.getAnonymousJClass(JClass.AnonymousClassType.UNION, unionClass.listOperands().toList());
 		// an identical anonymous class exists > we use it
 		if (cls != null) {
 			log.info("Reusing existing anonymous union class " + LogUtils.toLogName(cls));
@@ -745,7 +745,7 @@ public class OwlReader {
 			if (!jmodel.hasJClass(unionClass.getURI()))
 				jmodel.createJClass(unionClass, basePackage);
 			cls = jmodel.getJClass(unionClass.getURI());
-			cls.setAnonymous(true);
+			cls.setAnonymous(JClass.AnonymousClassType.UNION, unionClass.listOperands().toList());
 			cls.setOntClass(unionClass);
 		}
 

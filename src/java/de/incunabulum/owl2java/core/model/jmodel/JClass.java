@@ -17,13 +17,20 @@ import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
 import de.incunabulum.owl2java.core.utils.StringUtils;
 
 public class JClass extends JMapped {
+	public static enum AnonymousClassType { 
+		NONE,           // Not an anonymous class
+		INTERSECTION,   // Anonymous intersection class 
+		UNION           // Anonymous union class 
+	}
 
 	private static Log log = LogFactory.getLog(JClass.class);
 
 	private OntClass ontClass;
 	private JModel jModel;
 	private JPackage jPkg;
-	private boolean anonClass = false;
+
+	AnonymousClassType anonymousClassType = AnonymousClassType.NONE;
+	List<? extends OntClass> anonymousClassOperands = null;		
 
 	private List<JProperty> domainProperties = new ArrayList<JProperty>();
 	private List<JProperty> aggregatedProperties = new ArrayList<JProperty>();
@@ -437,7 +444,20 @@ public class JClass extends JMapped {
 	}
 
 	public boolean isAnonymous() {
-		return anonClass;
+		return anonymousClassType != AnonymousClassType.NONE;
+	}
+
+	public AnonymousClassType getAnonymousClassType() {
+		return anonymousClassType;
+	}
+
+	public List<? extends OntClass> getAnonymousClassOperands() {
+		return anonymousClassOperands;
+	}
+
+	public void setAnonymous(AnonymousClassType type, List<? extends OntClass> operands) {
+		this.anonymousClassType = type;
+		this.anonymousClassOperands = operands;
 	}
 
 	public boolean isRootClass() {
@@ -549,11 +569,6 @@ public class JClass extends JMapped {
 	public void removeSuperClassRelation(JClass superCls) {
 		jModel.getClassGraph().removeAllEdges(superCls, this);
 		// jModel.getClassGraph().removeVertex(superCls);
-	}
-
-	public void setAnonymous(boolean anon) {
-		log.debug(LogUtils.toLogName(this) + ": Marking as anonymous class");
-		anonClass = anon;
 	}
 
 	public void setOntClass(OntClass ontClass) {
