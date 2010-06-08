@@ -13,7 +13,6 @@ import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.ontology.UnionClass;
 import com.hp.hpl.jena.rdf.model.Property;
 
-import de.incunabulum.owl2java.core.model.jmodel.JClass;
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.model.jmodel.JPackage;
 import de.incunabulum.owl2java.core.model.ns.NamespaceUtils;
@@ -181,15 +180,6 @@ public class NamingUtils {
 		return name;
 	}
 
-	public static String createUnionClassName(JClass cls, List<JClass> operandClasses) {
-		String name = unionClassPrefix;
-		for (JClass c : operandClasses) {
-			name += c.getJavaClassName();
-		}
-		name = NamingUtils.getValidJavaName(name);
-		return name;
-	}
-
 	@SuppressWarnings("unchecked")
 	public static String createIntersectionClassName(IntersectionClass cls) {
 		String name = intersectionClassPrefix;
@@ -203,14 +193,6 @@ public class NamingUtils {
 			} else {
 				name += StringUtils.toFirstUpperCase(c.getLocalName());
 			}
-		}
-		return name;
-	}
-
-	public static String createIntersectionClassName(JClass cls, List<JClass> operandClasses) {
-		String name = intersectionClassPrefix;
-		for (JClass c : operandClasses) {
-			name += c.getJavaClassName();
 		}
 		return name;
 	}
