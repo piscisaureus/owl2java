@@ -575,7 +575,7 @@ public class OwlReader {
 		else {
 			// no identical intersection class exist > create new
 			String anonClassName = NamingUtils.createIntersectionClassName(intersectionClass);
-			String namespace = jmodel.getBaseNamespace();
+			String namespace = getAnonymousNamespace(intersectionClass.listOperands());;
 			String anonClassUri = namespace + anonClassName;
 
 			// rename the anon. class to a named class,
@@ -733,7 +733,7 @@ public class OwlReader {
 		} else {
 			// create a new anonymous class
 			String anonClassName = NamingUtils.createUnionClassName(unionClass);
-			String namespace = jmodel.getBaseNamespace();
+			String namespace = getAnonymousNamespace(unionClass.listOperands());
 			String anonClassUri = namespace + anonClassName;
 
 			// rename the anon. class to a named class,
@@ -777,6 +777,24 @@ public class OwlReader {
 					+ NamingUtils.getJavaFullName(superCls.getPackage(), superCls.getName()));
 		}
 		return cls;
+	}
+
+	/*
+	 * Find a namespace for an anonymous class.
+	 * If all relatedClasses have the same namespace, return it;
+	 * otherwise return the base namespace.
+	 */
+	public String getAnonymousNamespace(ExtendedIterator<? extends OntClass> operandClasses) {
+		if (!operandClasses.hasNext()) {
+			return jmodel.getBaseNamespace();
+		}
+		String namespace = operandClasses.next().getNameSpace();
+		while (operandClasses.hasNext()) {
+			if (!namespace.equals(operandClasses.next().getNameSpace())) {
+				return jmodel.getBaseNamespace();
+			}
+		}
+		return namespace;
 	}
 
 	@SuppressWarnings("unchecked")
