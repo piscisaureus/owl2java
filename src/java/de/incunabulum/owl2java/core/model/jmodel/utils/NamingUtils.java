@@ -26,8 +26,11 @@ public class NamingUtils {
 	public static int anonCounter = 0;
 	public static String anonPrefix = "Anon";
 
-	public static String unionClassPrefix = "Union";
-	public static String intersectionClassPrefix = "Intersection";
+	public static String unionClassPrefix = "";
+	public static String unionClassGlue = "And";
+
+	public static String intersectionClassPrefix = "";
+	public static String intersectionClassGlue = "Or";
 
 	public static String classNameAddOn = "";
 	// %c = AddOn, %n = Name, %p = Prefix
@@ -175,6 +178,9 @@ public class NamingUtils {
 		while (operandIt.hasNext()) {
 			OntClass c = (OntClass) operandIt.next();
 			name += StringUtils.toFirstUpperCase(c.getLocalName());
+			if (operandIt.hasNext()) {
+				name += unionClassGlue;
+			}
 		}
 		name = NamingUtils.getValidJavaName(name);
 		return name;
@@ -192,6 +198,9 @@ public class NamingUtils {
 				anonCounter++;
 			} else {
 				name += StringUtils.toFirstUpperCase(c.getLocalName());
+			}
+			if (operandIt.hasNext()) {
+				name += intersectionClassGlue;
 			}
 		}
 		return name;
