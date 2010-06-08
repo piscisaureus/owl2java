@@ -456,11 +456,11 @@ public class OwlReader {
 		// Dito for properties
 		handleProperties();
 
-		// now we handle the properties of any intersection class
-		handleDeferredIntersectionClasses();
-
 		// handle multiple ranges for Properties
 		handlePropertyRanges();
+
+		// now we handle the properties of any intersection class
+		handleDeferredIntersectionClasses();
 
 		// Finally, we handle the restrictions etc... and add them
 		// to the JModel
@@ -490,35 +490,19 @@ public class OwlReader {
 			if (prop.listObjectPropertyRange().size() < 2)
 				continue;
 
-			// XXX Multiple property range should use a intersection class instead of a union class
-			// -> not implemented, yet code present
-			// -> see the owl standard
-			log.info(LogUtils.toLogName(prop) + ": Found multiple range. Replacing with UnionClass ");
+			log.info(LogUtils.toLogName(prop) + ": Found multiple range. Replacing with IntersectionClass");
 
-			List<JClass> operandClasses = prop.listObjectPropertyRange();
-			JClass cls = jmodel.getAnonymousJClass(operandClasses);
-
-			// an identical anonymous class exists > we use it
-			if (cls != null) {
-				log.info("Reusing existing anonymous class " + LogUtils.toLogName(cls));
-			} else {
-				String anonClassName = NamingUtils.createUnionClassName(cls, operandClasses);
-				String namespace = jmodel.getBaseNamespace();
-				String anonClassUri = namespace + anonClassName;
-
-				// create class
-				if (!jmodel.hasJClass(anonClassUri))
-					jmodel.createJClass(anonClassName, anonClassUri, basePackage);
-				cls = jmodel.getJClass(anonClassUri);
-				cls.setAnonymous(true);
+			// fetch all ontology classes that are in the property range
+			ArrayList<OntClass> operandOntClasses = new ArrayList<OntClass>();
+			for (JClass operandClass: prop.listObjectPropertyRange()) {
+				operandOntClasses.add(operandClass.getOntClass());
 			}
 
-			// register range as super classes in class
-			for (JClass superCls : prop.listObjectPropertyRange()) {
-				superCls.addSubClass(cls);
-				log.debug(LogUtils.toLogName(cls) + ": Registering super class "
-						+ NamingUtils.getJavaFullName(superCls.getPackage(), superCls.getName()));
-			}
+			// add an anonymous intersection class to the ontology
+			IntersectionClass intersectionClass = ontModel.createIntersectionClass(null, this.ontModel.createList(operandOntClasses.iterator()));
+
+			// create/get the java representation of the intersection class
+			JClass cls = createIntersectionClass(intersectionClass);
 
 			// reset range for property to new union class
 			prop.listObjectPropertyRange().clear();
@@ -595,7 +579,7 @@ public class OwlReader {
 			String anonClassUri = namespace + anonClassName;
 
 			// rename the anon. class to a named class,
-			log.info("Renaming anonymous intersection class to :" + anonClassUri);
+			log.info("Renaming anonymous intersection class to: " + anonClassUri);
 			ResourceUtils.renameResource(intersectionClass, anonClassUri);
 			intersectionClass = ontModel.getOntClass(anonClassUri).asIntersectionClass();
 
