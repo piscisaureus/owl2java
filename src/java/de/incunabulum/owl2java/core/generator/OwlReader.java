@@ -194,34 +194,6 @@ public class OwlReader {
 		else
 			jProperty.setPropertyType(JProperty.ObjectProperty);
 
-		// property has domain -> add it to the correct domain class
-		boolean domainProp = false;
-		ExtendedIterator dIt = ontProperty.listDomain();
-		while (dIt.hasNext()) {
-			OntResource domain = (OntResource) dIt.next();
-			log.debug(LogUtils.toLogName(ontProperty) + ": Found domain " + LogUtils.toLogName(domain));
-
-			if (domain.isAnon()) {
-				// anonymous classes as domain > done in handleAnonClasses
-				log.debug(LogUtils.toLogName(ontProperty) + ": Domain is Anonymous class. Ignored.");
-				continue;
-			}
-			
-			JClass domainCls = jmodel.getJClass(domain.getURI());
-			domainCls.addDomainProperty(jProperty);
-			domainProp = true;
-			log.debug(LogUtils.toLogName(ontProperty) + ": Registering as domain property in class "
-					+ LogUtils.toLogName(domainCls));
-		}
-
-		// not a domain property > add it to the base thing (root) object
-		if (!domainProp) {
-			JClass domainCls = jmodel.getJClass(jmodel.getBaseThingUri());
-			domainCls.addDomainProperty(jProperty);
-			log.debug(LogUtils.toLogName(ontProperty) + ": Registering property without domain in "
-					+ LogUtils.toLogName(domainCls));
-		}
-
 		// property has range -> add range to property
 		Iterator rIt = ontProperty.listRange();
 		while (rIt.hasNext()) {
@@ -337,6 +309,34 @@ public class OwlReader {
 				log.debug(LogUtils.toLogName(ontProperty) + ": Alredy defined as inverse property of "
 						+ LogUtils.toLogName(equProp));
 			}
+		}
+
+		// property has domain -> add it to the correct domain class
+		boolean domainProp = false;
+		ExtendedIterator dIt = ontProperty.listDomain();
+		while (dIt.hasNext()) {
+			OntResource domain = (OntResource) dIt.next();
+			log.debug(LogUtils.toLogName(ontProperty) + ": Found domain " + LogUtils.toLogName(domain));
+
+			if (domain.isAnon()) {
+				// anonymous classes as domain > done in handleAnonClasses
+				log.debug(LogUtils.toLogName(ontProperty) + ": Domain is Anonymous class. Ignored.");
+				continue;
+			}
+
+			JClass domainCls = jmodel.getJClass(domain.getURI());
+			domainCls.addDomainProperty(jProperty);
+			domainProp = true;
+			log.debug(LogUtils.toLogName(ontProperty) + ": Registering as domain property in class "
+					+ LogUtils.toLogName(domainCls));
+		}
+
+		// not a domain property > add it to the base thing (root) object
+		if (!domainProp) {
+			JClass domainCls = jmodel.getJClass(jmodel.getBaseThingUri());
+			domainCls.addDomainProperty(jProperty);
+			log.debug(LogUtils.toLogName(ontProperty) + ": Registering property without domain in "
+					+ LogUtils.toLogName(domainCls));
 		}
 
 	}
