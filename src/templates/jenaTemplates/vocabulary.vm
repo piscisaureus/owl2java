@@ -23,30 +23,48 @@ public class $vocabName {
     @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(${vocabName}.class);
 
-    private static OntModel ontModel = ModelFactory.createOntologyModel( OntModelSpec.OWL_MEM, null );
-
     public static final List<String> NAMESPACES;
+
+    #foreach ($ns in $jmodel.listNamespaceURIs())
+        #set($prefix = $jmodel.getPrefix($ns))
+        public static final Resource NS#uppercase($prefix);
+    #end
+
+    #foreach ($cls in $jmodel.listJClasses())
+        public static final OntClass $cls.getJavaClassName();
+    #end
+
+    #foreach ($p in $jmodel.listJProperties())
+        #if ($p.isDataTypeProperty())
+            public static final DatatypeProperty $p.getJavaName();
+        #else
+            public static final ObjectProperty $p.getJavaName();
+        #end ## isDataTypeProperty
+    #end
+
     static {
         NAMESPACES = new ArrayList<String>();
         #foreach($ns in $jmodel.listNamespaceURIs())
             NAMESPACES.add("$ns");
         #end
+
+        OntModel resourceModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, null);
+
+        #foreach ($ns in $jmodel.listNamespaceURIs())
+            #set($prefix = $jmodel.getPrefix($ns))
+            NS#uppercase($prefix) = resourceModel.createResource("$ns");
+        #end
+
+        #foreach ($cls in $jmodel.listJClasses())
+            $cls.getJavaClassName() = resourceModel.createClass("$cls.getMapUri()");
+        #end
+
+        #foreach ($p in $jmodel.listJProperties())
+            #if ($p.isDataTypeProperty())
+                $p.getJavaName() = resourceModel.createDatatypeProperty("$p.getMapUri()");
+            #else
+                $p.getJavaName() = resourceModel.createObjectProperty("$p.getMapUri()");
+            #end ## isDataTypeProperty
+        #end
     }
-
-    #foreach ($ns in $jmodel.listNamespaceURIs())
-        #set($prefix = $jmodel.getPrefix($ns))
-        public static final Resource NS#uppercase($prefix) = ontModel.createResource("$ns");
-    #end
-
-    #foreach ($cls in $jmodel.listJClasses())
-        public static final OntClass $cls.getJavaClassName() = ontModel.createClass("$cls.getMapUri()");
-    #end
-
-    #foreach ($p in $jmodel.listJProperties())
-        #if ($p.isDataTypeProperty())
-            public static final DatatypeProperty $p.getJavaName() = ontModel.createDatatypeProperty("$p.getMapUri()");
-        #else
-            public static final ObjectProperty $p.getJavaName() = ontModel.createObjectProperty("$p.getMapUri()");
-        #end ## isDataTypeProperty
-    #end
 }
