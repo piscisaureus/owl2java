@@ -1,12 +1,15 @@
 package de.incunabulum.owl2java.core.generator;
 
 import java.io.File;
+import java.io.Writer;
 import java.util.Iterator;
+import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.app.VelocityEngine;
 
+import de.incunabulum.owl2java.core.formatter.CodeFormattingWriter;
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.model.jmodel.JPackage;
 import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
@@ -21,6 +24,9 @@ public abstract class AbstractWriter {
 	protected String baseDir;
 	protected String basePackage;
 	protected String toolsPackage;
+	
+	private boolean enableCodeFormatting;
+	private Properties codeFormatterOptions; 
 
 	protected JModel jmodel;
 	protected VelocityEngine vEngine;
@@ -76,8 +82,34 @@ public abstract class AbstractWriter {
 
 	}
 
+	/**
+	 * Creates a factory for stream writers that write source code to a specified file
+	 */
+	protected ICodeWriterFactory getCodeWriterFactory() {
+		return new AbstractCodeWriterFactory() {
+			@Override
+			public Writer getCodeWriter(Writer destination) {
+				if (enableCodeFormatting) {
+					// If source code formatting is enabled, wrap the writer in a source code formatting writer
+					return new CodeFormattingWriter(destination, codeFormatterOptions); 
+				} else {
+					// Otherwise just return the destination writer
+					return destination;
+				}
+			}
+		};
+	}
+
 	public void setToolsPackage(String toolsPackage) {
 		this.toolsPackage = toolsPackage;
+	}
+
+	public void setEnableCodeFormatting(boolean enableCodeFormatting) {
+		this.enableCodeFormatting = enableCodeFormatting;
+	}
+
+	public void setCodeFormatterOptions(Properties codeFormatterOptions) {
+		this.codeFormatterOptions = codeFormatterOptions;
 	}
 
 }

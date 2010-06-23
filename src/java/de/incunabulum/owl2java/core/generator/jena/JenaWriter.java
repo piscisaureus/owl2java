@@ -63,7 +63,7 @@ public class JenaWriter extends AbstractWriter {
 
 	protected void createTestClass() {
 		log.info("Creating Testclass");
-		JenaTestWriter tWriter = new JenaTestWriter(vEngine, getBaseVelocityContext());
+		JenaTestWriter tWriter = new JenaTestWriter(vEngine, getBaseVelocityContext(), getCodeWriterFactory());
 		tWriter.setTestClassName(testClassName);
 		tWriter.setToolsPackage(toolsPackage);
 		tWriter.writeTestCases(jmodel, baseDir, basePackage);
@@ -71,7 +71,7 @@ public class JenaWriter extends AbstractWriter {
 
 	protected void createFactory() {
 		log.info("Creating Factory");
-		JenaFactoryWriter fWriter = new JenaFactoryWriter(vEngine, getBaseVelocityContext());
+		JenaFactoryWriter fWriter = new JenaFactoryWriter(vEngine, getBaseVelocityContext(), getCodeWriterFactory());
 		fWriter.setFactoryName(factoryName);
 		fWriter.setToolsPackage(toolsPackage);
 		fWriter.writeFactory(jmodel, baseDir, basePackage);
@@ -79,7 +79,7 @@ public class JenaWriter extends AbstractWriter {
 
 	protected void createVocabulary() {
 		log.info("Creating vocabulary");
-		JenaVocabularyWriter vWriter = new JenaVocabularyWriter(vEngine, getBaseVelocityContext());
+		JenaVocabularyWriter vWriter = new JenaVocabularyWriter(vEngine, getBaseVelocityContext(), getCodeWriterFactory());
 		vWriter.setVocabularyName(vocabularyName);
 		vWriter.setToolsPackage(toolsPackage);
 		vWriter.writeVocabulary(jmodel, baseDir, basePackage);
@@ -108,7 +108,7 @@ public class JenaWriter extends AbstractWriter {
 	protected void createInterfaces() {
 		log.info("Creating java interfaces");
 
-		JenaInterfaceWriter ifaceWriter = new JenaInterfaceWriter(vEngine, getBaseVelocityContext());
+		JenaInterfaceWriter ifaceWriter = new JenaInterfaceWriter(vEngine, getBaseVelocityContext(), getCodeWriterFactory());
 
 		Iterator<JClass> clsIt = jmodel.listJClasses().iterator();
 		while (clsIt.hasNext()) {
@@ -119,7 +119,7 @@ public class JenaWriter extends AbstractWriter {
 
 	protected void createClasses() {
 		log.info("Creating java classes");
-		JenaClassWriter clsWriter = new JenaClassWriter(vEngine, getBaseVelocityContext());
+		JenaClassWriter clsWriter = new JenaClassWriter(vEngine, getBaseVelocityContext(), getCodeWriterFactory());
 
 		Iterator<JClass> clsIt = jmodel.listJClasses().iterator();
 		while (clsIt.hasNext()) {

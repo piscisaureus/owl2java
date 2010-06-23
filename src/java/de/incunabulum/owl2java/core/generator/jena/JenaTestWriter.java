@@ -1,6 +1,6 @@
 package de.incunabulum.owl2java.core.generator.jena;
 
-import java.io.FileWriter;
+import java.io.Writer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,6 +10,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
+import de.incunabulum.owl2java.core.generator.ICodeWriterFactory;
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
 import de.incunabulum.owl2java.core.utils.JavaUtils;
@@ -21,12 +22,15 @@ public class JenaTestWriter {
 
 	private VelocityEngine vEngine;
 	private VelocityContext vContext;
+	private ICodeWriterFactory codeWriterFactory;
+
 	private String testClassName;
 	private String toolsPackage;
 
-	public JenaTestWriter(VelocityEngine vEngine, VelocityContext vContext) {
+	public JenaTestWriter(VelocityEngine vEngine, VelocityContext vContext, ICodeWriterFactory codeWriterFactory) {
 		this.vEngine = vEngine;
 		this.vContext = vContext;
+		this.codeWriterFactory = codeWriterFactory;
 	}
 
 	public void writeTestCases(JModel jmodel, String baseDir, String basePackage) {
@@ -49,9 +53,9 @@ public class JenaTestWriter {
 		}
 
 		try {
-			FileWriter fWriter = new FileWriter(outPath);
-			template.merge(vContext, fWriter);
-			fWriter.close();
+			Writer writer = codeWriterFactory.getCodeWriter(outPath);
+			template.merge(vContext, writer);
+			writer.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

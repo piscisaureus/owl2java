@@ -98,6 +98,8 @@ public class Db4oGenerator extends AbstractGenerator {
 		mWriter.setInstanceClassName(mergeCodeClassName);
 		mWriter.setGenerateMergeCode(generateMergeCode);
 		mWriter.setGenerationType(generationType);
+		mWriter.setEnableCodeFormatting(enableCodeFormatting);
+		mWriter.setCodeFormatterOptions(codeFormatterOptions);
 		mWriter.generate(this.jmodel, baseDir, basePackage);
 		stopAll = new Date();
 	}

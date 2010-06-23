@@ -67,7 +67,7 @@ public class Db4oWriter extends AbstractWriter {
 
 	protected void createInstanceMergeCode() {
 		log.info("Creating instance handling stuff");
-		Db4oMergeCodeWriter vWriter = new Db4oMergeCodeWriter(vEngine, getBaseVelocityContext());
+		Db4oMergeCodeWriter vWriter = new Db4oMergeCodeWriter(vEngine, getBaseVelocityContext(), getCodeWriterFactory());
 		vWriter.setInstanceName(instanceClassName);
 		vWriter.setToolsPackage(toolsPackage);
 		vWriter.writeInstance(jmodel, baseDir, basePackage);		
@@ -93,7 +93,7 @@ public class Db4oWriter extends AbstractWriter {
 	
 	protected void createClasses() {
 		log.info("Creating java classes");
-		Db4oClassWriter clsWriter = new Db4oClassWriter(vEngine, getBaseVelocityContext());
+		Db4oClassWriter clsWriter = new Db4oClassWriter(vEngine, getBaseVelocityContext(), getCodeWriterFactory());
 
 		Iterator<JClass> clsIt = jmodel.listJClasses().iterator();
 		while (clsIt.hasNext()) {

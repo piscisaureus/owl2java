@@ -79,6 +79,8 @@ public class JenaGenerator extends AbstractGenerator {
 		mWriter.setFactoryName(factoryName);
 		mWriter.setCreateTestClass(createTestClass);
 		mWriter.setTestClassName(testClassName);
+		mWriter.setEnableCodeFormatting(enableCodeFormatting);
+		mWriter.setCodeFormatterOptions(codeFormatterOptions);
 		mWriter.generate(this.jmodel, baseDir, basePackage);
 
 		stopAll = new Date();

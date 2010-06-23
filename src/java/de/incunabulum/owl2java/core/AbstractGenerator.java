@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +33,9 @@ public abstract class AbstractGenerator implements IStatistics, IReporting {
 	JModel jmodel;
 
 	protected boolean reasignDomainlessProperties = true;
+	
+	protected boolean enableCodeFormatting = true;
+	protected Properties codeFormatterOptions = null;
 
 	public boolean addMappings(String uri, String altLocation) {
 		if (uri == null || altLocation == null) {
@@ -97,12 +101,20 @@ public abstract class AbstractGenerator implements IStatistics, IReporting {
 
 	public abstract void generate(OntModel model, String baseDir, String basePackage);
 
+	public void setToolsPackage(String toolsPackage) {
+		this.toolsPackage = toolsPackage;
+	}
+
 	public void setReasignDomainlessProperties(boolean reasignDomainlessProperties) {
 		this.reasignDomainlessProperties = reasignDomainlessProperties;
 	}
 
-	public void setToolsPackage(String toolsPackage) {
-		this.toolsPackage = toolsPackage;
+	public void setEnableCodeFormating(boolean enableCodeFormatting) {
+		this.enableCodeFormatting = enableCodeFormatting;
+	}
+
+	public void setCodeFormatterOptions(Properties codeFormatterOptions) {
+		this.codeFormatterOptions = codeFormatterOptions;
 	}
 
 }
