@@ -3,8 +3,6 @@ package de.incunabulum.owl2java.core.model.xsd;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.incunabulum.owl2java.core.model.xsd.XsdSchema;
-
 public class XsdMapConfig {
 
 	/**
