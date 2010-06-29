@@ -60,6 +60,8 @@ public class $testcaseName {
     #foreach ($cls in $jmodel.listJClasses())
         #set ($clsName = $cls.getJavaClassName())
         #set ($clsFullName = $cls.getJavaClassFullName())
+        #set ($aggregatedProperties = $cls.listAggregatedProperties())
+
         protected static void run${clsName}(OntModel ontModel) {
             log.info("Testing class $clsName");
             
@@ -109,30 +111,31 @@ public class $testcaseName {
             log.debug("  Deleting a named class instance");
             ${clsFullName}.delete(uri, ontModel);
             
-            // class instance for property tests
-            uri = getNewInstanceURI();
-            ${clsFullName}.create(uri, ontModel);
-            ${clsFullName} instance = ${clsFullName}.get(uri, ontModel);
-            
-            
-            // for each representation
-			#foreach($prop in $cls.listAggregatedProperties())
-				#set($propnameCaps = $prop.getJavaNameCaps())  ## the java name with first letter capitalized
-				#set($propname = $prop.getJavaName())          ## the java name				
-				log.info("  Testing property $propname of class $clsName");
-				
-				#parse("/jenaTemplates/testPropBase.vm")				
-				
-				#foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
-				#if($prop.isObjectProperty())
-					#parse("/jenaTemplates/testPropObj.vm")
-				#else
-					#set($rangeMethod = $prop.getDataRangeMethod()) ## the name of the method to acess a dataproperty range
-					#set($rangeURI = $prop.getRangeUri())      		## the uri of the range. Used for datatype properties
-					#parse("/jenaTemplates/testPropDT.vm")
-				#end				
-				#end
-			#end
+            #if ($aggregatedProperties.size() > 0)
+                // class instance for property tests
+                uri = getNewInstanceURI();
+                ${clsFullName}.create(uri, ontModel);
+                ${clsFullName} instance = ${clsFullName}.get(uri, ontModel);
+
+                // test each representation
+                #foreach($prop in $aggregatedProperties)
+                    #set($propnameCaps = $prop.getJavaNameCaps())  ## the java name with first letter capitalized
+                    #set($propname = $prop.getJavaName())          ## the java name
+                    log.info("  Testing property $propname of class $clsName");
+
+                    #parse("/jenaTemplates/testPropBase.vm")
+
+                    #foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
+                        #if($prop.isObjectProperty())
+                            #parse("/jenaTemplates/testPropObj.vm")
+                        #else
+                            #set($rangeMethod = $prop.getDataRangeMethod())  ## the name of the method to acess a dataproperty range
+                            #set($rangeURI = $prop.getRangeUri())            ## the uri of the range. Used for datatype properties
+                            #parse("/jenaTemplates/testPropDT.vm")
+                        #end
+                    #end
+                #end
+            #end
         }
     #end
 }

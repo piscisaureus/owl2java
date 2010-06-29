@@ -38,7 +38,7 @@ log.debug("    Adding property instance");
 instance.set$propnameCaps${suffix}($method("$rangeeUri"));
 
 log.debug("    Getting property instances");
-$rangeFull inst$propnameCaps${suffix} = instance.get$propnameCaps${suffix}();
+instance.get$propnameCaps${suffix}();
 
 log.debug("    Removing the property instance");
 instance.remove$propnameCaps${suffix}();
