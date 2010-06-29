@@ -38,10 +38,8 @@ import $iFName;
 /**
  * Class $cls.getMapUri()
  */
-@SuppressWarnings("unused")
 public class $cName extends IndividualImpl implements $iName {
 
-    @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(${cName}.class);
 
     static NullFilter nullFilter = new NullFilter();

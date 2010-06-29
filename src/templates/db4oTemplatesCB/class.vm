@@ -23,7 +23,6 @@ import com.db4o.ta.Activatable;
 /**
  * Class $cls.getMapUri()
  */
-@SuppressWarnings("unused")
 #if($cls.hasSuperClasses()) 
 	public class $cName extends ${cls.getFirstDirectSuperClass().getJavaClassFullName()} {
 #else

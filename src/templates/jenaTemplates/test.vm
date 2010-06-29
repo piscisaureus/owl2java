@@ -13,10 +13,8 @@ import ${pkgBase}.${pkgTools}.${factoryName};
 /**
  * Factory
  */
- @SuppressWarnings("unused")
 public class $testcaseName {
 
-    @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(${testcaseName}.class);
     
     private static String namePrefix = "ClassInstance";
@@ -62,7 +60,6 @@ public class $testcaseName {
     #foreach ($cls in $jmodel.listJClasses())
         #set ($clsName = $cls.getJavaClassName())
         #set ($clsFullName = $cls.getJavaClassFullName())
-    	@SuppressWarnings("deprecation")
         protected static void run${clsName}(OntModel ontModel) {
             log.info("Testing class $clsName");
             

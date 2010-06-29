@@ -8,10 +8,8 @@ import java.util.Iterator;
  */
  
 #if($cls.isRootClass())
- 	@SuppressWarnings("unused")
     public interface $cls.getJavaInterfaceName()  {
 #else
-	@SuppressWarnings("unused")
     public interface $cls.getJavaInterfaceName() extends $ifh.getExtends() {
 #end ## if isRootClass()
 
