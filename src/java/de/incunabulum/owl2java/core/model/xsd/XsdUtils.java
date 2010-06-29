@@ -233,7 +233,8 @@ public class XsdUtils {
 		return null;
 	}
 
-	protected static class ObjectAsBigDecimalMapper implements Map1 {
+	public static final Map1 objectAsBigDecimalMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -243,11 +244,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsBigDecimalMapper = new ObjectAsBigDecimalMapper();
-
-	protected static class ObjectAsBigIntegerMapper implements Map1 {
+	public static final Map1 objectAsBigIntegerMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -257,11 +257,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsBigIntegerMapper = new ObjectAsBigIntegerMapper();
-
-	protected static class ObjectAsBooleanMapper implements Map1 {
+	public static final Map1 objectAsBooleanMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -271,11 +270,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsBooleanMapper = new ObjectAsBooleanMapper();
-
-	protected static class ObjectAsByteMapper implements Map1 {
+	public static final Map1 objectAsByteMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -285,11 +283,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsByteMapper = new ObjectAsByteMapper();
-
-	protected static class ObjectAsCharacterMapper implements Map1 {
+	public static final Map1 objectAsCharacterMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -299,11 +296,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsCharacterMapper = new ObjectAsCharacterMapper();
-
-	protected static class ObjectAsDoubleMapper implements Map1 {
+	public static final Map1 objectAsDoubleMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -313,11 +309,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsDoubleMapper = new ObjectAsDoubleMapper();
-
-	protected static class ObjectAsFloatMapper implements Map1 {
+	public static final Map1 objectAsFloatMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -327,11 +322,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsFloatMapper = new ObjectAsFloatMapper();
-
-	protected static class ObjectAsIntegerMapper implements Map1 {
+	public static final Map1 objectAsIntegerMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -341,11 +335,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsIntegerMapper = new ObjectAsIntegerMapper();
-
-	protected static class ObjectAsLongMapper implements Map1 {
+	public static final Map1 objectAsLongMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -355,11 +348,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsLongMapper = new ObjectAsLongMapper();
-
-	protected static class ObjectAsShortMapper implements Map1 {
+	public static final Map1 objectAsShortMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -369,21 +361,19 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsShortMapper = new ObjectAsShortMapper();
-
-	protected static class ObjectAsStringMapper implements Map1 {
+	public static final Map1 objectAsStringMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			if (x instanceof Statement)
 				return ((Statement) x).getString();
 			return null;
 		}
-	}
+	};
 
-	public static final Map1 objectAsStringMapper = new ObjectAsStringMapper();
-
-	protected static class ObjectAsCalendarMapper implements Map1 {
+	public static final Map1 objectAsCalendarMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -393,11 +383,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsCalendarMapper = new ObjectAsCalendarMapper();
-
-	protected static class ObjectAsXSDDurationMapper implements Map1 {
+	public static final Map1 objectAsXSDDurationMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -407,11 +396,10 @@ public class XsdUtils {
 				return null;
 			}
 		}
-	}
+	};
 
-	public static final Map1 objectAsXSDDurationMapper = new ObjectAsXSDDurationMapper();
-
-	protected static class ObjectAsXSDDateTimeMapper implements Map1 {
+	public static final Map1 objectAsXSDDateTimeMapper = new Map1() {
+		@Override
 		public Object map1(Object x) {
 			try {
 				Literal l = ((Statement) x).getLiteral();
@@ -420,10 +408,7 @@ public class XsdUtils {
 				log.warn("Could not convert statement " + x + "to XsdDateTime");
 				return null;
 			}
-
 		}
-	}
-
-	public static final Map1 objectAsXSDDateTimeMapper = new ObjectAsXSDDateTimeMapper();
+	};
 
 }
