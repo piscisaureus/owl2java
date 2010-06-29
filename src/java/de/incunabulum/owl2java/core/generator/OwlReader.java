@@ -177,7 +177,6 @@ public class OwlReader {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void createProperty(OntProperty ontProperty) {
 		log.info(LogUtils.toLogName(ontProperty) + ": Found property");
 		log.debug(DebugUtils.logProperty(ontProperty));
@@ -195,9 +194,9 @@ public class OwlReader {
 			jProperty.setPropertyType(JProperty.ObjectProperty);
 
 		// property has range -> add range to property
-		Iterator rIt = ontProperty.listRange();
+		Iterator<? extends OntResource> rIt = ontProperty.listRange();
 		while (rIt.hasNext()) {
-			OntResource range = (OntResource) rIt.next();
+			OntResource range = rIt.next();
 			log.debug(LogUtils.toLogName(ontProperty) + ": Found range " + LogUtils.toLogName(range));
 
 			// Range points to a valid class -> object property
@@ -242,9 +241,9 @@ public class OwlReader {
 
 		// property has inverses; mark accordingly
 		if (ontProperty.hasInverse()) {
-			Iterator inverseIt = ontProperty.listInverse();
+			Iterator<? extends OntProperty> inverseIt = ontProperty.listInverse();
 			while (inverseIt.hasNext()) {
-				OntProperty inverseProp = (OntProperty) inverseIt.next();
+				OntProperty inverseProp = inverseIt.next();
 
 				// property already present?
 				if (!jmodel.hasJProperty(inverseProp.getURI()))
@@ -265,9 +264,9 @@ public class OwlReader {
 		}
 
 		// property has parent properties -> create and mark
-		Iterator superIt = ontProperty.listSuperProperties(true);
+		Iterator<? extends OntProperty> superIt = ontProperty.listSuperProperties(true);
 		while (superIt.hasNext()) {
-			OntProperty superProp = (OntProperty) superIt.next();
+			OntProperty superProp = superIt.next();
 			log
 					.debug(LogUtils.toLogName(ontProperty) + ": Registering super property "
 							+ LogUtils.toLogName(superProp));
@@ -285,9 +284,9 @@ public class OwlReader {
 		}
 
 		// property has equivalent properties -> create and link
-		Iterator equivalentIt = ontProperty.listEquivalentProperties();
+		Iterator<? extends OntProperty> equivalentIt = ontProperty.listEquivalentProperties();
 		while (equivalentIt.hasNext()) {
-			OntProperty equProp = (OntProperty) equivalentIt.next();
+			OntProperty equProp = equivalentIt.next();
 
 			// property already present?
 			if (!jmodel.hasJProperty(equProp.getURI()))
@@ -313,9 +312,9 @@ public class OwlReader {
 
 		// property has domain -> add it to the correct domain class
 		boolean domainProp = false;
-		ExtendedIterator dIt = ontProperty.listDomain();
+		ExtendedIterator<? extends OntResource> dIt = ontProperty.listDomain();
 		while (dIt.hasNext()) {
-			OntResource domain = (OntResource) dIt.next();
+			OntResource domain = dIt.next();
 			log.debug(LogUtils.toLogName(ontProperty) + ": Found domain " + LogUtils.toLogName(domain));
 
 			if (domain.isAnon()) {
@@ -381,9 +380,9 @@ public class OwlReader {
 		cls.setOntClass(ontClass);
 
 		// find (or create, if not present) super class and update classes
-		ExtendedIterator superIt = ontClass.listSuperClasses(true);
+		ExtendedIterator<OntClass> superIt = ontClass.listSuperClasses(true);
 		while (superIt.hasNext()) {
-			OntClass superCls = (OntClass) superIt.next();
+			OntClass superCls = superIt.next();
 			hasBaseThingURI(superCls);
 
 			if (superCls.isAnon()) {
@@ -413,9 +412,9 @@ public class OwlReader {
 		}
 
 		// find (or create, if not present) equivalent class definitions
-		ExtendedIterator equIt = ontClass.listEquivalentClasses();
+		ExtendedIterator<OntClass> equIt = ontClass.listEquivalentClasses();
 		while (equIt.hasNext()) {
-			OntClass equCls = (OntClass) equIt.next();
+			OntClass equCls = equIt.next();
 
 			if (equCls.isAnon()) {
 				log.warn("Currently, only primitive equivalent class definitions are used (OWL Lite)");
@@ -475,13 +474,12 @@ public class OwlReader {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void handlePropertyRanges() {
 		log.info("");
 		log.info("Checking for multiple ranges of object properties");
-		Iterator propertyIt = jmodel.getUri2property().keySet().iterator();
+		Iterator<String> propertyIt = jmodel.getUri2property().keySet().iterator();
 		while (propertyIt.hasNext()) {
-			String propUri = (String) propertyIt.next();
+			String propUri = propertyIt.next();
 			JProperty prop = jmodel.getUri2property().get(propUri);
 
 			if (prop.getPropertyType() == JProperty.DataTypeProperty)
@@ -516,15 +514,14 @@ public class OwlReader {
 		return jmodel;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void handleAnonymousClasses() {
 		// > loop over all anonymous classes and do some magic
 		log.info("");
 		log.info("Analyzing anonymous classes");
 
-		List list = ontModel.listClasses().toList();
+		List<OntClass> list = ontModel.listClasses().toList();
 		for (int i = 0; i < list.size(); i++) {
-			OntClass ontClass = (OntClass) list.get(i);
+			OntClass ontClass = list.get(i);
 
 			// skip all non anonymous classes
 			if (!ontClass.isAnon())
@@ -562,7 +559,6 @@ public class OwlReader {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	protected JClass createIntersectionClass(IntersectionClass intersectionClass) {
 		// do we have anonymous operands in this class? this, we can not handle
 		// right now. -> we skip it
@@ -595,9 +591,9 @@ public class OwlReader {
 		// operands
 
 		// register new intersection class as parent of this class
-		Iterator subIt = intersectionClass.listSubClasses();
+		Iterator<OntClass> subIt = intersectionClass.listSubClasses();
 		while (subIt.hasNext()) {
-			OntClass ontCls = (OntClass) subIt.next();
+			OntClass ontCls = subIt.next();
 			String ontUri = ontCls.getURI();
 			JClass subCls = jmodel.getJClass(ontUri);
 			subCls.addSuperClass(cls);
@@ -607,9 +603,9 @@ public class OwlReader {
 
 		// register operand classes as child classes of new intersection
 		// class
-		Iterator operandsIt = intersectionClass.listOperands();
+		Iterator<? extends OntClass> operandsIt = intersectionClass.listOperands();
 		while (operandsIt.hasNext()) {
-			OntClass ontCls = (OntClass) operandsIt.next();
+			OntClass ontCls = operandsIt.next();
 
 			if (ontCls.isAnon())
 				continue;
@@ -629,10 +625,10 @@ public class OwlReader {
 		List<JClass> reassignedSuperClasses = new ArrayList<JClass>();
 		operandsIt = intersectionClass.listOperands();
 		while (operandsIt.hasNext()) {
-			OntClass operandCls = (OntClass) operandsIt.next();
-			Iterator superIt = operandCls.listSuperClasses();
+			OntClass operandCls = operandsIt.next();
+			Iterator<OntClass> superIt = operandCls.listSuperClasses();
 			while (superIt.hasNext()) {
-				OntClass ontCls = (OntClass) superIt.next();
+				OntClass ontCls = superIt.next();
 				String ontUri = ontCls.getURI();
 				JClass superCls = jmodel.getJClass(ontUri);
 
@@ -648,7 +644,7 @@ public class OwlReader {
 		// operand classes are now sub class of intersection class
 		operandsIt = intersectionClass.listOperands();
 		while (operandsIt.hasNext()) {
-			OntClass ontCls = (OntClass) operandsIt.next();
+			OntClass ontCls = operandsIt.next();
 			// skip any anonymous class
 			if (ontCls.isAnon())
 				continue;
@@ -670,10 +666,9 @@ public class OwlReader {
 		return cls;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void handleIntersectionClassProperties(JClass cls) {
 		IntersectionClass intersectionClass = cls.getOntClass().asIntersectionClass();
-		Iterator operandsIt;
+		Iterator<? extends OntClass> operandsIt;
 
 		// reassign property domain for common properties to intersection class
 		// find all properties
@@ -681,7 +676,7 @@ public class OwlReader {
 		List<JProperty> propertiesToRemove = new ArrayList<JProperty>();
 		operandsIt = intersectionClass.listOperands();
 		while (operandsIt.hasNext()) {
-			OntClass ontCls = (OntClass) operandsIt.next();
+			OntClass ontCls = operandsIt.next();
 			if (ontCls.isAnon())
 				continue;
 			String ontUri = ontCls.getURI();
@@ -693,7 +688,7 @@ public class OwlReader {
 		for (JProperty p : properties) {
 			operandsIt = intersectionClass.listOperands();
 			while (operandsIt.hasNext()) {
-				OntClass ontCls = (OntClass) operandsIt.next();
+				OntClass ontCls = operandsIt.next();
 				String ontUri = ontCls.getURI();
 				JClass operandCls = jmodel.getJClass(ontUri);
 
@@ -715,7 +710,7 @@ public class OwlReader {
 			// remove operand class from domain of p
 			operandsIt = intersectionClass.listOperands();
 			while (operandsIt.hasNext()) {
-				OntClass ontCls = (OntClass) operandsIt.next();
+				OntClass ontCls = operandsIt.next();
 				String ontUri = ontCls.getURI();
 				JClass operandCls = jmodel.getJClass(ontUri);
 
@@ -724,7 +719,6 @@ public class OwlReader {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	protected JClass createUnionClass(UnionClass unionClass) {
 		JClass cls = jmodel.getAnonymousJClass(JClass.AnonymousClassType.UNION, unionClass.listOperands().toList());
 		// an identical anonymous class exists > we use it
@@ -750,9 +744,9 @@ public class OwlReader {
 		}
 
 		// register the new union class as parent of this class
-		Iterator subIt = unionClass.listSubClasses();
+		Iterator<OntClass> subIt = unionClass.listSubClasses();
 		while (subIt.hasNext()) {
-			OntClass ontCls = (OntClass) subIt.next();
+			OntClass ontCls = subIt.next();
 			String ontUri = ontCls.getURI();
 			JClass subCls = jmodel.getJClass(ontUri);
 			subCls.removeSuperClassRelation(jmodel.getBaseThing());
@@ -763,9 +757,9 @@ public class OwlReader {
 		
 
 		// get super classes and register them
-		Iterator operandIt = unionClass.listOperands();
+		Iterator<? extends OntClass> operandIt = unionClass.listOperands();
 		while (operandIt.hasNext()) {
-			OntClass superClass = (OntClass) operandIt.next();
+			OntClass superClass = operandIt.next();
 
 			JClass superCls;
 			if (!jmodel.hasJClass(superClass.getURI()))
@@ -797,7 +791,6 @@ public class OwlReader {
 		return namespace;
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void handleClassishObjects() {
 		// create our base object "Thing" and add as class
 		createBaseJClassish();
@@ -809,7 +802,7 @@ public class OwlReader {
 		// handle the ontology classes
 		Iterator<OntClass> it = ontModel.listNamedClasses();
 		while (it.hasNext()) {
-			OntClass ontClass = (OntClass) it.next();
+			OntClass ontClass = it.next();
 			createJClassish(ontClass);
 		}
 	}
@@ -824,12 +817,11 @@ public class OwlReader {
 		jmodel.createJClass(thingName, thingUri, basePackage);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void handleNamespaces() {
 		// find the namespaces and add them to our namespace2prefix mapping
-		Iterator it = this.ontModel.getNsPrefixMap().keySet().iterator();
+		Iterator<String> it = this.ontModel.getNsPrefixMap().keySet().iterator();
 		while (it.hasNext()) {
-			String prefix = (String) it.next();
+			String prefix = it.next();
 			String uri = this.ontModel.getNsPrefixURI(prefix);
 
 			jmodel.addNamespacePrefix(uri, prefix);
@@ -837,9 +829,9 @@ public class OwlReader {
 		}
 
 		// handle name spaces without prefix
-		Iterator importedUriIt = ontModel.listImportedOntologyURIs(true).iterator();
+		Iterator<String> importedUriIt = ontModel.listImportedOntologyURIs(true).iterator();
 		while (importedUriIt.hasNext()) {
-			String importedUri = (String) importedUriIt.next() + "#";
+			String importedUri = importedUriIt.next() + "#";
 			if (!jmodel.hasNamespace(importedUri)) {
 				String ns = importedUri;
 				log.info("Found namespace without prefix: " + ns);
@@ -852,9 +844,8 @@ public class OwlReader {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void handleProperties() {
-		Iterator it;
+		Iterator<? extends OntProperty> it;
 		log.info("");
 
 		log.info("Found " + ontModel.listObjectProperties().toList().size() + " object properties");
@@ -884,10 +875,9 @@ public class OwlReader {
 		handleProperties(it);
 	}
 
-	@SuppressWarnings("unchecked")
-	protected void handleProperties(Iterator propertiesIt) {
+	protected void handleProperties(Iterator<? extends OntProperty> propertiesIt) {
 		while (propertiesIt.hasNext()) {
-			OntProperty ontProperty = (OntProperty) propertiesIt.next();
+			OntProperty ontProperty = propertiesIt.next();
 			
 			// ignore primitive properties
 			String uri = ontProperty.getURI();
@@ -898,7 +888,6 @@ public class OwlReader {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void handleRestrictions() {
 
 		// > loop over all restrictions and do some magic
@@ -923,9 +912,9 @@ public class OwlReader {
 				log.debug(DebugUtils.logRestriction(ontRestriction));
 
 				// find the classes it acts on
-				Iterator subClassIt = ontRestriction.listSubClasses();
+				Iterator<OntClass> subClassIt = ontRestriction.listSubClasses();
 				while (subClassIt.hasNext()) {
-					OntClass ontClass = (OntClass) subClassIt.next();
+					OntClass ontClass = subClassIt.next();
 
 					// Any anonymous class as subject of restriction is ignored. Not supported
 					// this can be union or intersection etc.
