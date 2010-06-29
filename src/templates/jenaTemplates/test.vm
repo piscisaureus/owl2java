@@ -47,7 +47,7 @@ public class $testcaseName {
     	
     	log.info("Registering custom classes with jena");
     	${factoryName} factory = new ${factoryName}();
-    	factory.registerImports(ontModel, ontology);
+    	factory.registerImports(ontology, ontModel);
     	factory.registerCustomClasses();
     	    
         log.info("Starting test case run");
@@ -72,16 +72,16 @@ public class $testcaseName {
             
             log.debug("  Creating two named class instance");
             String uri = getNewInstanceURI();
-            ${clsFullName}.create(ontModel,uri);
+            ${clsFullName}.create(uri, ontModel);
             uri = getNewInstanceURI();
-            ${clsFullName}.create(ontModel,uri);
+            ${clsFullName}.create(uri, ontModel);
             
             log.debug("  Checking for existance of class instance");
-            boolean exists = ${clsFullName}.exists(ontModel, uri);
+            boolean exists = ${clsFullName}.exists(uri, ontModel);
             log.debug("  -> exists: " + exists);
             
             log.debug("  Fetching known instance");
-            ${clsFullName} clsInstance = ${clsFullName}.get(ontModel, uri);
+            ${clsFullName} clsInstance = ${clsFullName}.get(uri, ontModel);
             log.debug("  -> instance: " + clsInstance.getLocalName());
             
             log.debug("  Iterate over all class instances");
@@ -96,26 +96,26 @@ public class $testcaseName {
             	log.debug("  -> instance: " + cls.getLocalName());
             
             log.debug("  Iterate over all class instances and subclass instances");
-            Iterator<$clsFullName> it2 = ${clsFullName}.iterate(ontModel, false);
+            Iterator<$clsFullName> it2 = ${clsFullName}.iterate(false, ontModel);
             while (it2.hasNext()) {
             	clsInstance = ($clsFullName) it2.next();
             	log.debug("  -> instance: " + clsInstance.getLocalName());
             }
             
             log.debug("  List all class instances");
-            for ($clsFullName cls : ${clsFullName}.list(ontModel, false))
+            for ($clsFullName cls : ${clsFullName}.list(false, ontModel))
             	log.debug("  -> instance: " + cls.getLocalName());
 
             log.debug("  Counting class instances");
             log.debug("  -> count: " + ${clsFullName}.count(ontModel));
             
             log.debug("  Deleting a named class instance");
-            ${clsFullName}.delete(ontModel, uri);
+            ${clsFullName}.delete(uri, ontModel);
             
             // class instance for property tests
             uri = getNewInstanceURI();
-            ${clsFullName}.create(ontModel,uri);
-            ${clsFullName} instance = ${clsFullName}.get(ontModel, uri);
+            ${clsFullName}.create(uri, ontModel);
+            ${clsFullName} instance = ${clsFullName}.get(uri, ontModel);
             
             
             // for each representation

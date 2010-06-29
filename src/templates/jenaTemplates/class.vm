@@ -119,7 +119,7 @@ public class $cName extends IndividualImpl implements $iName {
     /**
      * Static Functions for instance handling
      */
-    public static $cName get(OntModel ontModel, String uri) {
+    public static $cName get(String uri, OntModel ontModel) {
         Individual individual = ontModel.getIndividual(uri);
         return ($cFName) individual.as(${cFName}.class);
     }
@@ -141,15 +141,15 @@ public class $cName extends IndividualImpl implements $iName {
     }
 
     @SuppressWarnings("unchecked")
-    public static Iterator<$cName> iterate(OntModel ontModel, boolean direct) {
+    public static Iterator<$cName> iterate(boolean direct, OntModel ontModel) {
     	OntClass cls = ontModel.getOntClass("$cUri");
     	ExtendedIterator it = cls.listInstances(direct);
         return it.mapWith(${cFName}.mapper).filterDrop(nullFilter);
     }
     
-    public static List<$cName> list(OntModel ontModel, boolean direct) {
+    public static List<$cName> list(boolean direct, OntModel ontModel) {
 		List<$cName> list = new ArrayList<$cName>();
-		Iterator <$cName> it = iterate(ontModel, direct);
+		Iterator <$cName> it = iterate(direct, ontModel);
 		while (it.hasNext()) {
 			$cName cls = it.next();
 			list.add(cls);
@@ -168,23 +168,23 @@ public class $cName extends IndividualImpl implements $iName {
     }
     
     
-    public static boolean exists(OntModel ontModel, String uri) {
+    public static boolean exists(String uri, OntModel ontModel) {
         Individual individual = ontModel.getIndividual(uri);
         if (individual != null)
             return true;
         return false;
     }
 
-    public static $cName create(OntModel ontModel, String uri) {
+    public static $cName create(String uri, OntModel ontModel) {
     	return ($cName) ontModel.createOntResource(${cName}.class, ${pkgBase}.${pkgTools}.${vocabName}.${cName}, uri); 
     }
 
     public static $cName create(OntModel ontModel) {
-        return create(ontModel, null);
+        return create(null, ontModel);
     }
     
-    public static void delete(OntModel ontModel, String uri) {
-    	${pkgBase}.${pkgTools}.${factoryName}.deleteInstance(ontModel, uri);
+    public static void delete(String uri, OntModel ontModel) {
+    	${pkgBase}.${pkgTools}.${factoryName}.deleteInstance(uri, ontModel);
     }
     
     

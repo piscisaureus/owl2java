@@ -7,9 +7,9 @@
 #if($rep.isMultipleEnabled())
 log.debug("    Adding property instance");
 uri = getNewInstanceURI(); 
-instance.add$propnameCaps${suffix}(${rangeFull}.create(ontModel, uri));
-instance.add$propnameCaps${suffix}(${rangeFull}.create(ontModel, getNewInstanceURI()));
-instance.add$propnameCaps${suffix}(${rangeFull}.create(ontModel, getNewInstanceURI()));
+instance.add$propnameCaps${suffix}(${rangeFull}.create(uri, ontModel));
+instance.add$propnameCaps${suffix}(${rangeFull}.create(getNewInstanceURI(), ontModel));
+instance.add$propnameCaps${suffix}(${rangeFull}.create(getNewInstanceURI(), ontModel));
 
 log.debug("    Iterate over all property instances");
 Iterator<$rangeFull> it$propnameCaps${suffix} = instance.iterate$propnameCaps${suffix}();
@@ -36,7 +36,7 @@ instance.removeAll$propnameCaps${suffix}();
 #if($rep.isSingleEnabled())
 log.debug("    Adding property instance");
 uri = getNewInstanceURI(); 
-instance.set$propnameCaps${suffix}(${rangeFull}.create(ontModel, uri));
+instance.set$propnameCaps${suffix}(${rangeFull}.create(uri, ontModel));
 
 
 log.debug("    Getting property instances");

@@ -47,7 +47,7 @@ public class $factoryName {
     /**
      * Deletes the individual with URI from the OntModel
      */
-    public static boolean deleteInstance(OntModel ontModel, String uri) {
+    public static boolean deleteInstance(String uri, OntModel ontModel) {
         Individual individual = ontModel.getIndividual(uri);
         if (individual != null) {
             individual.remove();
@@ -75,7 +75,7 @@ public class $factoryName {
      * Currently, this uses the namespace URI without trailing '#' or ':'
      * as location.
      */
-    public void registerImports(OntModel ontModel, Ontology ontology) {
+    public void registerImports(Ontology ontology, OntModel ontModel) {
         log.info("Adding import statements to the model");
         OntDocumentManager odm = OntDocumentManager.getInstance();
         #foreach($import in $jmodel.listImportURIs())

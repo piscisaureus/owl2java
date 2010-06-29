@@ -42,11 +42,11 @@ public class $instanceName implements IDb4oMergeCode {
 	OntModel ontModel;
     
    
-    public void run(OntModel ontModel, String dbPath) {
-    	run(ontModel, dbPath, false);
+    public void run(String dbPath, OntModel ontModel) {
+    	run(dbPath, false, ontModel);
     }
     
-    public void run(OntModel ontModel, String dbPath, boolean deleteDbFirst) {
+    public void run(String dbPath, boolean deleteDbFirst, OntModel ontModel) {
     	this.ontModel = ontModel;
     	
     	if (deleteDbFirst) {
@@ -65,11 +65,11 @@ public class $instanceName implements IDb4oMergeCode {
     	log.info("Done");    	
     }
     
-    public void run(String ontUri , String dbPath) {
-    	run(ontUri, dbPath, false);
+    public void run(String dbPath, String ontUri) {
+    	run(dbPath, false, ontUri);
     }
     
-    public void run(String ontUri, String dbPath, boolean deleteDbFirst) {
+    public void run(String dbPath, boolean deleteDbFirst, String ontUri) {
 		ontModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_DL_MEM);
 		OntDocumentManager owlDocMgr = ontModel.getDocumentManager();
 		owlDocMgr.setProcessImports(true);
