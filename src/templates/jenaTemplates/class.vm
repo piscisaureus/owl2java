@@ -31,7 +31,9 @@ import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.util.iterator.WrappedIterator;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+import com.hp.hpl.jena.util.iterator.Filter;
 import com.hp.hpl.jena.util.iterator.Map1;
+
 // import interface
 import $iFName;
 
@@ -41,8 +43,6 @@ import $iFName;
 public class $cName extends IndividualImpl implements $iName {
 
     private static Log log = LogFactory.getLog(${cName}.class);
-
-    static NullFilter nullFilter = new NullFilter();
 
     /**
      * Implementation factory for $cName
@@ -77,6 +77,10 @@ public class $cName extends IndividualImpl implements $iName {
         }
     };
 
+    /**
+     * Filtering support for $cName
+     */
+    static final public Filter<$cName> nullFilter = new NullFilter<$cName>();
 
     /**
      * Mapping support for $cName

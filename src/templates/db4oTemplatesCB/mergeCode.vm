@@ -36,8 +36,6 @@ public class $instanceName implements IDb4oMergeCode {
     
     private static Map<String, Object> uri2db4oObject = new HashMap<String, Object>();
     
-    static NullFilter nullFilter = new NullFilter();
-        
     ObjectContainer db;
 	OntModel ontModel;
     
