@@ -75,6 +75,14 @@ public class $factoryName {
     }
 
     /**
+     * Same as deleteInstance, but works with the default OntModel
+     * @see ${factoryName}#deleteInstance(String, OntModel)
+     */
+    public static boolean deleteInstance(String uri) {
+        return deleteInstance(uri, getDefaultModel());
+    }
+
+    /**
      * Registers all custom classes with jena
      */
     public static void registerCustomClasses() {
@@ -100,5 +108,13 @@ public class $factoryName {
             odm.loadImport(ontModel, "$import");
             ontology.addImport(ontModel.createResource("$import"));
         #end
+    }
+
+    /**
+     * Same as registerImports, but works with the default OntModel
+     * @see ${factoryName}#registerImports(Ontology, OntModel)
+     */
+    public void registerImports(Ontology ontology) {
+        registerImports(ontology, getDefaultModel());
     }
 }
