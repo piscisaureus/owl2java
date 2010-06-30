@@ -44,9 +44,8 @@ public class $testcaseName {
         Ontology ontology = ontModel.createOntology(base);
     	
     	log.info("Registering custom classes with jena");
-    	${factoryName} factory = new ${factoryName}();
-    	factory.registerImports(ontology, ontModel);
-    	factory.registerCustomClasses();
+        ${factoryName}.registerImports(ontology, ontModel);
+        ${factoryName}.registerCustomClasses();
     	    
         log.info("Starting test case run");
         #foreach ($cls in $jmodel.listJClasses())

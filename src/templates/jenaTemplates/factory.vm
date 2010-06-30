@@ -59,7 +59,7 @@ public class $factoryName {
     /**
      * Registers all custom classes with jena
      */
-    public void registerCustomClasses() {
+    public static void registerCustomClasses() {
         log.info("Registering custom classes with jena");
         #foreach($cls in $jmodel.listJClasses())
             #set($cname = $cls.getJavaClassFullName())
@@ -74,7 +74,7 @@ public class $factoryName {
      * Currently, this uses the namespace URI without trailing '#' or ':'
      * as location.
      */
-    public void registerImports(Ontology ontology, OntModel ontModel) {
+    public static void registerImports(Ontology ontology, OntModel ontModel) {
         log.info("Adding import statements to the model");
         OntDocumentManager odm = OntDocumentManager.getInstance();
         #foreach($import in $jmodel.listImportURIs())
