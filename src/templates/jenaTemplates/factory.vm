@@ -18,6 +18,8 @@ public class $factoryName {
 
     private static Log log = LogFactory.getLog(${factoryName}.class);
 
+    private static OntModel defaultModel = null;
+
     private static Map<String, String> uri2Type;
 
     static {
@@ -27,6 +29,22 @@ public class $factoryName {
         #end
     }
 
+    /**
+     * Sets the default ontModel that may be used by ontology wrapper classes when no explicit ontModel argument is provided
+     */
+    public static void setDefaultModel(OntModel defaultModel) {
+        ${factoryName}.defaultModel = defaultModel;
+    }
+
+    /**
+     * Returns the default ontModel set with setDefaultModel()
+     */
+    public static OntModel getDefaultModel() {
+        if (defaultModel == null) {
+            throw new RuntimeException("No default OntModel was provided to ${pkgBase}.${pkgTools}.${factoryName}");
+        }
+        return defaultModel;
+    }
 
     /**
      * Returns the interface name for a given OWL Class
