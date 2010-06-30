@@ -65,7 +65,7 @@
             if (n.canAs(${rangeFull}.class))
                 return ($rangeFull) n.as(${rangeFull}.class);
             else {
-                log.warn("Could not convert property $prop.getMapUri() to type $rangeFull");
+                log.warn("Could not convert ${propname} of " + getURI() + " (" + n + ") to type $range");
                 return null;
             }		
 		}

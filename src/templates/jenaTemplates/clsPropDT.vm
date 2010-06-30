@@ -70,7 +70,7 @@
                 Literal l = (Literal) n;
                 return ($rangeFull) (${rangeMethod}(l));
             } else {
-                log.warn("Could not convert property $p.getMapUri() to type $rangeFull");
+                log.warn("Could not convert ${propname} of " + getURI() + " (" + n + ") to type $range");
                 return null;
             }
 		}
