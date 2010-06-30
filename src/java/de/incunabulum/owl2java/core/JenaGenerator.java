@@ -22,7 +22,7 @@ public class JenaGenerator extends AbstractGenerator {
 	// config options
 	private String vocabularyName = "Vocabulary";
 	private String factoryName = "Factory";
-	private String testClassName = "Owl2JavaTest";
+	private String testClassName = "Test";
 
 	private boolean createTestClass = true;
 
