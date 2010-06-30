@@ -443,6 +443,22 @@ public class JClass extends JMapped {
 		return false;
 	}
 
+	/**
+	 * List JClass representations of all (direct and indirect) subclasses of this class 
+	 */
+	public List<JClass> listAllSubClasses() {
+		return listAllSubClasses(this);
+	}
+
+	private List<JClass> listAllSubClasses(JClass cls) {
+		List<JClass> subClasses = new ArrayList<JClass>();
+		for (JClass subClass: jModel.getClassGraph().listDirectChildren(cls)) {
+			subClasses.add(subClass);
+			subClasses.addAll(listAllSubClasses(subClass));
+		}
+		return subClasses;
+	}
+
 	public boolean isAnonymous() {
 		return anonymousClassType != AnonymousClassType.NONE;
 	}
