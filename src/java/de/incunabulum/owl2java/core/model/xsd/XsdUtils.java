@@ -233,11 +233,11 @@ public class XsdUtils {
 		return null;
 	}
 
-	public static final Map1 objectAsBigDecimalMapper = new Map1() {
+	public static final Map1<Statement, BigDecimal> objectAsBigDecimalMapper = new Map1<Statement, BigDecimal>() {
 		@Override
-		public Object map1(Object x) {
+		public BigDecimal map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getBigDecimal(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to BigDecimal");
@@ -246,11 +246,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsBigIntegerMapper = new Map1() {
+	public static final Map1<Statement, BigInteger> objectAsBigIntegerMapper = new Map1<Statement, BigInteger>() {
 		@Override
-		public Object map1(Object x) {
+		public BigInteger map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getBigInteger(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to BigInteger");
@@ -259,11 +259,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsBooleanMapper = new Map1() {
+	public static final Map1<Statement, Boolean> objectAsBooleanMapper = new Map1<Statement, Boolean>() {
 		@Override
-		public Object map1(Object x) {
+		public Boolean map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getBoolean(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Boolean");
@@ -272,11 +272,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsByteMapper = new Map1() {
+	public static final Map1<Statement, Byte> objectAsByteMapper = new Map1<Statement, Byte>() {
 		@Override
-		public Object map1(Object x) {
+		public Byte map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getByte(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Byte");
@@ -285,11 +285,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsCharacterMapper = new Map1() {
+	public static final Map1<Statement, Character> objectAsCharacterMapper = new Map1<Statement, Character>() {
 		@Override
-		public Object map1(Object x) {
+		public Character map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getCharacter(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Character");
@@ -298,11 +298,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsDoubleMapper = new Map1() {
+	public static final Map1<Statement, Double> objectAsDoubleMapper = new Map1<Statement, Double>() {
 		@Override
-		public Object map1(Object x) {
+		public Double map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getDouble(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Double");
@@ -311,11 +311,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsFloatMapper = new Map1() {
+	public static final Map1<Statement, Float> objectAsFloatMapper = new Map1<Statement, Float>() {
 		@Override
-		public Object map1(Object x) {
+		public Float map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getFloat(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Float");
@@ -324,11 +324,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsIntegerMapper = new Map1() {
+	public static final Map1<Statement, Integer> objectAsIntegerMapper = new Map1<Statement, Integer>() {
 		@Override
-		public Object map1(Object x) {
+		public Integer map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getInteger(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Integer");
@@ -337,11 +337,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsLongMapper = new Map1() {
+	public static final Map1<Statement, Long> objectAsLongMapper = new Map1<Statement, Long>() {
 		@Override
-		public Object map1(Object x) {
+		public Long map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getLong(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Long");
@@ -350,11 +350,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsShortMapper = new Map1() {
+	public static final Map1<Statement, Short> objectAsShortMapper = new Map1<Statement, Short>() {
 		@Override
-		public Object map1(Object x) {
+		public Short map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getShort(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Short");
@@ -363,20 +363,20 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsStringMapper = new Map1() {
+	public static final Map1<Statement, String> objectAsStringMapper = new Map1<Statement, String>() {
 		@Override
-		public Object map1(Object x) {
+		public String map1(Statement x) {
 			if (x instanceof Statement)
-				return ((Statement) x).getString();
+				return x.getString();
 			return null;
 		}
 	};
 
-	public static final Map1 objectAsCalendarMapper = new Map1() {
+	public static final Map1<Statement, Calendar> objectAsCalendarMapper = new Map1<Statement, Calendar>() {
 		@Override
-		public Object map1(Object x) {
+		public Calendar map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getCalendar(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to Calendar");
@@ -385,11 +385,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsXSDDurationMapper = new Map1() {
+	public static final Map1<Statement, XSDDuration> objectAsXSDDurationMapper = new Map1<Statement, XSDDuration>() {
 		@Override
-		public Object map1(Object x) {
+		public XSDDuration map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getXSDDuration(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to XsdDuration");
@@ -398,11 +398,11 @@ public class XsdUtils {
 		}
 	};
 
-	public static final Map1 objectAsXSDDateTimeMapper = new Map1() {
+	public static final Map1<Statement, XSDDateTime> objectAsXSDDateTimeMapper = new Map1<Statement, XSDDateTime>() {
 		@Override
-		public Object map1(Object x) {
+		public XSDDateTime map1(Statement x) {
 			try {
-				Literal l = ((Statement) x).getLiteral();
+				Literal l = x.getLiteral();
 				return getXSDDateTime(l);
 			} catch (Exception e) {
 				log.warn("Could not convert statement " + x + "to XsdDateTime");
