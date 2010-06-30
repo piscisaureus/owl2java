@@ -37,14 +37,14 @@ public class NamingUtils {
 
 	public static String classNameAddOn = "";
 	// %c = AddOn, %n = Name, %p = Prefix
-	public static String classNamingSchema = "%c%n%p";
+	public static String classNamingSchema = "%c%n";
 
 	public static String interfaceNameAddOn = "I";
 	// %i = AddOn, %n = Name, %p = Prefix
-	public static String interfaceNamingSchema = "%i%n%p";
+	public static String interfaceNamingSchema = "%i%n";
 
 	// %n = Name, $p = Prefix
-	public static String propertyNamingSchema = "%n%p";
+	public static String propertyNamingSchema = "%n";
 	public static boolean propertyStripPrefix = true;
 
 	public static List<String> propertyIgnoredPrefixes;
