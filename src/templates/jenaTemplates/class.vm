@@ -85,22 +85,27 @@ public class $cName extends IndividualImpl implements $iName {
     /**
      * Mapping support for $cName
      */
-    protected static class Mapper implements Map1 {
-
-        public Object map1(Object x) {
+    public static <From> Map1<From, $cName> mapperFrom(Class<From> from) {
+        return new Map1<From, $cName>() {
+            @Override
+            public $cName map1(Object x) {
             if (x instanceof Statement) {
                 Resource r = ((Statement)x).getResource();
                 if (r.canAs(${cName}.class))
                     return r.as(${cName}.class);
-            } else if (x instanceof RDFNode) {
-                if (((RDFNode)x).canAs(${cName}.class))
-                    return ((RDFNode)x).as(${cName}.class);
+                } else if (x instanceof RDFNode) {
+                    if (((RDFNode)x).canAs(${cName}.class))
+                        return ((RDFNode)x).as(${cName}.class);
             }
             return null;
         }
+        };
     }
 
-    public static Map1 mapper = new Mapper();
+    // Instantiate some mappers for general use
+    static final public Map1<Statement, $cName> statementMapper = mapperFrom(Statement.class);
+    static final public Map1<Individual, $cName> individualMapper = mapperFrom(Individual.class);
+    static final public Map1<RDFNode, $cName> nodeMapper = mapperFrom(RDFNode.class);
 
     /**
      * Generic functions from parent class
@@ -126,10 +131,9 @@ public class $cName extends IndividualImpl implements $iName {
         return ($cFName) individual.as(${cFName}.class);
     }
 
-    @SuppressWarnings("unchecked")
     public static Iterator<$cName> iterate(OntModel ontModel) {
-        ExtendedIterator it = ontModel.listIndividuals(${pkgBase}.${pkgTools}.${vocabName}.${cName});
-        return it.mapWith(${cFName}.mapper).filterDrop(nullFilter);
+        ExtendedIterator<Individual> it = ontModel.listIndividuals(${pkgBase}.${pkgTools}.${vocabName}.${cName});
+        return it.mapWith(individualMapper).filterDrop(nullFilter);
     }
     
     public static List<$cName> list(OntModel ontModel) {
@@ -142,13 +146,13 @@ public class $cName extends IndividualImpl implements $iName {
     	return list;
     }
 
-    @SuppressWarnings("unchecked")
     public static Iterator<$cName> iterate(boolean direct, OntModel ontModel) {
-    	OntClass cls = ontModel.getOntClass("$cUri");
-    	ExtendedIterator it = cls.listInstances(direct);
-        return it.mapWith(${cFName}.mapper).filterDrop(nullFilter);
+        OntClass cls = ontModel.getOntClass("$cUri");
+        ExtendedIterator<? extends RDFNode> it = cls.listInstances(direct);
+        ExtendedIterator<RDFNode> nodeIt = new WrappedIterator<RDFNode>(it) {};
+        return nodeIt.mapWith(nodeMapper).filterDrop(nullFilter);
     }
-    
+
     public static List<$cName> list(boolean direct, OntModel ontModel) {
 		List<$cName> list = new ArrayList<$cName>();
 		Iterator <$cName> it = iterate(direct, ontModel);
