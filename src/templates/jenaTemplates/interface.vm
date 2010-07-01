@@ -3,14 +3,16 @@ package $cls.getJavaPackageName();
 import java.util.List;
 import java.util.Iterator;
 
+import com.hp.hpl.jena.ontology.Individual;
+
 /**
  * Interface $cls.getMapUri()
  */
  
 #if($cls.isRootClass())
-    public interface $cls.getJavaInterfaceName()  {
+    public interface $cls.getJavaInterfaceName() extends Individual {
 #else
-    public interface $cls.getJavaInterfaceName() extends $ifh.getExtends() {
+    public interface $cls.getJavaInterfaceName() extends Individual, $ifh.getExtends() {
 #end ## if isRootClass()
 
 ##
