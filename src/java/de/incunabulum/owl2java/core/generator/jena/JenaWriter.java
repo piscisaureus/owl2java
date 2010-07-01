@@ -1,6 +1,8 @@
 package de.incunabulum.owl2java.core.generator.jena;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -16,8 +18,6 @@ import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
 import de.incunabulum.owl2java.core.formatter.CodeFormattingWriter;
-import de.incunabulum.owl2java.core.generator.AbstractCodeWriterFactory;
-import de.incunabulum.owl2java.core.generator.ICodeWriterFactory;
 import de.incunabulum.owl2java.core.model.jmodel.JClass;
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 import de.incunabulum.owl2java.core.model.jmodel.JPackage;
@@ -140,7 +140,7 @@ public class JenaWriter {
 			vContext.put("cls", cls);
 
 			try {
-				Writer writer = getCodeWriterFactory().getCodeWriter(outPath);
+				Writer writer = getCodeWriter(outPath);
 				template.merge(vContext, writer);
 				writer.close();
 			} catch (Exception e) {
@@ -169,7 +169,7 @@ public class JenaWriter {
 		}
 
 		try {
-			Writer writer = getCodeWriterFactory().getCodeWriter(outPath);
+			Writer writer = getCodeWriter(outPath);
 			template.merge(getBaseVelocityContext(), writer);
 			writer.close();
 		} catch (Exception e) {
@@ -205,7 +205,7 @@ public class JenaWriter {
 			vContext.put("cls", cls);
 
 			try {
-				Writer writer = getCodeWriterFactory().getCodeWriter(outPath);
+				Writer writer = getCodeWriter(outPath);
 				template.merge(vContext, writer);
 				writer.close();
 			} catch (Exception e) {
@@ -260,7 +260,7 @@ public class JenaWriter {
 		}
 
 		try {
-			Writer writer = getCodeWriterFactory().getCodeWriter(outPath);
+			Writer writer = getCodeWriter(outPath);
 			template.merge(getBaseVelocityContext(), writer);
 			writer.close();
 		} catch (Exception e) {
@@ -288,7 +288,7 @@ public class JenaWriter {
 		}
 
 		try {
-			Writer writer = getCodeWriterFactory().getCodeWriter(outPath);
+			Writer writer = getCodeWriter(outPath);
 			template.merge(getBaseVelocityContext(), writer);
 			writer.close();
 		} catch (Exception e) {
@@ -319,21 +319,15 @@ public class JenaWriter {
 	/**
 	 * Creates a factory for stream writers that write source code to a
 	 * specified file
+	 * 
+	 * @throws IOException
 	 */
-	private ICodeWriterFactory getCodeWriterFactory() {
-		return new AbstractCodeWriterFactory() {
-			@Override
-			public Writer getCodeWriter(Writer destination) {
-				if (enableCodeFormatting) {
-					// If source code formatting is enabled, wrap the writer in
-					// a source code formatting writer
-					return new CodeFormattingWriter(destination, codeFormatterOptions);
-				} else {
-					// Otherwise just return the destination writer
-					return destination;
-				}
-			}
-		};
+	private Writer getCodeWriter(String fileName) throws IOException {
+		Writer writer = new FileWriter(fileName);
+		if (enableCodeFormatting) {
+			writer = new CodeFormattingWriter(writer, codeFormatterOptions);
+		}
+		return writer;
 	}
 
 	private void initVelocityEngine(String baseDir) {
