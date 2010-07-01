@@ -50,8 +50,6 @@ public class JenaInterfaceWriter {
 			throw new RuntimeException();
 		}
 
-		JenaInterfaceHelper ifaceHelper = new JenaInterfaceHelper(cls);
-		vContext.put("ifh", ifaceHelper);
 		vContext.put("cls", cls);
 
 		try {

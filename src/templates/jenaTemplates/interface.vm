@@ -9,11 +9,11 @@ import com.hp.hpl.jena.ontology.Individual;
  * Interface $cls.getMapUri()
  */
  
-#if($cls.isRootClass())
-    public interface $cls.getJavaInterfaceName() extends Individual {
-#else
-    public interface $cls.getJavaInterfaceName() extends Individual, $ifh.getExtends() {
-#end ## if isRootClass()
+
+public interface $cls.getJavaInterfaceName() extends Individual
+#foreach ($superClass in $cls.listDirectSuperClasses())
+    , $superClass.getJavaInterfaceFullName()
+#end {
 
 ##
 ## loop over all properties and its presentations
