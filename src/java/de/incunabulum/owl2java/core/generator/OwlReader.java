@@ -706,16 +706,6 @@ public class OwlReader {
 			// add intersection class as domain
 			cls.addDomainProperty(p);
 			log.debug(LogUtils.toLogName(p) + ": Reassigning to intersection class " + LogUtils.toLogName(cls));
-
-			// remove operand class from domain of p
-			operandsIt = intersectionClass.listOperands();
-			while (operandsIt.hasNext()) {
-				OntClass ontCls = operandsIt.next();
-				String ontUri = ontCls.getURI();
-				JClass operandCls = jmodel.getJClass(ontUri);
-
-				operandCls.removeDomainProperty(p);
-			}
 		}
 	}
 
