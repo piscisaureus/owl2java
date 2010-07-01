@@ -5,8 +5,11 @@
 	#set($suffix = $rep.getJavaMethodSuffix())
 	#set($multipleDeprecated = $rep.getMultipleDeprecated())
 	#set($singleDeprecated = $rep.getSingleDeprecated())
-	
-	
+
+	public boolean has$propnameCaps($rangeFull #mixedlowercase($range)Value) {
+		return hasProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+	}
+
 	#if($rep.isMultipleEnabled())
 		$multipleDeprecated
 		public int count$propnameCaps$suffix() {

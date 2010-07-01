@@ -1,16 +1,21 @@
 ## loop over all presentations and create functions
 #foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
 	#set($range = $rep.getRangeJava())
-	#set($rangeFull = $rep.getRangeJavaFull())
+	#set($rangeOutFull = $rep.getRangeJavaFull())
+	#set($rangeInFull = $rep.getRangeInterfaceJavaFull())
 	#set($suffix = $rep.getJavaMethodSuffix())
 	#set($multipleDeprecated = $rep.getMultipleDeprecated())
 	#set($singleDeprecated = $rep.getSingleDeprecated())
 	
+	public boolean has$propnameCaps($rangeInFull #mixedlowercase($range)Value) {
+		return hasProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+	}
+
 	#if($rep.isMultipleEnabled())
 		$multipleDeprecated
 		public int count$propnameCaps$suffix() {
 			int count = 0;
-			Iterator<$rangeFull> it = iterate${propnameCaps}${suffix}();
+			Iterator<$rangeOutFull> it = iterate${propnameCaps}${suffix}();
 			while (it.hasNext()) {
 				it.next();
 				count++;
@@ -19,36 +24,36 @@
 		}
 		
         $multipleDeprecated
-        public Iterator<$rangeFull> iterate${propnameCaps}${suffix}() {
+        public Iterator<$rangeOutFull> iterate${propnameCaps}${suffix}() {
             ExtendedIterator<Statement> it = listProperties(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            return it.mapWith(${rangeFull}.statementMapper).filterDrop(${rangeFull}.nullFilter);
+            return it.mapWith(${rangeOutFull}.statementMapper).filterDrop(${rangeOutFull}.nullFilter);
         }
 		
  		$multipleDeprecated
-		public List<$rangeFull> list${propnameCaps}${suffix}() {
-			List<$rangeFull> list = new ArrayList<$rangeFull>();
-			Iterator<$rangeFull> it = iterate${propnameCaps}${suffix}();
+		public List<$rangeOutFull> list${propnameCaps}${suffix}() {
+			List<$rangeOutFull> list = new ArrayList<$rangeOutFull>();
+			Iterator<$rangeOutFull> it = iterate${propnameCaps}${suffix}();
 			while (it.hasNext()) {
-				$rangeFull inst = it.next();
+				$rangeOutFull inst = it.next();
 				list.add(inst);
 			}
 			return list;
 		}
 		
 		$multipleDeprecated
-		public void add$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
+		public void add$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value) {
             addProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
 		}
 		
 		$multipleDeprecated
-		public void addAll$propnameCaps${suffix}(List<$rangeFull> #mixedlowercase($range)List) {
-            for ($rangeFull o : #mixedlowercase($range)List)
+		public void addAll$propnameCaps${suffix}(List<? extends $rangeInFull> #mixedlowercase($range)List) {
+            for ($rangeInFull o : #mixedlowercase($range)List)
                 add$propnameCaps${suffix}(o);
 		
 		}
 		
 		$multipleDeprecated
-		public void remove$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
+		public void remove$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value) {
             removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
 		}
 		
@@ -60,10 +65,10 @@
 	
 	#if($rep.isSingleEnabled())
 		$singleDeprecated
-		public $rangeFull get$propnameCaps${suffix} () {
+		public $rangeOutFull get$propnameCaps${suffix} () {
             RDFNode n = getPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            if (n.canAs(${rangeFull}.class))
-                return ($rangeFull) n.as(${rangeFull}.class);
+            if (n.canAs(${rangeOutFull}.class))
+                return ($rangeOutFull) n.as(${rangeOutFull}.class);
             else {
                 log.warn("Could not convert ${propname} of " + getURI() + " (" + n + ") to type $range");
                 return null;
@@ -71,7 +76,7 @@
 		}
 		
 		$singleDeprecated
-		public void set$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
+		public void set$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value) {
             removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
             setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
 		}

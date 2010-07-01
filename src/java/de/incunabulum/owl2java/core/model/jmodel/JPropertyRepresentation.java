@@ -209,6 +209,18 @@ public class JPropertyRepresentation implements IReporting {
 		
 	}
 
+	public String getRangeUri() {
+		if (allValuesRestriction == null) {
+			return onProperty.getRangeUri();
+		}
+
+		if (allValuesRestriction.hasAllValues()) {
+			// object property
+			return "";
+		}
+		return onProperty.getRangeUri();
+	}
+
 	public String getRangeJava() {
 		if (allValuesRestriction == null)
 			return onProperty.getRangeJava();
@@ -222,18 +234,6 @@ public class JPropertyRepresentation implements IReporting {
 		return onProperty.getRangeJava();
 	}
 
-	public String getRangeUri() {
-		if (allValuesRestriction == null) {
-			return onProperty.getRangeUri();
-		}
-
-		if (allValuesRestriction.hasAllValues()) {
-			// object property
-			return "";
-		}
-		return onProperty.getRangeUri();
-	}
-
 	public String getRangeJavaFull() {
 		if (allValuesRestriction == null)
 			return onProperty.getRangeJavaFull();
@@ -245,6 +245,32 @@ public class JPropertyRepresentation implements IReporting {
 		}
 		// return the default range of the property
 		return onProperty.getRangeJavaFull();
+	}
+
+	public String getInterfaceRangeJava() {
+		if (allValuesRestriction == null)
+			return onProperty.getRangeInterfaceJava();
+
+		if (allValuesRestriction.hasAllValues()) {
+			// return the range as defined by allValues
+			JClass allValues = allValuesRestriction.getAllValues();
+			return allValues.getJavaInterfaceName();
+		}
+		// return the default range of the property
+		return onProperty.getRangeInterfaceJava();
+	}
+
+	public String getRangeInterfaceJavaFull() {
+		if (allValuesRestriction == null)
+			return onProperty.getRangeInterfaceJavaFull();
+
+		if (allValuesRestriction.hasAllValues()) {
+			// return the range as defined by allValues
+			JClass allValues = allValuesRestriction.getAllValues();
+			return allValues.getJavaInterfaceFullName();
+		}
+		// return the default range of the property
+		return onProperty.getRangeInterfaceJavaFull();
 	}
 
 	public String getPropertyType() {

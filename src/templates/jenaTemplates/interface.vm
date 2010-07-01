@@ -31,7 +31,16 @@ import com.hp.hpl.jena.ontology.Individual;
 	## loop over all presentations and create functions
 	#foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
 		#set($range = $rep.getRangeJava())
-		#set($rangeFull = $rep.getRangeJavaFull())
+		#if($prop.isObjectProperty()) 
+			#set($rangeOutFull = $rep.getRangeJavaFull())
+			#set($rangeInFull = $rep.getRangeInterfaceJavaFull())
+			#set($rangeListInFull = "? extends " + $rep.getRangeInterfaceJavaFull())
+		#else
+			#set($rangeOutFull = $rep.getRangeJavaFull())
+			#set($rangeInFull = $rep.getRangeJavaFull())
+			#set($rangeListInFull = $rep.getRangeJavaFull())
+		#end
+			
 		#set($suffix = $rep.getJavaMethodSuffix())
 		#set($multipleDeprecated = $rep.getMultipleDeprecated())
 		#set($singleDeprecated = $rep.getSingleDeprecated())
@@ -40,24 +49,24 @@ import com.hp.hpl.jena.ontology.Individual;
 			$multipleDeprecated
 			public int count$propnameCaps$suffix();
 			$multipleDeprecated
-			public Iterator<$rangeFull> iterate${propnameCaps}${suffix}();
+			public Iterator<$rangeOutFull> iterate${propnameCaps}${suffix}();
 			$multipleDeprecated
-			public List<$rangeFull> list${propnameCaps}${suffix}();
+			public List<$rangeOutFull> list${propnameCaps}${suffix}();
 			$multipleDeprecated
-			public void add$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value);
+			public void add$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value);
 			$multipleDeprecated
-			public void addAll$propnameCaps${suffix}(List<$rangeFull> #mixedlowercase($range)List);
+			public void addAll$propnameCaps${suffix}(List<$rangeListInFull> #mixedlowercase($range)List);
 			$multipleDeprecated
-			public void remove$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value);
+			public void remove$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value);
 			$multipleDeprecated
 			public void removeAll$propnameCaps${suffix}();
 		#end
 		
 		#if($rep.isSingleEnabled())
 			$singleDeprecated
-			public $rangeFull get$propnameCaps${suffix} ();
+			public $rangeOutFull get$propnameCaps${suffix} ();
 			$singleDeprecated
-			public void set$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value);
+			public void set$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value);
 			$singleDeprecated
 			public void remove$propnameCaps${suffix}();						
 		#end

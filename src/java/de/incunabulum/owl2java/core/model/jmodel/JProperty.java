@@ -158,6 +158,26 @@ public class JProperty extends JMapped {
 		}
 		return rangeName;
 	}
+	
+	public String getRangeInterfaceJava() {
+		String rangeName = new String();;
+		String rangeUri = getRangeUri();
+		if (this.isObjectProperty()) {
+			JClass cls = jmodel.getJClass(rangeUri);
+			rangeName = cls.getJavaInterfaceName();
+		}
+		return rangeName;
+	}
+
+	public String getRangeInterfaceJavaFull() {
+		String rangeName = new String();;
+		String rangeUri = getRangeUri();
+		if (this.isObjectProperty()) {
+			JClass cls = jmodel.getJClass(rangeUri);
+			rangeName = cls.getJavaInterfaceFullName();
+		}
+		return rangeName;
+	}
 
 	@SuppressWarnings("unchecked")
 	public String getRangeUri() {
