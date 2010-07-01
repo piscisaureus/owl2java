@@ -1,4 +1,4 @@
-package de.incunabulum.owl2java.core.generator.jena;
+package de.incunabulum.owl2java.core.generator;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -25,7 +25,7 @@ import de.incunabulum.owl2java.core.model.jmodel.utils.NamingUtils;
 import de.incunabulum.owl2java.core.model.xsd.XsdMapTestData;
 import de.incunabulum.owl2java.core.utils.JavaUtils;
 
-public class JenaWriter {
+public class JavaWriter {
 	private static final String CLASS_TEMPLATE_NAME = "class.vm";
 	private static final String FACTORY_TEMPLATE_NAME = "factory.vm";
 	private static final String INTERFACE_TEMPLATE_NAME = "interface.vm";
@@ -34,7 +34,7 @@ public class JenaWriter {
 
 	private static final String templateDirJena = "jenaTemplates";
 
-	static Log log = LogFactory.getLog(JenaWriter.class);
+	static Log log = LogFactory.getLog(JavaWriter.class);
 
 	private static String getTemplatePath(String templateName) {
 		return "/" + templateDirJena + "/" + templateName;
@@ -126,7 +126,7 @@ public class JenaWriter {
 
 			Template template;
 			try {
-				String templatePath = JenaWriter.getTemplatePath(CLASS_TEMPLATE_NAME);
+				String templatePath = JavaWriter.getTemplatePath(CLASS_TEMPLATE_NAME);
 				template = vEngine.getTemplate(templatePath);
 			} catch (ResourceNotFoundException e) {
 				throw new RuntimeException();
@@ -158,7 +158,7 @@ public class JenaWriter {
 
 		Template template;
 		try {
-			String templatePath = JenaWriter.getTemplatePath(FACTORY_TEMPLATE_NAME);
+			String templatePath = JavaWriter.getTemplatePath(FACTORY_TEMPLATE_NAME);
 			template = vEngine.getTemplate(templatePath);
 		} catch (ResourceNotFoundException e) {
 			throw new RuntimeException();
@@ -191,7 +191,7 @@ public class JenaWriter {
 
 			Template template;
 			try {
-				String templatePath = JenaWriter.getTemplatePath(INTERFACE_TEMPLATE_NAME);
+				String templatePath = JavaWriter.getTemplatePath(INTERFACE_TEMPLATE_NAME);
 				template = vEngine.getTemplate(templatePath);
 			} catch (ResourceNotFoundException e) {
 				throw new RuntimeException();
@@ -249,7 +249,7 @@ public class JenaWriter {
 
 		Template template;
 		try {
-			String templatePath = JenaWriter.getTemplatePath(TEST_TEMPLATE_NAME);
+			String templatePath = JavaWriter.getTemplatePath(TEST_TEMPLATE_NAME);
 			template = vEngine.getTemplate(templatePath);
 		} catch (ResourceNotFoundException e) {
 			throw new RuntimeException();
@@ -277,7 +277,7 @@ public class JenaWriter {
 
 		Template template;
 		try {
-			String templatePath = JenaWriter.getTemplatePath(VOCABULARY_TEMPLATE_NAME);
+			String templatePath = JavaWriter.getTemplatePath(VOCABULARY_TEMPLATE_NAME);
 			template = vEngine.getTemplate(templatePath);
 		} catch (ResourceNotFoundException e) {
 			throw new RuntimeException();

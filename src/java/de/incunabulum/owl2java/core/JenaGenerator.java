@@ -14,9 +14,9 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
+import de.incunabulum.owl2java.core.generator.JavaWriter;
 import de.incunabulum.owl2java.core.generator.ModelPreparation;
 import de.incunabulum.owl2java.core.generator.OwlReader;
-import de.incunabulum.owl2java.core.generator.jena.JenaWriter;
 import de.incunabulum.owl2java.core.model.jmodel.JModel;
 
 public class JenaGenerator {
@@ -102,7 +102,7 @@ public class JenaGenerator {
 
 		// write the model
 		startToDisk = new Date();
-		JenaWriter mWriter = new JenaWriter();
+		JavaWriter mWriter = new JavaWriter();
 		mWriter.setVocabularyName(vocabularyName);
 		mWriter.setToolsPackage(toolsPackage);
 		mWriter.setFactoryName(factoryName);
