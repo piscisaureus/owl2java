@@ -26,19 +26,15 @@ import de.incunabulum.owl2java.core.model.xsd.XsdMapTestData;
 import de.incunabulum.owl2java.core.utils.JavaUtils;
 
 public class JavaWriter {
-	private static final String CLASS_TEMPLATE_NAME = "class.vm";
-	private static final String FACTORY_TEMPLATE_NAME = "factory.vm";
-	private static final String INTERFACE_TEMPLATE_NAME = "interface.vm";
-	private static final String TEST_TEMPLATE_NAME = "test.vm";
-	private static final String VOCABULARY_TEMPLATE_NAME = "vocabulary.vm";
+	private static final String TEMPLATE_ROOT = JavaWriter.class.getResource("templates") + "/";
 
-	private static final String templateDirJena = "jenaTemplates";
+	private static final String TEMPLATE_CLASS = "class.vm";
+	private static final String TEMPLATE_FACTORY = "factory.vm";
+	private static final String TEMPLATE_INTERFACE = "interface.vm";
+	private static final String TEMPLATE_TEST = "test.vm";
+	private static final String TEMPLATE_VOCABULARY = "vocabulary.vm";
 
 	static Log log = LogFactory.getLog(JavaWriter.class);
-
-	private static String getTemplatePath(String templateName) {
-		return "/" + templateDirJena + "/" + templateName;
-	}
 
 	private String baseDir;
 	private String basePackage;
@@ -64,7 +60,7 @@ public class JavaWriter {
 		createPackageDirectories();
 
 		// init the templating engine
-		initVelocityEngine(templateDirJena);
+		initVelocityEngine();
 
 		// write interfaces
 		createInterfaces();
@@ -126,8 +122,7 @@ public class JavaWriter {
 
 			Template template;
 			try {
-				String templatePath = JavaWriter.getTemplatePath(CLASS_TEMPLATE_NAME);
-				template = vEngine.getTemplate(templatePath);
+				template = vEngine.getTemplate(TEMPLATE_CLASS);
 			} catch (ResourceNotFoundException e) {
 				throw new RuntimeException();
 			} catch (ParseErrorException e) {
@@ -158,8 +153,7 @@ public class JavaWriter {
 
 		Template template;
 		try {
-			String templatePath = JavaWriter.getTemplatePath(FACTORY_TEMPLATE_NAME);
-			template = vEngine.getTemplate(templatePath);
+			template = vEngine.getTemplate(TEMPLATE_FACTORY);
 		} catch (ResourceNotFoundException e) {
 			throw new RuntimeException();
 		} catch (ParseErrorException e) {
@@ -191,8 +185,7 @@ public class JavaWriter {
 
 			Template template;
 			try {
-				String templatePath = JavaWriter.getTemplatePath(INTERFACE_TEMPLATE_NAME);
-				template = vEngine.getTemplate(templatePath);
+				template = vEngine.getTemplate(TEMPLATE_INTERFACE);
 			} catch (ResourceNotFoundException e) {
 				throw new RuntimeException();
 			} catch (ParseErrorException e) {
@@ -249,8 +242,7 @@ public class JavaWriter {
 
 		Template template;
 		try {
-			String templatePath = JavaWriter.getTemplatePath(TEST_TEMPLATE_NAME);
-			template = vEngine.getTemplate(templatePath);
+			template = vEngine.getTemplate(TEMPLATE_TEST);
 		} catch (ResourceNotFoundException e) {
 			throw new RuntimeException();
 		} catch (ParseErrorException e) {
@@ -277,8 +269,7 @@ public class JavaWriter {
 
 		Template template;
 		try {
-			String templatePath = JavaWriter.getTemplatePath(VOCABULARY_TEMPLATE_NAME);
-			template = vEngine.getTemplate(templatePath);
+			template = vEngine.getTemplate(TEMPLATE_VOCABULARY);
 		} catch (ResourceNotFoundException e) {
 			throw new RuntimeException();
 		} catch (ParseErrorException e) {
@@ -330,18 +321,19 @@ public class JavaWriter {
 		return writer;
 	}
 
-	private void initVelocityEngine(String baseDir) {
+	private void initVelocityEngine() {
 		log.info("Init velocity engine");
 
 		vEngine = new VelocityEngine();
 
-		vEngine.setProperty("resource.loader", "class");
-		vEngine.setProperty("class.resource.loader.description", "Velocity Classpath Resource Loasder");
-		vEngine.setProperty("class.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+		vEngine.setProperty("resource.loader", "url");
+		vEngine.setProperty("url.resource.loader.description", "Velocity URL Resource Loader");
+		vEngine.setProperty("url.resource.loader.class", "org.apache.velocity.runtime.resource.loader.URLResourceLoader");
+		vEngine.setProperty("url.resource.loader.root", TEMPLATE_ROOT);
 
 		// see http://minaret.biz/tips/tomcatLogging.html
 		vEngine.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.Log4JLogSystem");
-		vEngine.setProperty("velocimacro.library", "/" + baseDir + "/" + "macros.vm");
+		vEngine.setProperty("velocimacro.library", "macros.vm");
 		try {
 			vEngine.init();
 		} catch (Exception e) {

@@ -260,13 +260,13 @@ public class $cName extends IndividualImpl implements $iName {
 #foreach($prop in $cls.listAggregatedProperties())
 	#set($propnameCaps = $prop.getJavaNameCaps())  ## the java name with first letter capitalized
 	#set($propname = $prop.getJavaName())             ## the java name
-	#parse("/jenaTemplates/clsPropBase.vm")
+	#parse("clsPropBase.vm")
 	#if($prop.isObjectProperty())
-		#parse("/jenaTemplates/clsPropObj.vm")
+		#parse("clsPropObj.vm")
 	#else
 		#set($rangeMethod = $prop.getDataRangeMethod()) ## the name of the method to acess a dataproperty range
 		#set($rangeURI = $prop.getRangeUri())      ## the uri of the range. Used for datatype properties
-		#parse("/jenaTemplates/clsPropDT.vm")
+		#parse("clsPropDT.vm")
 	#end
 #end
 }
