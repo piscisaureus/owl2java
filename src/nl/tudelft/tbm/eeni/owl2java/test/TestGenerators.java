@@ -19,7 +19,7 @@ public class TestGenerators extends TestCase{
 
 		JenaGenerator gen = new JenaGenerator();
 
-		String uri = "http://owl.incunabulum.de/2008-Jakuzi/owl4java.owl";
+		String uri = "file:resources/test/owl4java.owl";
 		gen.generate(uri, "src/testOut", "jenatestFull");
 
 		// report
@@ -39,7 +39,7 @@ public class TestGenerators extends TestCase{
 
 		JenaGenerator gen = new JenaGenerator();
 
-		String uri = "http://owl.incunabulum.de/2008-Jakuzi/owl4java-simple.owl";
+		String uri = "file:resources/test/owl4java-simple.owl";
 		gen.generate(uri, "src/testOut", "jenatestSimple");
 
 		// report
