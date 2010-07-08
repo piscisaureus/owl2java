@@ -14,13 +14,18 @@ public class TestGenerators extends TestCase{
 
 	private static Log log = LogFactory.getLog(TestGenerators.class);
 
+	void main() {
+		testJenaGeneratorFull();
+		testJenaGeneratorSimple();
+	}
+	
 	public static void testJenaGeneratorFull() {
 		Date startDate = new Date();
 
 		JenaGenerator gen = new JenaGenerator();
 
 		String uri = "file:resources/test/owl4java.owl";
-		gen.generate(uri, "src/testOut", "jenatestFull");
+		gen.generate(uri, "testOut", "jenatestFull");
 
 		// report
 		String report = gen.getJModelReport();
@@ -40,7 +45,7 @@ public class TestGenerators extends TestCase{
 		JenaGenerator gen = new JenaGenerator();
 
 		String uri = "file:resources/test/owl4java-simple.owl";
-		gen.generate(uri, "src/testOut", "jenatestSimple");
+		gen.generate(uri, "testOut", "jenatestSimple");
 
 		// report
 		String report = gen.getJModelReport();
