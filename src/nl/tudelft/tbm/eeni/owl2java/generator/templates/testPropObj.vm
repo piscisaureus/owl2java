@@ -6,7 +6,7 @@
 
 #if($rep.isMultipleEnabled())
 log.debug("    Adding property instance");
-uri = getNewInstanceURI(); 
+uri = getNewInstanceURI();
 instance.add$propnameCaps${suffix}(${rangeFull}.create(uri, ontModel));
 instance.add$propnameCaps${suffix}(${rangeFull}.create(getNewInstanceURI(), ontModel));
 instance.add$propnameCaps${suffix}(${rangeFull}.create(getNewInstanceURI(), ontModel));
@@ -35,7 +35,7 @@ instance.removeAll$propnameCaps${suffix}();
 
 #if($rep.isSingleEnabled())
 log.debug("    Adding property instance");
-uri = getNewInstanceURI(); 
+uri = getNewInstanceURI();
 instance.set$propnameCaps${suffix}(${rangeFull}.create(uri, ontModel));
 
 
@@ -44,5 +44,5 @@ instance.get$propnameCaps${suffix}();
 
 log.debug("    Removing the property instance");
 instance.remove$propnameCaps${suffix}();
-			
+
 #end

@@ -8,11 +8,11 @@ import com.hp.hpl.jena.ontology.Individual;
 /**
  * Interface $cls.getMapUri()
  */
- 
+
 
 public interface $cls.getJavaInterfaceName() extends Individual
 #foreach ($superClass in $cls.listDirectSuperClasses())
-    , $superClass.getJavaInterfaceFullName()
+	, $superClass.getJavaInterfaceFullName()
 #end {
 
 ##
@@ -26,11 +26,11 @@ public interface $cls.getJavaInterfaceName() extends Individual
 	 * Domain property $propnameCaps
 	 * with uri $prop.getMapUri()
 	 */
-	
+
 	## loop over all presentations and create functions
 	#foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
 		#set($range = $rep.getRangeJava())
-		#if($prop.isObjectProperty()) 
+		#if($prop.isObjectProperty())
 			#set($rangeOutFull = $rep.getRangeJavaFull())
 			#set($rangeInFull = $rep.getRangeInterfaceJavaFull())
 			#set($rangeListInFull = "? extends " + $rep.getRangeInterfaceJavaFull())
@@ -39,7 +39,7 @@ public interface $cls.getJavaInterfaceName() extends Individual
 			#set($rangeInFull = $rep.getRangeJavaFull())
 			#set($rangeListInFull = $rep.getRangeJavaFull())
 		#end
-			
+
 		#set($suffix = $rep.getJavaMethodSuffix())
 		#set($multipleDeprecated = $rep.getMultipleDeprecated())
 		#set($singleDeprecated = $rep.getSingleDeprecated())
@@ -63,16 +63,16 @@ public interface $cls.getJavaInterfaceName() extends Individual
 			$multipleDeprecated
 			public void removeAll$propnameCaps${suffix}();
 		#end
-		
+
 		#if($rep.isSingleEnabled())
 			$singleDeprecated
 			public $rangeOutFull get$propnameCaps${suffix} ();
 			$singleDeprecated
 			public void set$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value);
 			$singleDeprecated
-			public void remove$propnameCaps${suffix}();						
+			public void remove$propnameCaps${suffix}();
 		#end
-		
-	#end	
+
+	#end
 #end
 }

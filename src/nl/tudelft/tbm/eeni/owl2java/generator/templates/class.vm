@@ -43,168 +43,168 @@ import $iFName;
  */
 public class $cName extends IndividualImpl implements $iName {
 
-    private static Log log = LogFactory.getLog(${cName}.class);
+	private static Log log = LogFactory.getLog(${cName}.class);
 
-    /**
-     * Implementation factory for $cName
-     */
-    static final public Implementation factory = new Implementation() {
+	/**
+	 * Implementation factory for $cName
+	 */
+	static final public Implementation factory = new Implementation() {
 
-        /**
-         * Convert a Node into an instance of the class
-         */
-        public EnhNode wrap(Node n, EnhGraph eg) {
-            if (canWrap(n, eg)) {
-                return new $cName(n, eg);
-            } else {
-                log.warn("Cannot convert node " + n.toString() + " to  $cName");
-                return null;
-            }
-        }
+		/**
+		 * Convert a Node into an instance of the class
+		 */
+		public EnhNode wrap(Node n, EnhGraph eg) {
+			if (canWrap(n, eg)) {
+				return new $cName(n, eg);
+			} else {
+				log.warn("Cannot convert node " + n.toString() + " to  $cName");
+				return null;
+			}
+		}
 
-        /**
-         * Return true iff the node can be converted to an instance of
-         * this class ($cName)
-         */
-        public boolean canWrap(Node n, EnhGraph eg) {
-            Profile profile;
-            if (eg instanceof OntModel)
-                profile = ((OntModel)eg).getProfile();
-            else
-                return false;
+		/**
+		 * Return true iff the node can be converted to an instance of
+		 * this class ($cName)
+		 */
+		public boolean canWrap(Node n, EnhGraph eg) {
+			Profile profile;
+			if (eg instanceof OntModel)
+				profile = ((OntModel)eg).getProfile();
+			else
+				return false;
 
-            if (!profile.isSupported(n, eg, Individual.class)) {
-                return false;
-            }
+			if (!profile.isSupported(n, eg, Individual.class)) {
+				return false;
+			}
 
-            Graph graph = eg.asGraph();
-            return graph.contains(n, com.hp.hpl.jena.vocabulary.RDF.type.asNode(), ${pkgBase}.${pkgTools}.${vocabName}.${cName}.asNode())
-                #foreach($subClass in $cls.listAllSubClasses())
-                    || graph.contains(n, com.hp.hpl.jena.vocabulary.RDF.type.asNode(), ${pkgBase}.${pkgTools}.${vocabName}.${subClass.getJavaClassName()}.asNode())
-                #end
-            ;
-        }
-    };
+			Graph graph = eg.asGraph();
+			return graph.contains(n, com.hp.hpl.jena.vocabulary.RDF.type.asNode(), ${pkgBase}.${pkgTools}.${vocabName}.${cName}.asNode())
+				#foreach($subClass in $cls.listAllSubClasses())
+					|| graph.contains(n, com.hp.hpl.jena.vocabulary.RDF.type.asNode(), ${pkgBase}.${pkgTools}.${vocabName}.${subClass.getJavaClassName()}.asNode())
+				#end
+			;
+		}
+	};
 
-    /**
-     * Filtering support for $cName
-     */
-    static final public Filter<$cName> nullFilter = new NullFilter<$cName>();
+	/**
+	 * Filtering support for $cName
+	 */
+	static final public Filter<$cName> nullFilter = new NullFilter<$cName>();
 
-    /**
-     * Mapping support for $cName
-     */
-    public static <From> Map1<From, $cName> mapperFrom(Class<From> from) {
-        return new Map1<From, $cName>() {
-            @Override
-            public $cName map1(Object x) {
-            if (x instanceof Statement) {
-                Resource r = ((Statement)x).getResource();
-                if (r.canAs(${cName}.class))
-                    return r.as(${cName}.class);
-                } else if (x instanceof RDFNode) {
-                    if (((RDFNode)x).canAs(${cName}.class))
-                        return ((RDFNode)x).as(${cName}.class);
-            }
-            return null;
-        }
-        };
-    }
+	/**
+	 * Mapping support for $cName
+	 */
+	public static <From> Map1<From, $cName> mapperFrom(Class<From> from) {
+		return new Map1<From, $cName>() {
+			@Override
+			public $cName map1(Object x) {
+			if (x instanceof Statement) {
+				Resource r = ((Statement)x).getResource();
+				if (r.canAs(${cName}.class))
+					return r.as(${cName}.class);
+				} else if (x instanceof RDFNode) {
+					if (((RDFNode)x).canAs(${cName}.class))
+						return ((RDFNode)x).as(${cName}.class);
+			}
+			return null;
+		}
+		};
+	}
 
-    // Instantiate some mappers for general use
-    static final public Map1<Statement, $cName> statementMapper = mapperFrom(Statement.class);
-    static final public Map1<Individual, $cName> individualMapper = mapperFrom(Individual.class);
-    static final public Map1<RDFNode, $cName> nodeMapper = mapperFrom(RDFNode.class);
+	// Instantiate some mappers for general use
+	static final public Map1<Statement, $cName> statementMapper = mapperFrom(Statement.class);
+	static final public Map1<Individual, $cName> individualMapper = mapperFrom(Individual.class);
+	static final public Map1<RDFNode, $cName> nodeMapper = mapperFrom(RDFNode.class);
 
-    /**
-     * Generic functions from parent class
-     */
-    public $cName(Node n, EnhGraph g) {
-        super(n, g);
-    }
+	/**
+	 * Generic functions from parent class
+	 */
+	public $cName(Node n, EnhGraph g) {
+		super(n, g);
+	}
 
-    /**
-     * Registers all custom classes with jena
-     */
-    public static void register() {
-        log.debug("Registering custom class $cName with jena");
-        BuiltinPersonalities.model.add(${cName}.class, ${cName}.factory);
-        BuiltinPersonalities.model.add(${cFName}.class, ${cName}.factory);
-     }
+	/**
+	 * Registers all custom classes with jena
+	 */
+	public static void register() {
+		log.debug("Registering custom class $cName with jena");
+		BuiltinPersonalities.model.add(${cName}.class, ${cName}.factory);
+		BuiltinPersonalities.model.add(${cFName}.class, ${cName}.factory);
+	 }
 
-    /**
-     * Static Functions for instance handling
-     */
-    public static $cName get(String uri, OntModel ontModel) {
-        Individual individual = ontModel.getIndividual(uri);
-        return ($cFName) individual.as(${cFName}.class);
-    }
+	/**
+	 * Static Functions for instance handling
+	 */
+	public static $cName get(String uri, OntModel ontModel) {
+		Individual individual = ontModel.getIndividual(uri);
+		return ($cFName) individual.as(${cFName}.class);
+	}
 
-    public static $cName get(String uri) {
-        return get(uri, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static $cName get(String uri) {
+		return get(uri, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
-    public static Iterator<$cName> iterate(OntModel ontModel) {
-        ExtendedIterator<Individual> it = ontModel.listIndividuals(${pkgBase}.${pkgTools}.${vocabName}.${cName});
-        return it.mapWith(individualMapper).filterDrop(nullFilter);
-    }
+	public static Iterator<$cName> iterate(OntModel ontModel) {
+		ExtendedIterator<Individual> it = ontModel.listIndividuals(${pkgBase}.${pkgTools}.${vocabName}.${cName});
+		return it.mapWith(individualMapper).filterDrop(nullFilter);
+	}
 
-    public static Iterator<$cName> iterate() {
-        return iterate(${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static Iterator<$cName> iterate() {
+		return iterate(${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
-    public static List<$cName> list(OntModel ontModel) {
+	public static List<$cName> list(OntModel ontModel) {
 		List<$cName> list = new ArrayList<$cName>();
 		Iterator <$cName> it = iterate(ontModel);
 		while (it.hasNext()) {
 			$cName cls = it.next();
 			list.add(cls);
-		}    	
-    	return list;
-    }
+		}
+		return list;
+	}
 
-    public static List<$cName> list() {
-        return list(${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static List<$cName> list() {
+		return list(${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
-    public static Iterator<$cName> iterate(boolean direct, OntModel ontModel) {
-        OntClass cls = ontModel.getOntClass("$cUri");
-        ExtendedIterator<? extends RDFNode> it = cls.listInstances(direct);
-        ExtendedIterator<RDFNode> nodeIt = new WrappedIterator<RDFNode>(it) {};
-        return nodeIt.mapWith(nodeMapper).filterDrop(nullFilter);
-    }
+	public static Iterator<$cName> iterate(boolean direct, OntModel ontModel) {
+		OntClass cls = ontModel.getOntClass("$cUri");
+		ExtendedIterator<? extends RDFNode> it = cls.listInstances(direct);
+		ExtendedIterator<RDFNode> nodeIt = new WrappedIterator<RDFNode>(it) {};
+		return nodeIt.mapWith(nodeMapper).filterDrop(nullFilter);
+	}
 
-    public static Iterator<$cName> iterate(boolean direct) {
-        return iterate(direct, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static Iterator<$cName> iterate(boolean direct) {
+		return iterate(direct, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
-    public static List<$cName> list(boolean direct, OntModel ontModel) {
+	public static List<$cName> list(boolean direct, OntModel ontModel) {
 		List<$cName> list = new ArrayList<$cName>();
 		Iterator <$cName> it = iterate(direct, ontModel);
 		while (it.hasNext()) {
 			$cName cls = it.next();
 			list.add(cls);
-		}    	
-    	return list;
-    }
+		}
+		return list;
+	}
 
-    public static List<$cName> list(boolean direct) {
-        return list(direct, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static List<$cName> list(boolean direct) {
+		return list(direct, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
-    public static int count(OntModel ontModel) {
-    	int count = 0;
+	public static int count(OntModel ontModel) {
+		int count = 0;
 		Iterator<$cName> it = iterate(ontModel);
 		while (it.hasNext()) {
 			it.next();
 			count++;
-		}    	
-    	return count;    
-    }
+		}
+		return count;
+	}
 
-    public static int count() {
-        return count(${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static int count() {
+		return count(${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
 	public static int count(boolean direct, OntModel ontModel) {
 		int count = 0;
@@ -220,40 +220,40 @@ public class $cName extends IndividualImpl implements $iName {
 		return count(direct, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
 	}
 
-    public static boolean exists(String uri, OntModel ontModel) {
-        Individual individual = ontModel.getIndividual(uri);
-        if (individual != null)
-            return true;
-        return false;
-    }
+	public static boolean exists(String uri, OntModel ontModel) {
+		Individual individual = ontModel.getIndividual(uri);
+		if (individual != null)
+			return true;
+		return false;
+	}
 
-    public static boolean exists(String uri) {
-        return exists(uri, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static boolean exists(String uri) {
+		return exists(uri, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
-    public static $cName create(String uri, OntModel ontModel) {
-    	return ($cName) ontModel.createOntResource(${cName}.class, ${pkgBase}.${pkgTools}.${vocabName}.${cName}, uri); 
-    }
+	public static $cName create(String uri, OntModel ontModel) {
+		return ($cName) ontModel.createOntResource(${cName}.class, ${pkgBase}.${pkgTools}.${vocabName}.${cName}, uri);
+	}
 
-    public static $cName create(OntModel ontModel) {
-        return create(null, ontModel);
-    }
+	public static $cName create(OntModel ontModel) {
+		return create(null, ontModel);
+	}
 
-    public static $cName create(String uri) {
-        return create(uri, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static $cName create(String uri) {
+		return create(uri, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
-    public static $cName create() {
-        return create(null, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
-    }
+	public static $cName create() {
+		return create(null, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
 
-    public static void delete(String uri, OntModel ontModel) {
-    	${pkgBase}.${pkgTools}.${factoryName}.deleteInstance(uri, ontModel);
-    }
+	public static void delete(String uri, OntModel ontModel) {
+		${pkgBase}.${pkgTools}.${factoryName}.deleteInstance(uri, ontModel);
+	}
 
-    public static void delete(String uri) {
-        ${pkgBase}.${pkgTools}.${factoryName}.deleteInstance(uri);
-    }
+	public static void delete(String uri) {
+		${pkgBase}.${pkgTools}.${factoryName}.deleteInstance(uri);
+	}
 
 
 ## add the domain property methods

@@ -42,5 +42,5 @@ instance.get$propnameCaps${suffix}();
 
 log.debug("    Removing the property instance");
 instance.remove$propnameCaps${suffix}();
-			
+
 #end

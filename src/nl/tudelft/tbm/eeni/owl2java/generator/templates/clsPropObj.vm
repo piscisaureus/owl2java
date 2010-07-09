@@ -6,7 +6,7 @@
 	#set($suffix = $rep.getJavaMethodSuffix())
 	#set($multipleDeprecated = $rep.getMultipleDeprecated())
 	#set($singleDeprecated = $rep.getSingleDeprecated())
-	
+
 	public boolean has$propnameCaps($rangeInFull #mixedlowercase($range)Value) {
 		return hasProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
 	}
@@ -22,14 +22,14 @@
 			}
 			return count;
 		}
-		
-        $multipleDeprecated
-        public Iterator<$rangeOutFull> iterate${propnameCaps}${suffix}() {
-            ExtendedIterator<Statement> it = listProperties(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            return it.mapWith(${rangeOutFull}.statementMapper).filterDrop(${rangeOutFull}.nullFilter);
-        }
-		
- 		$multipleDeprecated
+
+		$multipleDeprecated
+		public Iterator<$rangeOutFull> iterate${propnameCaps}${suffix}() {
+			ExtendedIterator<Statement> it = listProperties(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+			return it.mapWith(${rangeOutFull}.statementMapper).filterDrop(${rangeOutFull}.nullFilter);
+		}
+
+		$multipleDeprecated
 		public List<$rangeOutFull> list${propnameCaps}${suffix}() {
 			List<$rangeOutFull> list = new ArrayList<$rangeOutFull>();
 			Iterator<$rangeOutFull> it = iterate${propnameCaps}${suffix}();
@@ -39,51 +39,51 @@
 			}
 			return list;
 		}
-		
+
 		$multipleDeprecated
 		public void add$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value) {
-            addProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+			addProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
 		}
-		
+
 		$multipleDeprecated
 		public void addAll$propnameCaps${suffix}(List<? extends $rangeInFull> #mixedlowercase($range)List) {
-            for ($rangeInFull o : #mixedlowercase($range)List)
-                add$propnameCaps${suffix}(o);
-		
+			for ($rangeInFull o : #mixedlowercase($range)List)
+				add$propnameCaps${suffix}(o);
+
 		}
-		
+
 		$multipleDeprecated
 		public void remove$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value) {
-            removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+			removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
 		}
-		
+
 		$multipleDeprecated
 		public void removeAll$propnameCaps${suffix}() {
-		            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+					removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
 		}
 	#end
-	
+
 	#if($rep.isSingleEnabled())
 		$singleDeprecated
 		public $rangeOutFull get$propnameCaps${suffix} () {
-            RDFNode n = getPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            if (n.canAs(${rangeOutFull}.class))
-                return ($rangeOutFull) n.as(${rangeOutFull}.class);
-            else {
-                log.warn("Could not convert ${propname} of " + getURI() + " (" + n + ") to type $range");
-                return null;
-            }		
+			RDFNode n = getPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+			if (n.canAs(${rangeOutFull}.class))
+				return ($rangeOutFull) n.as(${rangeOutFull}.class);
+			else {
+				log.warn("Could not convert ${propname} of " + getURI() + " (" + n + ") to type $range");
+				return null;
+			}
 		}
-		
+
 		$singleDeprecated
 		public void set$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value) {
-            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
+			removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+			setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, #mixedlowercase($range)Value);
 		}
-		
+
 		$singleDeprecated
 		public void remove$propnameCaps${suffix}() {
-            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});		
-		}						
+			removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+		}
 	#end
-#end    
+#end

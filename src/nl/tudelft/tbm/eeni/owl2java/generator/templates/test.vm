@@ -15,126 +15,126 @@ import ${pkgBase}.${pkgTools}.${factoryName};
  */
 public class $testcaseName {
 
-    private static Log log = LogFactory.getLog(${testcaseName}.class);
-    
-    private static String namePrefix = "ClassInstance";
-    private static int nameCount = 0;
-    
-    public static void main(String[] args) {
-        run();
-    }
-    
-    private static String getNewInstanceName() {
-    	nameCount++;
-    	return namePrefix + nameCount;
+	private static Log log = LogFactory.getLog(${testcaseName}.class);
+
+	private static String namePrefix = "ClassInstance";
+	private static int nameCount = 0;
+
+	public static void main(String[] args) {
+		run();
 	}
 
-    private static String getNewInstanceURI() {
-    	String localName = getNewInstanceName();
-    	String base = "jmodel.getBaseNamespace()";
-    	return base + "#" + localName;
+	private static String getNewInstanceName() {
+		nameCount++;
+		return namePrefix + nameCount;
 	}
-	
 
-    public static void run() {
-    	String base = "jmodel.getBaseNamespace()";
-    	
-    	log.info("Creating an empty ontology");
-        OntModel ontModel = ModelFactory.createOntologyModel();
-        Ontology ontology = ontModel.createOntology(base);
-    	
-    	log.info("Registering custom classes with jena");
-        ${factoryName}.registerImports(ontology, ontModel);
-        ${factoryName}.registerCustomClasses();
-    	    
-        log.info("Starting test case run");
-        #foreach ($cls in $jmodel.listJClasses())
-            #set($clsName = $cls.getJavaClassName())
-            run${clsName}(ontModel);
-        #end
-    	log.info("DONE DONE DONE DONE DONE DONE DONE DONE");
-    }
+	private static String getNewInstanceURI() {
+		String localName = getNewInstanceName();
+		String base = "jmodel.getBaseNamespace()";
+		return base + "#" + localName;
+	}
 
 
-    #foreach ($cls in $jmodel.listJClasses())
-        #set ($clsName = $cls.getJavaClassName())
-        #set ($clsFullName = $cls.getJavaClassFullName())
-        #set ($aggregatedProperties = $cls.listAggregatedProperties())
+	public static void run() {
+		String base = "jmodel.getBaseNamespace()";
 
-        protected static void run${clsName}(OntModel ontModel) {
-            log.info("Testing class $clsName");
-            
-            // create, create anonymous, exists, delete, list
-            log.debug("  Creating anonymous class instance");
-            ${clsFullName}.create(ontModel);
-            
-            log.debug("  Creating two named class instance");
-            String uri = getNewInstanceURI();
-            ${clsFullName}.create(uri, ontModel);
-            uri = getNewInstanceURI();
-            ${clsFullName}.create(uri, ontModel);
-            
-            log.debug("  Checking for existance of class instance");
-            boolean exists = ${clsFullName}.exists(uri, ontModel);
-            log.debug("  -> exists: " + exists);
-            
-            log.debug("  Fetching known instance");
-            ${clsFullName} clsInstance = ${clsFullName}.get(uri, ontModel);
-            log.debug("  -> instance: " + clsInstance.getLocalName());
-            
-            log.debug("  Iterate over all class instances");
-            Iterator<$clsFullName> it = ${clsFullName}.iterate(ontModel);
-            while (it.hasNext()) {
-            	clsInstance = ($clsFullName) it.next();
-            	log.debug("  -> instance: " + clsInstance.getLocalName());
-            }
-            
-            log.debug("  List all class instances and ");
-            for ($clsFullName cls : ${clsFullName}.list(ontModel))
-            	log.debug("  -> instance: " + cls.getLocalName());
-            
-            log.debug("  Iterate over all class instances and subclass instances");
-            Iterator<$clsFullName> it2 = ${clsFullName}.iterate(false, ontModel);
-            while (it2.hasNext()) {
-            	clsInstance = ($clsFullName) it2.next();
-            	log.debug("  -> instance: " + clsInstance.getLocalName());
-            }
-            
-            log.debug("  List all class instances");
-            for ($clsFullName cls : ${clsFullName}.list(false, ontModel))
-            	log.debug("  -> instance: " + cls.getLocalName());
+		log.info("Creating an empty ontology");
+		OntModel ontModel = ModelFactory.createOntologyModel();
+		Ontology ontology = ontModel.createOntology(base);
 
-            log.debug("  Counting class instances");
-            log.debug("  -> count: " + ${clsFullName}.count(ontModel));
-            
-            log.debug("  Deleting a named class instance");
-            ${clsFullName}.delete(uri, ontModel);
-            
-            #if ($aggregatedProperties.size() > 0)
-                // class instance for property tests
-                uri = getNewInstanceURI();
-                ${clsFullName}.create(uri, ontModel);
-                ${clsFullName} instance = ${clsFullName}.get(uri, ontModel);
+		log.info("Registering custom classes with jena");
+		${factoryName}.registerImports(ontology, ontModel);
+		${factoryName}.registerCustomClasses();
 
-                // test each representation
-                #foreach($prop in $aggregatedProperties)
-                    #set($propnameCaps = $prop.getJavaNameCaps())  ## the java name with first letter capitalized
-                    #set($propname = $prop.getJavaName())          ## the java name
-                    log.info("  Testing property $propname of class $clsName");
+		log.info("Starting test case run");
+		#foreach ($cls in $jmodel.listJClasses())
+			#set($clsName = $cls.getJavaClassName())
+			run${clsName}(ontModel);
+		#end
+		log.info("DONE DONE DONE DONE DONE DONE DONE DONE");
+	}
 
-                    #parse("testPropBase.vm")
 
-                    #foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
-                        #if($prop.isObjectProperty())
-                            #parse("testPropObj.vm")
-                        #else
-                            #set($rangeMethod = $prop.getDataRangeMethod())  ## the name of the method to acess a dataproperty range
-                            #set($rangeURI = $prop.getRangeUri())            ## the uri of the range. Used for datatype properties
-                            #parse("testPropDT.vm")
-                        #end
-                    #end
-                #end
-            #end
-        }
-    #end
+	#foreach ($cls in $jmodel.listJClasses())
+		#set ($clsName = $cls.getJavaClassName())
+		#set ($clsFullName = $cls.getJavaClassFullName())
+		#set ($aggregatedProperties = $cls.listAggregatedProperties())
+
+		protected static void run${clsName}(OntModel ontModel) {
+			log.info("Testing class $clsName");
+
+			// create, create anonymous, exists, delete, list
+			log.debug("  Creating anonymous class instance");
+			${clsFullName}.create(ontModel);
+
+			log.debug("  Creating two named class instance");
+			String uri = getNewInstanceURI();
+			${clsFullName}.create(uri, ontModel);
+			uri = getNewInstanceURI();
+			${clsFullName}.create(uri, ontModel);
+
+			log.debug("  Checking for existance of class instance");
+			boolean exists = ${clsFullName}.exists(uri, ontModel);
+			log.debug("  -> exists: " + exists);
+
+			log.debug("  Fetching known instance");
+			${clsFullName} clsInstance = ${clsFullName}.get(uri, ontModel);
+			log.debug("  -> instance: " + clsInstance.getLocalName());
+
+			log.debug("  Iterate over all class instances");
+			Iterator<$clsFullName> it = ${clsFullName}.iterate(ontModel);
+			while (it.hasNext()) {
+				clsInstance = ($clsFullName) it.next();
+				log.debug("  -> instance: " + clsInstance.getLocalName());
+			}
+
+			log.debug("  List all class instances and ");
+			for ($clsFullName cls : ${clsFullName}.list(ontModel))
+				log.debug("  -> instance: " + cls.getLocalName());
+
+			log.debug("  Iterate over all class instances and subclass instances");
+			Iterator<$clsFullName> it2 = ${clsFullName}.iterate(false, ontModel);
+			while (it2.hasNext()) {
+				clsInstance = ($clsFullName) it2.next();
+				log.debug("  -> instance: " + clsInstance.getLocalName());
+			}
+
+			log.debug("  List all class instances");
+			for ($clsFullName cls : ${clsFullName}.list(false, ontModel))
+				log.debug("  -> instance: " + cls.getLocalName());
+
+			log.debug("  Counting class instances");
+			log.debug("  -> count: " + ${clsFullName}.count(ontModel));
+
+			log.debug("  Deleting a named class instance");
+			${clsFullName}.delete(uri, ontModel);
+
+			#if ($aggregatedProperties.size() > 0)
+				// class instance for property tests
+				uri = getNewInstanceURI();
+				${clsFullName}.create(uri, ontModel);
+				${clsFullName} instance = ${clsFullName}.get(uri, ontModel);
+
+				// test each representation
+				#foreach($prop in $aggregatedProperties)
+					#set($propnameCaps = $prop.getJavaNameCaps())  ## the java name with first letter capitalized
+					#set($propname = $prop.getJavaName())          ## the java name
+					log.info("  Testing property $propname of class $clsName");
+
+					#parse("testPropBase.vm")
+
+					#foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
+						#if($prop.isObjectProperty())
+							#parse("testPropObj.vm")
+						#else
+							#set($rangeMethod = $prop.getDataRangeMethod())  ## the name of the method to acess a dataproperty range
+							#set($rangeURI = $prop.getRangeUri())            ## the uri of the range. Used for datatype properties
+							#parse("testPropDT.vm")
+						#end
+					#end
+				#end
+			#end
+		}
+	#end
 }

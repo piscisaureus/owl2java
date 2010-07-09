@@ -22,13 +22,13 @@
 			return count;
 		}
 
-        $multipleDeprecated
-        public Iterator<$rangeFull> iterate${propnameCaps}${suffix}() {
-            ExtendedIterator<Statement> it = listProperties(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            return it.mapWith(nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.objectAs${range}Mapper).filterDrop(new NullFilter<${rangeFull}>());
-        }
+		$multipleDeprecated
+		public Iterator<$rangeFull> iterate${propnameCaps}${suffix}() {
+			ExtendedIterator<Statement> it = listProperties(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+			return it.mapWith(nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.objectAs${range}Mapper).filterDrop(new NullFilter<${rangeFull}>());
+		}
 
- 		$multipleDeprecated
+		$multipleDeprecated
 		public List<$rangeFull> list${propnameCaps}${suffix}() {
 			List<$rangeFull> list = new ArrayList<$rangeFull>();
 			Iterator<$rangeFull> it = iterate${propnameCaps}${suffix}();
@@ -38,57 +38,57 @@
 			}
 			return list;
 		}
-  
-		
+
+
 		$multipleDeprecated
 		public void add$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
-            Literal literal = nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
-            setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
+			Literal literal = nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
+			setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
 		}
-		
+
 		$multipleDeprecated
 		public void addAll$propnameCaps${suffix}(List<$rangeFull> #mixedlowercase($range)List) {
-            for ($rangeFull o : #mixedlowercase($range)List)
-                add$propnameCaps${suffix}(o);
+			for ($rangeFull o : #mixedlowercase($range)List)
+				add$propnameCaps${suffix}(o);
 		}
-		
+
 		$multipleDeprecated
 		public void remove$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
-            Literal literal = nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
-            removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
+			Literal literal = nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
+			removeProperty(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
 		}
-		
+
 		$multipleDeprecated
 		public void removeAll$propnameCaps${suffix}() {
-            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-		
+			removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+
 		}
 	#end
-	
+
 	#if($rep.isSingleEnabled())
 		$singleDeprecated
 		public $rangeFull get$propnameCaps${suffix} () {
-            RDFNode n = getPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-            if (n instanceof Literal) {
-                Literal l = (Literal) n;
-                return ($rangeFull) (${rangeMethod}(l));
-            } else {
-                log.warn("Could not convert ${propname} of " + getURI() + " (" + n + ") to type $range");
-                return null;
-            }
+			RDFNode n = getPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+			if (n instanceof Literal) {
+				Literal l = (Literal) n;
+				return ($rangeFull) (${rangeMethod}(l));
+			} else {
+				log.warn("Could not convert ${propname} of " + getURI() + " (" + n + ") to type $range");
+				return null;
+			}
 		}
-		
+
 		$singleDeprecated
 		public void set$propnameCaps${suffix}($rangeFull #mixedlowercase($range)Value) {
-            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
-	        nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");    
-            Literal literal = nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
-            setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
+			removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+			nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
+			Literal literal = nl.tudelft.tbm.eeni.owl2java.model.xsd.XsdUtils.createTypedLiteral((OntModel)getModel(), #mixedlowercase($range)Value, "$rangeURI");
+			setPropertyValue(${pkgBase}.${pkgTools}.${vocabName}.${propname}, literal);
 		}
-		
+
 		$singleDeprecated
 		public void remove$propnameCaps${suffix}() {
-            removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});		
-		}						
+			removeAll(${pkgBase}.${pkgTools}.${vocabName}.${propname});
+		}
 	#end
 #end
