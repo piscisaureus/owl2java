@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+      Owl2Java readme
+    </title>
+  </head>
+  <body>
+
+    <h1>
+      Owl2Java readme
+    </h1>
+
+    <h2>
+      Known issues &amp; todo
+    </h2>
+
+    <h3>
+      Owl features
+    </h3>
+    <ul>
+      <li>Add support for complex range definitions (so running PropertyRangeSimplifier is no longer necessary)</li>
+      <li>Support property characteristics like maxCardinality, transitive, inverse functional</li>
+      <li>Add support for primitive types like float, int, etc. (how about lists, iterators then?)</li>
+      <li>Add support for XsdDuration</li>
+      <li>XsdTypes entity is currently ignored</li>
+    </ul>
+
+    <h3>
+      Code generation
+    </h3>
+    <ul>
+      <li>Output path could be either absolute or relative to project root</li>
+      <li>When writing code to somewhere outside the owl2java folder, also copy owl2java classes that the generated code depends on</li>
+      <li>Use Sparql for generated count() methods</li>
+    </ul>
+
+    <h3>
+      Other
+    </h3>
+    <ul>
+      <li>Add JavaDoc comments</li>
+      <li>More examples and general documentation</li>
+      <li>Make the code generator use generics instead of casts internally</li>
+    </ul>
+
+  </body>
+</html>
