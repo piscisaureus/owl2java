@@ -26,7 +26,6 @@ import com.hp.hpl.jena.ontology.Individual;
 	 * Domain property $propnameCaps
 	 * with uri $prop.getMapUri()
 	 */
-	public boolean exists$propnameCaps();
 	
 	## loop over all presentations and create functions
 	#foreach ($rep in $cls.listAggregatedPropertyRepresentations($prop))
@@ -44,7 +43,10 @@ import com.hp.hpl.jena.ontology.Individual;
 		#set($suffix = $rep.getJavaMethodSuffix())
 		#set($multipleDeprecated = $rep.getMultipleDeprecated())
 		#set($singleDeprecated = $rep.getSingleDeprecated())
-		
+
+		public boolean exists$propnameCaps();
+		public boolean has$propnameCaps${suffix}($rangeInFull #mixedlowercase($range)Value);
+
 		#if($rep.isMultipleEnabled())
 			$multipleDeprecated
 			public int count$propnameCaps$suffix();
