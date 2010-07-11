@@ -206,6 +206,20 @@ public class $cName extends IndividualImpl implements $iName {
         return count(${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
     }
 
+	public static int count(boolean direct, OntModel ontModel) {
+		int count = 0;
+		Iterator<$cName> it = iterate(direct, ontModel);
+		while (it.hasNext()) {
+			it.next();
+			count++;
+		}
+		return count;
+	}
+
+	public static int count(boolean direct) {
+		return count(direct, ${pkgBase}.${pkgTools}.${factoryName}.getDefaultModel());
+	}
+
     public static boolean exists(String uri, OntModel ontModel) {
         Individual individual = ontModel.getIndividual(uri);
         if (individual != null)
