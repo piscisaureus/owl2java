@@ -152,7 +152,7 @@ However Java does not support multiple inheritance like Owl does, therefore gene
 
 Generated classes have a number of static methods to load, delete, list and iterate over instances of a particular OWL class. The method names should be self-explaining; however some details may require explanation: 
 
-*   The OntModel parameter is always optional; if not supplied, the default ontology set with *Factory.setDefaultOntology()* is used. 
+*   The OntModel parameter is always optional; if not supplied, the default ontology set with *Factory.setDefaultModel()* is used. 
 *   When creating an instance, the URI parameter may be omitted; an url for the instance will then be generated. 
 *   Delete() is a static method and requires you to give it the url of the instance to be deleted. To remove an instance that has been 'wrapped' with get(), use the non-static remove() method. 
 *   The iterate(), list() and count() methods optionally take a parameter named *direct*. When it is set to true, these functions consider only direct instances of this class, ignoring instances of subclasses. If *direct* is set to false or omitted, subclass instances are listed, iterated, counted too. 
@@ -224,7 +224,7 @@ The generated classes have methods to work with the properties of an OWL individ
 
 ## Authors and license 
 
-The original Owl2Java, of which this project is a fork, was written by Michael Zimmermann. He should be credited for most the work. More information can be found at <http://www.incunabulum.de/projects/it/Owl2Java>.  
+The original Owl2Java, of which this project is a fork, was written by Michael Zimmermann. He should be credited for most the work. More information can be found at <http://www.incunabulum.de/projects/it/owl2java>.  
 Modifications were made by Bert Belder at the TU Delft (the Netherlands), faculty of Systems Engineering, Policy Analysis and Management, Energy and Industry section. 
 
 Both the original Owl2Java and this fork are licensed under the GNU General Public License version 2;  
